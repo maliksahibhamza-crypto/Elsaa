@@ -15,7 +15,7 @@
             align-items: center; 
             justify-content: center; 
             text-align: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .container {
@@ -23,17 +23,16 @@
             padding: 30px;
             border-radius: 20px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             position: relative;
             z-index: 10;
         }
 
-        /* Screens handling */
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; animation: fadeIn 0.5s ease; }
         .active { display: flex; }
 
-        h1 { color: var(--pink); font-size: 24px; margin-bottom: 15px; }
+        h1, h2 { color: var(--pink); font-size: 24px; margin-bottom: 15px; }
         p { font-size: 16px; margin-bottom: 20px; color: #555; line-height: 1.6; }
 
         button {
@@ -45,22 +44,32 @@
             cursor: pointer;
             transition: 0.3s;
             font-weight: bold;
-            display: inline-block;
         }
         .continue { background: var(--pink); color: white; }
         .leave { background: #ccc; color: #333; }
         button:hover { transform: scale(1.08); }
 
-        /* Grid for cards */
+        /* Nayi Coding ki Special Styling */
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; width: 100%; }
         .flower-card { 
             background: white; border: 2px solid var(--pink); 
             padding: 15px; border-radius: 12px; cursor: pointer; font-size: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
-        .special-btn { animation: pulse 2s infinite; background: #ff758c; color: white; width: 100%; }
+        .flower-card:hover { background: #fff0f3; }
+        
+        .special-btn { 
+            animation: pulse 2s infinite; 
+            background: #ff758c; 
+            color: white; 
+            width: 100%; 
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 2px solid white;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
         /* Floating Hearts */
         .hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
@@ -71,7 +80,7 @@
             100% { transform: translateY(-10vh); opacity: 0; } 
         }
 
-        /* Modal */
+        /* Modal Settings */
         .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: none; z-index: 100; width: 85%; max-width: 350px; }
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; z-index: 99; }
     </style>
@@ -84,7 +93,7 @@
         <div id="page1" class="screen active">
             <h1>Hey!</h1>
             <p>Who are you? 🤨<br>Why are you here? 🤨<br><br>Are you a hacker or a scammer?<br>If not, press Continue.<br>Otherwise, press Leave</p>
-            <div>
+            <div style="display:flex; justify-content:center;">
                 <button class="leave" onclick="nav('page2')">Leave</button>
                 <button class="continue" onclick="nav('page3')">Continue</button>
             </div>
@@ -98,8 +107,10 @@
         <div id="page3" class="screen">
             <h1>⚠️ Warning Alert</h1>
             <p>There is a high risk that your data could be hacked.. 😈<br><br>But if you want to know how this could happen, continue</p>
-            <button class="leave" onclick="nav('page4')">Leave</button>
-            <button class="continue" onclick="nav('page5')">Continue</button>
+            <div style="display:flex; justify-content:center;">
+                <button class="leave" onclick="nav('page4')">Leave</button>
+                <button class="continue" onclick="nav('page5')">Continue</button>
+            </div>
         </div>
 
         <div id="page4" class="screen">
@@ -114,20 +125,23 @@
         </div>
 
         <div id="page6" class="screen">
-            <p>Why you selected NO.. 😒🔪<br>There is no option to leave 😌<br>Chalo achi bachi bano 🤭</p>
+            <p>Why you selected NO.. 😒🔪<br>There is no option to leave 😌<br>Aapko banna padega…<br>Chalo achi bachi bano 🤭</p>
             <button class="continue" onclick="nav('page7')">Continue</button>
         </div>
 
         <div id="page7" class="screen">
             <h1>Best choice ever 💖</h1>
             <p>Elsa + Me 💑<br>Aapki muskurahat mere liye sabse bara gift hai ✨<br><br>I’ve got a few more surprises for you. Want to see them?</p>
-            <button class="continue" onclick="nav('page9')">YES</button>
-            <button class="leave" onclick="nav('page8')">NO</button>
+            <div style="display:flex; justify-content:center;">
+                <button class="continue" onclick="nav('page9')">YES</button>
+                <button class="leave" onclick="nav('page8')">NO</button>
+            </div>
         </div>
 
         <div id="page8" class="screen">
+            <img src="https://i.ibb.co/CByGz9C/angry-cat-knife.png" width="120" style="margin-bottom:15px;">
             <h1>No? 😶 Are you sure?</h1>
-            <p>Because it’s kinda made for you 💝<br>Even if you say no, you’re still special to me 🌸</p>
+            <p>Because it’s kinda made for you 💝<br>Even if you say no, you’re still special to me 🌸<br><br>I’ve prepared a few more surprises...</p>
             <button class="continue" onclick="nav('page9')">OkiEe</button>
         </div>
 
@@ -139,17 +153,21 @@
 
         <div id="page10" class="screen">
             <h2>A Note for Elsa...</h2>
-            <p style="font-style: italic; font-size: 0.9rem;">"Hi… Elsa, I prepared this only two days ago. I wasn’t sure if you’d like it... But if it brings even a little smile to your face, then it's worth it 🤧"</p>
+            <p style="font-style: italic; font-size: 0.95rem;">"Hi… to be honest, Elsa, I prepared this only two days ago. I wasn’t sure if you’d like it, because this kind of thing feels awkward to me. But if it brings even a little smile to your face, then I’ll consider my effort completely worth it 🤧"</p>
+            <p>"I’m not very good at expressing things, but I hope you understand the effort behind this."</p>
             <button class="leave" onclick="nav('page9')">⬅️ Back</button>
         </div>
 
         <div id="page11" class="screen">
             <h1>Choose a Card 🌸</h1>
             <div class="grid">
-                <div class="flower-card" onclick="openCard('Rose Day 🌹', 'A rose for you, to remind you how special you are.')">🌸 Card 1</div>
-                <div class="flower-card" onclick="openCard('Propose Day 💌', 'I just wanted to say… you mean a lot to me 💙')">🌸 Card 2</div>
-                <div class="flower-card" onclick="openCard('Chocolate Day 🍫', 'Life feels a little sweeter with you 🍫')">🌸 Card 3</div>
-                <div class="flower-card" onclick="openCard('Valentine\'s Day 💖', 'Happy Valentine’s Day Elsa! ❤️')">🌸 Card 4</div>
+                <div class="flower-card" onclick="openCard('7 Feb - Rose Day 🌹', 'A rose for you, to remind you how special you are.')">🌸 Card 1</div>
+                <div class="flower-card" onclick="openCard('8 Feb - Propose Day 💌', 'I just wanted to say… you mean a lot to me 💙')">🌸 Card 2</div>
+                <div class="flower-card" onclick="openCard('9 Feb - Chocolate Day 🍫', 'Life feels a little sweeter with you 🍫')">🌸 Card 3</div>
+                <div class="flower-card" onclick="openCard('10 Feb - Teddy Day 🧸', 'Sending you something soft and warm, just like my intentions 🧸🤍')">🌸 Card 4</div>
+                <div class="flower-card" onclick="openCard('11 Feb - Promise Day 🤝', 'I promise to be honest and real with you 🤍')">🌸 Card 5</div>
+                <div class="flower-card" onclick="openCard('Next Days... 😉', 'Baqi do Mai sharam arhi hai islie apse ijazat k bad update krdonga..🤝')">🌸 Card 6</div>
+                <div class="flower-card" onclick="openCard('14 Feb - Valentine Day 💖', 'It’s not about the day, it’s about you. Happy Valentine’s Day ❤️')">🌸 Card 7</div>
             </div>
             <button class="leave" style="margin-top:20px" onclick="nav('page9')">Back</button>
         </div>
@@ -157,26 +175,20 @@
 
     <div class="overlay" id="overlay" onclick="closeCard()"></div>
     <div class="modal" id="modal">
-        <h2 id="modalTitle" style="color:#ff4d6d"></h2>
-        <p id="modalBody" style="margin-top:10px"></p>
+        <h2 id="modalTitle" style="font-size: 1.2rem;"></h2>
+        <p id="modalBody" style="margin-top:10px; font-size: 0.95rem;"></p>
         <button class="continue" onclick="closeCard()">Close</button>
     </div>
 
     <script>
-        // Simple Navigation Function
         function nav(id) {
-            // Hide all screens
             const screens = document.querySelectorAll('.screen');
             screens.forEach(s => s.classList.remove('active'));
-            
-            // Show the target screen
             const target = document.getElementById(id);
-            if(target) {
-                target.classList.add('active');
-            }
+            if(target) target.classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        // Floating Hearts Logic
         function createHeart(){
             const container = document.querySelector(".hearts");
             const h = document.createElement("div");
@@ -189,7 +201,6 @@
         }
         setInterval(createHeart, 400);
 
-        // Card Modal Logic
         function openCard(title, text) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalBody').innerText = text;
@@ -202,4 +213,5 @@
         }
     </script>
 </body>
-</html>
+            </html>
+            

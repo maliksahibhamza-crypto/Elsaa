@@ -15,7 +15,7 @@
             align-items: center; 
             justify-content: center; 
             text-align: center;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         .container {
@@ -23,21 +23,20 @@
             padding: 30px;
             border-radius: 20px;
             width: 90%;
-            max-width: 420px;
+            max-width: 400px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 0.6s ease;
             position: relative;
             z-index: 10;
         }
 
         /* Screens handling */
-        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; animation: fadeIn 0.5s ease; }
         .active { display: flex; }
 
-        h1, h2 { color: var(--pink); font-size: 24px; margin-bottom: 15px; }
+        h1 { color: var(--pink); font-size: 24px; margin-bottom: 15px; }
         p { font-size: 16px; margin-bottom: 20px; color: #555; line-height: 1.6; }
 
-        button, .btn {
+        button {
             padding: 12px 25px;
             margin: 8px;
             border: none;
@@ -46,20 +45,20 @@
             cursor: pointer;
             transition: 0.3s;
             font-weight: bold;
+            display: inline-block;
         }
-        .continue, .btn { background: var(--pink); color: white; }
-        .leave, .no-btn { background: #ccc; color: #333; }
+        .continue { background: var(--pink); color: white; }
+        .leave { background: #ccc; color: #333; }
         button:hover { transform: scale(1.08); }
 
         /* Grid for cards */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; width: 100%; }
         .flower-card { 
             background: white; border: 2px solid var(--pink); 
-            padding: 15px; border-radius: 12px; cursor: pointer; font-size: 0.9rem;
+            padding: 15px; border-radius: 12px; cursor: pointer; font-size: 0.8rem;
         }
-        .special-btn { animation: pulse 2s infinite; background: #ff758c; width: 100%; }
+        .special-btn { animation: pulse 2s infinite; background: #ff758c; color: white; width: 100%; }
 
-        /* Animations */
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
@@ -85,57 +84,122 @@
         <div id="page1" class="screen active">
             <h1>Hey!</h1>
             <p>Who are you? 🤨<br>Why are you here? 🤨<br><br>Are you a hacker or a scammer?<br>If not, press Continue.<br>Otherwise, press Leave</p>
-            <div style="display:flex">
-                <button class="leave" onclick="goTo('page2')">Leave</button>
-                <button class="continue" onclick="goTo('page3')">Continue</button>
+            <div>
+                <button class="leave" onclick="nav('page2')">Leave</button>
+                <button class="continue" onclick="nav('page3')">Continue</button>
             </div>
         </div>
 
         <div id="page2" class="screen">
             <p>Hmm, agar tum hacker ya scammer nahi ho, to phir mera dil kaise hack kar liya? 😌<br><br>Ab seedhi sharafat se Continue press karo</p>
-            <button class="continue" onclick="goTo('page3')">Continue</button>
+            <button class="continue" onclick="nav('page3')">Continue</button>
         </div>
 
         <div id="page3" class="screen">
             <h1>⚠️ Warning Alert</h1>
             <p>There is a high risk that your data could be hacked.. 😈<br><br>But if you want to know how this could happen, continue</p>
-            <button class="leave" onclick="goTo('page4')">Leave</button>
-            <button class="continue" onclick="goTo('page5')">Continue</button>
+            <button class="leave" onclick="nav('page4')">Leave</button>
+            <button class="continue" onclick="nav('page5')">Continue</button>
         </div>
 
         <div id="page4" class="screen">
             <p>But wait... why did you leave? 😏<br>You’re not afraid of challenges.<br>Just press continue!</p>
-            <button class="continue" onclick="goTo('page5')">Continue</button>
+            <button class="continue" onclick="nav('page5')">Continue</button>
         </div>
 
         <div id="page5" class="screen">
             <p>Sunein.. 🤭<br>Ap bhi soch rahi hongi yeh kya mazak hai 😅<br><br><strong>Will you be my Valentine? 💖</strong></p>
-            <button class="continue" onclick="goTo('page7')">Obviously YES 😍</button>
-            <button class="leave" onclick="goTo('page6')">No 🙄</button>
+            <button class="continue" onclick="nav('page7')">Obviously YES 😍</button>
+            <button class="leave" onclick="nav('page6')">No 🙄</button>
         </div>
 
         <div id="page6" class="screen">
             <p>Why you selected NO.. 😒🔪<br>There is no option to leave 😌<br>Chalo achi bachi bano 🤭</p>
-            <button class="continue" onclick="goTo('page7')">Continue</button>
+            <button class="continue" onclick="nav('page7')">Continue</button>
         </div>
 
         <div id="page7" class="screen">
             <h1>Best choice ever 💖</h1>
             <p>Elsa + Me 💑<br>Aapki muskurahat mere liye sabse bara gift hai ✨<br><br>I’ve got a few more surprises for you. Want to see them?</p>
-            <div style="display:flex">
-                <button class="btn" onclick="goTo('page9')">YES</button>
-                <button class="leave" onclick="goTo('page8')">NO</button>
-            </div>
+            <button class="continue" onclick="nav('page9')">YES</button>
+            <button class="leave" onclick="nav('page8')">NO</button>
         </div>
 
         <div id="page8" class="screen">
             <h1>No? 😶 Are you sure?</h1>
             <p>Because it’s kinda made for you 💝<br>Even if you say no, you’re still special to me 🌸</p>
-            <button class="btn" onclick="goTo('page9')">OkiEe</button>
+            <button class="continue" onclick="nav('page9')">OkiEe</button>
         </div>
 
         <div id="page9" class="screen">
             <h1>What's Next? ✨</h1>
-            <button class="btn special-btn" onclick="goTo('page11')">🎁 Surprises</button>
-            <button class="btn special-btn" style="background:#ff9a9e" onclick="goTo('page10')">📩 A special msg for uhh</
-                
+            <button class="special-btn" onclick="nav('page11')">🎁 Surprises</button>
+            <button class="special-btn" style="background:#ff9a9e" onclick="nav('page10')">📩 A special msg for uhh</button>
+        </div>
+
+        <div id="page10" class="screen">
+            <h2>A Note for Elsa...</h2>
+            <p style="font-style: italic; font-size: 0.9rem;">"Hi… Elsa, I prepared this only two days ago. I wasn’t sure if you’d like it... But if it brings even a little smile to your face, then it's worth it 🤧"</p>
+            <button class="leave" onclick="nav('page9')">⬅️ Back</button>
+        </div>
+
+        <div id="page11" class="screen">
+            <h1>Choose a Card 🌸</h1>
+            <div class="grid">
+                <div class="flower-card" onclick="openCard('Rose Day 🌹', 'A rose for you, to remind you how special you are.')">🌸 Card 1</div>
+                <div class="flower-card" onclick="openCard('Propose Day 💌', 'I just wanted to say… you mean a lot to me 💙')">🌸 Card 2</div>
+                <div class="flower-card" onclick="openCard('Chocolate Day 🍫', 'Life feels a little sweeter with you 🍫')">🌸 Card 3</div>
+                <div class="flower-card" onclick="openCard('Valentine\'s Day 💖', 'Happy Valentine’s Day Elsa! ❤️')">🌸 Card 4</div>
+            </div>
+            <button class="leave" style="margin-top:20px" onclick="nav('page9')">Back</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeCard()"></div>
+    <div class="modal" id="modal">
+        <h2 id="modalTitle" style="color:#ff4d6d"></h2>
+        <p id="modalBody" style="margin-top:10px"></p>
+        <button class="continue" onclick="closeCard()">Close</button>
+    </div>
+
+    <script>
+        // Simple Navigation Function
+        function nav(id) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(s => s.classList.remove('active'));
+            
+            // Show the target screen
+            const target = document.getElementById(id);
+            if(target) {
+                target.classList.add('active');
+            }
+        }
+
+        // Floating Hearts Logic
+        function createHeart(){
+            const container = document.querySelector(".hearts");
+            const h = document.createElement("div");
+            h.className = "heart";
+            h.innerHTML = "💖";
+            h.style.left = Math.random() * 100 + "vw";
+            h.style.animationDuration = (3 + Math.random() * 2) + "s";
+            container.appendChild(h);
+            setTimeout(() => h.remove(), 4000);
+        }
+        setInterval(createHeart, 400);
+
+        // Card Modal Logic
+        function openCard(title, text) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = text;
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function closeCard() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

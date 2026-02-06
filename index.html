@@ -195,3 +195,109 @@ page1();
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Surprise for Elsa</title>
+    <style>
+        :root { --pink: #ff4d6d; --bg: #fff5f7; }
+        body { margin: 0; font-family: 'Arial', sans-serif; background: var(--bg); text-align: center; overflow-x: hidden; }
+        .screen { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; animation: fadeIn 0.5s; }
+        .active { display: flex; }
+        
+        h1, h2 { color: var(--pink); }
+        p { color: #555; line-height: 1.6; max-width: 500px; }
+        
+        .btn { padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin: 10px; transition: 0.3s; background: var(--pink); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn:hover { transform: scale(1.05); }
+
+        /* Envelopes Grid */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .flower-card { background: white; border: 2px solid var(--pink); padding: 20px; border-radius: 15px; cursor: pointer; position: relative; overflow: hidden; }
+        .flower-card::before { content: '🌸'; position: absolute; top: 5px; right: 5px; font-size: 1.2rem; }
+
+        /* Animation for Special Buttons */
+        .special-btn { animation: pulse 2s infinite; background: #ff758c; font-size: 1.1rem; border: 2px solid white; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none; z-index: 100; width: 80%; max-width: 400px; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; }
+    </style>
+</head>
+<body>
+
+    <div id="page7" class="screen active">
+        <h1>Page Seven ❤️</h1>
+        <p>I’ve got a few more surprises for you. Want to see them?</p>
+        <div class="btn-container">
+            <button class="btn" onclick="goTo('page9')">YES</button>
+            <button class="btn" style="background:#888" onclick="goTo('page8')">NO</button>
+        </div>
+    </div>
+
+    <div id="page8" class="screen">
+        <h1>No? 😶 Are you sure?</h1>
+        <p>Because it’s kinda made for you 💝<br>
+        Even if you say no, you’re still special to me 🌸<br><br>
+        But I’ve prepared a few more surprises for you… you should see them 😌✨</p>
+        <button class="btn" onclick="goTo('page9')">OkiEe</button>
+    </div>
+
+    <div id="page9" class="screen">
+        <h1>More Surprises! ✨</h1>
+        <button class="btn special-btn" onclick="goTo('page11')">🎁 Surprises</button>
+        <button class="btn special-btn" onclick="goTo('page10')">📩 A special msg for uhh</button>
+    </div>
+
+    <div id="page10" class="screen">
+        <h2>A Note for Elsa...</h2>
+        <p>Hi… to be honest, Elsa, I prepared this only two days ago. I wasn’t sure if I should do it or if you’d like it, because this kind of thing feels awkward to me. But if it brings even a little smile to your face, then I’ll consider my effort completely worth it 🤧</p>
+        <p>I’m not very good at expressing things, but I hope you understand the effort behind this. I just wanted you to know that you truly matter to me.</p>
+        <button class="btn" style="background:#888" onclick="goTo('page9')">⬅️ Back</button>
+    </div>
+
+    <div id="page11" class="screen">
+        <h1>Choose a Card 🌸</h1>
+        <div class="grid">
+            <div class="flower-card" onclick="openCard('7 February Happy Rose Day 🌹', 'A rose for you, to remind you how special you are.')">Card 1</div>
+            <div class="flower-card" onclick="openCard('8 February Happy Propose Day 💌', 'I just wanted to say… you mean a lot to me 💙')">Card 2</div>
+            <div class="flower-card" onclick="openCard('9 February Chocolate Day 🍫', 'Life feels a little sweeter with you 🍫')">Card 3</div>
+            <div class="flower-card" onclick="openCard('10 February Teddy Day 🧸', 'Sending you something soft and warm, just like my intentions 🧸🤍')">Card 4</div>
+            <div class="flower-card" onclick="openCard('11 February Promise Day 🤝', 'I promise to be honest and real with you 🤍')">Card 5</div>
+            <div class="flower-card" onclick="openCard('Baqi Do? 😁', 'Baqi do Mai sharam arhi hai islie apse ijazat k bad update krdonga..🤝')">Card 6</div>
+            <div class="flower-card" onclick="openCard('14 February Happy Valentine\'s Day 💖', 'It’s not about the day, it’s about you. Happy Valentine’s Day ❤️')">Card 7</div>
+        </div>
+        <button class="btn" style="margin-top:20px; background:#888" onclick="goTo('page9')">Back</button>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeCard()"></div>
+    <div class="modal" id="modal">
+        <h2 id="modalTitle"></h2>
+        <p id="modalBody"></p>
+        <button class="btn" onclick="closeCard()">Close</button>
+    </div>
+
+    <script>
+        function goTo(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function openCard(title, text) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = text;
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeCard() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

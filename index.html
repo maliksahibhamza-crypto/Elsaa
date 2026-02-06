@@ -1,303 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Warning ⚠️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-body{
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-}
-.container{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    width:90%;
-    max-width:420px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.2);
-    animation:fadeIn 0.6s ease;
-}
-h1{
-    font-size:24px;
-    margin-bottom:15px;
-}
-p{
-    font-size:16px;
-    margin-bottom:20px;
-}
-button{
-    padding:12px 25px;
-    margin:8px;
-    border:none;
-    border-radius:30px;
-    font-size:15px;
-    cursor:pointer;
-    transition:0.3s;
-}
-.continue{
-    background:#ff4d6d;
-    color:white;
-}
-.leave{
-    background:#ccc;
-}
-button:hover{
-    transform:scale(1.08);
-}
-@keyframes fadeIn{
-    from{opacity:0; transform:scale(0.9);}
-    to{opacity:1; transform:scale(1);}
-}
-.hearts{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-}
-.heart{
-    position:absolute;
-    color:#ff4d6d;
-    font-size:20px;
-    animation:float 4s linear infinite;
-}
-@keyframes float{
-    0%{transform:translateY(100vh); opacity:0;}
-    30%{opacity:1;}
-    100%{transform:translateY(-10vh); opacity:0;}
-}
-</style>
-</head>
-
-<body>
-
-<div class="hearts"></div>
-
-<div class="container" id="content"></div>
-
-<script>
-const content = document.getElementById("content");
-
-function hearts(){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="💖";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(3+Math.random()*2)+"s";
-    document.querySelector(".hearts").appendChild(h);
-    setTimeout(()=>h.remove(),4000);
-}
-setInterval(hearts,400);
-
-function page1(){
-    content.innerHTML=`
-    <h1>Hey!</h1>
-    <p>
-    Who are you? 🤨<br>
-    Why are you here? 🤨<br><br>
-    Are you a hacker or a scammer?<br>
-    If not, press Continue.<br>
-    Otherwise, press Leave
-    </p>
-    <button class="leave" onclick="page2()">Leave</button>
-    <button class="continue" onclick="page3()">Continue</button>
-    `;
-}
-
-function page2(){
-    content.innerHTML=`
-    <p>
-    Hmm, agar tum hacker ya scammer nahi ho,<br>
-    to phir mera dil kaise hack kar liya? 😌<br>
-    Aur scam bhi kar diya…<br><br>
-    Ab seedhi sharafat se Continue press karo
-    </p>
-    <button class="continue" onclick="page3()">Continue</button>
-    `;
-}
-
-function page3(){
-    content.innerHTML=`
-    <h1>⚠️ Warning Alert</h1>
-    <p>
-    There is a high risk that your data could be hacked.. 😈<br><br>
-    But if you want to know how this could happen<br>
-    and are willing to take a small risk, then continue
-    </p>
-    <button class="leave" onclick="page4()">Leave</button>
-    <button class="continue" onclick="page5()">Continue</button>
-    `;
-}
-
-function page4(){
-    content.innerHTML=`
-    <p>
-    But wait... why did you leave? 😏<br><br>
-    You’re not afraid, and you like taking risks and challenges.<br>
-    Don’t think too much, just press continue
-    </p>
-    <button class="continue" onclick="page5()">Continue</button>
-    `;
-}
-
-function page5(){
-    content.innerHTML=`
-    <p>
-    Sunein.. 🤭<br><br>
-    Ap bhi soch rahi hongi yeh kya mazak hai 😅<br>
-    Ab serious ho jate hain…<br><br>
-    <strong>Will you be my Valentine? 💖</strong>
-    </p>
-    <button class="continue" onclick="page7()">Obviously YES 😍</button>
-    <button class="leave" onclick="page6()">No 🙄</button>
-    `;
-}
-
-function page6(){
-    content.innerHTML=`
-    <p>
-    Why you selected NO.. 😒🔪<br><br>
-    There is no option to leave 😌<br>
-    Aapko banna padega…<br><br>
-    Chalo achi bachi bano 🤭
-    </p>
-    <button class="continue" onclick="page7()">Continue</button>
-    `;
-}
-
-function page7(){
-    content.innerHTML=`
-    <h1>Best choice ever 💖</h1>
-    <p>
-    Elsa + Me 💑<br><br>
-    Aapki muskurahat mere liye sabse bara gift hai ✨<br><br>
-    I luvvv uhhh 🤭<br><br>
-    <strong>Happy Valentine’s Day 💌</strong>
-    </p>
-    `;
-}
-
-page1();
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
+    <title>Valentine Surprise for Elsa 💖</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine Surprise for Elsa</title>
     <style>
         :root { --pink: #ff4d6d; --bg: #fff5f7; }
-        body { margin: 0; font-family: 'Arial', sans-serif; background: var(--bg); text-align: center; overflow-x: hidden; }
-        .screen { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; animation: fadeIn 0.5s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.6s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Screens handling */
+        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; }
         .active { display: flex; }
-        
-        h1, h2 { color: var(--pink); }
-        p { color: #555; line-height: 1.6; max-width: 500px; }
-        
-        .btn { padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin: 10px; transition: 0.3s; background: var(--pink); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .btn:hover { transform: scale(1.05); }
 
-        /* Envelopes Grid */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-        .flower-card { background: white; border: 2px solid var(--pink); padding: 20px; border-radius: 15px; cursor: pointer; position: relative; overflow: hidden; }
-        .flower-card::before { content: '🌸'; position: absolute; top: 5px; right: 5px; font-size: 1.2rem; }
+        h1, h2 { color: var(--pink); font-size: 24px; margin-bottom: 15px; }
+        p { font-size: 16px; margin-bottom: 20px; color: #555; line-height: 1.6; }
 
-        /* Animation for Special Buttons */
-        .special-btn { animation: pulse 2s infinite; background: #ff758c; font-size: 1.1rem; border: 2px solid white; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none; z-index: 100; width: 80%; max-width: 400px; }
-        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; }
+        button, .btn {
+            padding: 12px 25px;
+            margin: 8px;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        .continue, .btn { background: var(--pink); color: white; }
+        .leave, .no-btn { background: #ccc; color: #333; }
+        button:hover { transform: scale(1.08); }
+
+        /* Grid for cards */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+        .flower-card { 
+            background: white; border: 2px solid var(--pink); 
+            padding: 15px; border-radius: 12px; cursor: pointer; font-size: 0.9rem;
+        }
+        .special-btn { animation: pulse 2s infinite; background: #ff758c; width: 100%; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* Floating Hearts */
+        .hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .heart { position: absolute; color: var(--pink); font-size: 20px; animation: float 4s linear infinite; }
+        @keyframes float { 
+            0% { transform: translateY(100vh); opacity: 0; } 
+            30% { opacity: 1; } 
+            100% { transform: translateY(-10vh); opacity: 0; } 
+        }
+
+        /* Modal */
+        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: none; z-index: 100; width: 85%; max-width: 350px; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; z-index: 99; }
     </style>
 </head>
 <body>
 
-    <div id="page7" class="screen active">
-        <h1>Page Seven ❤️</h1>
-        <p>I’ve got a few more surprises for you. Want to see them?</p>
-        <div class="btn-container">
-            <button class="btn" onclick="goTo('page9')">YES</button>
-            <button class="btn" style="background:#888" onclick="goTo('page8')">NO</button>
+    <div class="hearts"></div>
+
+    <div class="container">
+        <div id="page1" class="screen active">
+            <h1>Hey!</h1>
+            <p>Who are you? 🤨<br>Why are you here? 🤨<br><br>Are you a hacker or a scammer?<br>If not, press Continue.<br>Otherwise, press Leave</p>
+            <div style="display:flex">
+                <button class="leave" onclick="goTo('page2')">Leave</button>
+                <button class="continue" onclick="goTo('page3')">Continue</button>
+            </div>
         </div>
-    </div>
 
-    <div id="page8" class="screen">
-        <h1>No? 😶 Are you sure?</h1>
-        <p>Because it’s kinda made for you 💝<br>
-        Even if you say no, you’re still special to me 🌸<br><br>
-        But I’ve prepared a few more surprises for you… you should see them 😌✨</p>
-        <button class="btn" onclick="goTo('page9')">OkiEe</button>
-    </div>
-
-    <div id="page9" class="screen">
-        <h1>More Surprises! ✨</h1>
-        <button class="btn special-btn" onclick="goTo('page11')">🎁 Surprises</button>
-        <button class="btn special-btn" onclick="goTo('page10')">📩 A special msg for uhh</button>
-    </div>
-
-    <div id="page10" class="screen">
-        <h2>A Note for Elsa...</h2>
-        <p>Hi… to be honest, Elsa, I prepared this only two days ago. I wasn’t sure if I should do it or if you’d like it, because this kind of thing feels awkward to me. But if it brings even a little smile to your face, then I’ll consider my effort completely worth it 🤧</p>
-        <p>I’m not very good at expressing things, but I hope you understand the effort behind this. I just wanted you to know that you truly matter to me.</p>
-        <button class="btn" style="background:#888" onclick="goTo('page9')">⬅️ Back</button>
-    </div>
-
-    <div id="page11" class="screen">
-        <h1>Choose a Card 🌸</h1>
-        <div class="grid">
-            <div class="flower-card" onclick="openCard('7 February Happy Rose Day 🌹', 'A rose for you, to remind you how special you are.')">Card 1</div>
-            <div class="flower-card" onclick="openCard('8 February Happy Propose Day 💌', 'I just wanted to say… you mean a lot to me 💙')">Card 2</div>
-            <div class="flower-card" onclick="openCard('9 February Chocolate Day 🍫', 'Life feels a little sweeter with you 🍫')">Card 3</div>
-            <div class="flower-card" onclick="openCard('10 February Teddy Day 🧸', 'Sending you something soft and warm, just like my intentions 🧸🤍')">Card 4</div>
-            <div class="flower-card" onclick="openCard('11 February Promise Day 🤝', 'I promise to be honest and real with you 🤍')">Card 5</div>
-            <div class="flower-card" onclick="openCard('Baqi Do? 😁', 'Baqi do Mai sharam arhi hai islie apse ijazat k bad update krdonga..🤝')">Card 6</div>
-            <div class="flower-card" onclick="openCard('14 February Happy Valentine\'s Day 💖', 'It’s not about the day, it’s about you. Happy Valentine’s Day ❤️')">Card 7</div>
+        <div id="page2" class="screen">
+            <p>Hmm, agar tum hacker ya scammer nahi ho, to phir mera dil kaise hack kar liya? 😌<br><br>Ab seedhi sharafat se Continue press karo</p>
+            <button class="continue" onclick="goTo('page3')">Continue</button>
         </div>
-        <button class="btn" style="margin-top:20px; background:#888" onclick="goTo('page9')">Back</button>
-    </div>
 
-    <div class="overlay" id="overlay" onclick="closeCard()"></div>
-    <div class="modal" id="modal">
-        <h2 id="modalTitle"></h2>
-        <p id="modalBody"></p>
-        <button class="btn" onclick="closeCard()">Close</button>
-    </div>
+        <div id="page3" class="screen">
+            <h1>⚠️ Warning Alert</h1>
+            <p>There is a high risk that your data could be hacked.. 😈<br><br>But if you want to know how this could happen, continue</p>
+            <button class="leave" onclick="goTo('page4')">Leave</button>
+            <button class="continue" onclick="goTo('page5')">Continue</button>
+        </div>
 
-    <script>
-        function goTo(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
-        }
+        <div id="page4" class="screen">
+            <p>But wait... why did you leave? 😏<br>You’re not afraid of challenges.<br>Just press continue!</p>
+            <button class="continue" onclick="goTo('page5')">Continue</button>
+        </div>
 
-        function openCard(title, text) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalBody').innerText = text;
-            document.getElementById('modal').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
+        <div id="page5" class="screen">
+            <p>Sunein.. 🤭<br>Ap bhi soch rahi hongi yeh kya mazak hai 😅<br><br><strong>Will you be my Valentine? 💖</strong></p>
+            <button class="continue" onclick="goTo('page7')">Obviously YES 😍</button>
+            <button class="leave" onclick="goTo('page6')">No 🙄</button>
+        </div>
 
-        function closeCard() {
-            document.getElementById('modal').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
+        <div id="page6" class="screen">
+            <p>Why you selected NO.. 😒🔪<br>There is no option to leave 😌<br>Chalo achi bachi bano 🤭</p>
+            <button class="continue" onclick="goTo('page7')">Continue</button>
+        </div>
+
+        <div id="page7" class="screen">
+            <h1>Best choice ever 💖</h1>
+            <p>Elsa + Me 💑<br>Aapki muskurahat mere liye sabse bara gift hai ✨<br><br>I’ve got a few more surprises for you. Want to see them?</p>
+            <div style="display:flex">
+                <button class="btn" onclick="goTo('page9')">YES</button>
+                <button class="leave" onclick="goTo('page8')">NO</button>
+            </div>
+        </div>
+
+        <div id="page8" class="screen">
+            <h1>No? 😶 Are you sure?</h1>
+            <p>Because it’s kinda made for you 💝<br>Even if you say no, you’re still special to me 🌸</p>
+            <button class="btn" onclick="goTo('page9')">OkiEe</button>
+        </div>
+
+        <div id="page9" class="screen">
+            <h1>What's Next? ✨</h1>
+            <button class="btn special-btn" onclick="goTo('page11')">🎁 Surprises</button>
+            <button class="btn special-btn" style="background:#ff9a9e" onclick="goTo('page10')">📩 A special msg for uhh</
+                

@@ -73,6 +73,8 @@
 
         .game-zone { height: 250px; position: relative; background: rgba(0,0,0,0.02); border-radius: 20px; overflow: hidden; margin: 20px 0; border: 1px solid #eee; }
         #movingHeart { font-size: 50px; position: absolute; cursor: pointer; transition: 0.1s linear; top: 50%; left: 50%; }
+        
+        .comment-box { margin-top: 20px; padding: 15px; border-top: 2px solid var(--pink-bg); text-align: left; }
     </style>
 </head>
 <body>
@@ -188,6 +190,15 @@
     <div id="page14" class="page">
         <h1>Happy Valentine's Day</h1>
         <button class="btn" onclick="revealSpecialMessage()">❤️ View Special Message</button>
+        
+        <div class="comment-box">
+            <h3 style="font-size: 1.2rem; color: var(--gold);">Leave a Note ✍️</h3>
+            <input type="text" id="visitorName" placeholder="Your Name" style="margin-bottom: 8px;">
+            <textarea id="visitorMsg" placeholder="Type your message here..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Poppins'; height: 80px; resize: none;"></textarea>
+            <center><button class="btn" style="padding: 10px 20px; font-size: 0.65rem;" onclick="addComment()">Post Comment</button></center>
+            
+            <div id="commentDisplay" style="margin-top: 15px; max-height: 150px; overflow-y: auto;"></div>
+        </div>
     </div>
 
     <div id="page15" class="page">
@@ -234,7 +245,7 @@
         });
         if(correct === 7) {
             alert("Verification Complete. Exiting Security Layer...");
-            goToPage(1); // Leave means go back to start
+            goToPage(1);
         } else {
             showModal('Failed', 'Incorrect answers. Access remains locked.');
         }
@@ -274,7 +285,33 @@
     function showModal(title, body) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerHTML = body; document.getElementById('customModal').style.display = 'flex'; }
     function closeModal() { document.getElementById('customModal').style.display = 'none'; }
 
+    function addComment() {
+        const name = document.getElementById('visitorName').value || "Someone Special";
+        const msg = document.getElementById('visitorMsg').value;
+        const display = document.getElementById('commentDisplay');
+        if(!msg.trim()) return alert("Please enter a message!");
+        
+        // Time Formatting
+        const now = new Date();
+        const timeStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
+
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.style.fontSize = '0.85rem';
+        card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <b>${name}</b>
+                <span style="font-size:0.65rem; color:#888;">${timeStr}</span>
+            </div>
+            <p style="margin:5px 0 0 0;">${msg}</p>
+        `;
+        display.prepend(card);
+        
+        document.getElementById('visitorMsg').value = "";
+        document.getElementById('visitorName').value = "";
+    }
+
     particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "shape": { "type": "heart" }, "color": { "value": "#d4af37" }, "opacity": { "value": 0.3 }, "size": { "value": 4 }, "move": { "enable": true, "speed": 1 } } });
 </script>
 </body>
-    </html>
+                </html>

@@ -6,28 +6,74 @@
     <title>Secure Access | Private Vault</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --pink-bg: #fce4ec; --glass: rgba(255, 255, 255, 0.95); --text: #2c3e50; }
+        :root {
+            --gold: #d4af37;
+            --pink-bg: #fce4ec;
+            --glass: rgba(255, 255, 255, 0.95);
+            --text: #2c3e50;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, var(--pink-bg) 0%, #ffffff 100%); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; color: var(--text); }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--pink-bg) 0%, #ffffff 100%);
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; color: var(--text);
+        }
+
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none; }
-        .container { width: 95%; max-width: 550px; background: var(--glass); backdrop-filter: blur(20px); padding: 35px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.1); text-align: center; z-index: 10; position: relative; max-height: 90vh; overflow-y: auto; }
+
+        .container {
+            width: 95%; max-width: 550px; background: var(--glass);
+            backdrop-filter: blur(20px); padding: 35px; border-radius: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            text-align: center; z-index: 10; position: relative; max-height: 90vh; overflow-y: auto;
+        }
+
         .page { display: none; animation: fadeIn 0.8s ease forwards; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
         h1, h2, h3 { font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #1a1a1a; }
         p { line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
-        .btn { background: var(--gold); color: white; padding: 14px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; margin: 10px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: inline-block; }
+
+        .btn {
+            background: var(--gold); color: white; padding: 14px 28px; border: none;
+            border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s;
+            margin: 10px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: inline-block;
+        }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5); }
-        .premium-search { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2px solid var(--gold); background: white; font-family: 'Poppins'; outline: none; transition: 0.3s; text-align: center; }
+
+        .premium-search {
+            width: 100%; padding: 15px 25px; border-radius: 50px;
+            border: 2px solid var(--gold); background: white;
+            font-family: 'Poppins'; outline: none; transition: 0.3s; text-align: center;
+        }
+
         .empty-zone { padding: 40px 20px; opacity: 0.4; border: 2px dashed #ccc; border-radius: 20px; margin-top: 20px; min-height: 150px; display: flex; align-items: center; justify-content: center; }
-        #customModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .modal-content { background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 25px; border: 1px solid var(--gold); overflow-y: auto; max-height: 80vh; text-align: left; animation: modalIn 0.4s ease; }
+
+        #customModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 100; display: none;
+            align-items: center; justify-content: center; backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: white; width: 90%; max-width: 450px; padding: 35px;
+            border-radius: 25px; border: 1px solid var(--gold); overflow-y: auto;
+            max-height: 80vh; text-align: left; animation: modalIn 0.4s ease;
+        }
+
         .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: 'Poppins'; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+
         .timeline-card { background: white; border: 1px solid var(--gold); padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
         .timeline-card:hover { background: var(--pink-bg); transform: scale(1.02); }
+
         .game-zone { height: 250px; position: relative; background: rgba(0,0,0,0.02); border-radius: 20px; overflow: hidden; margin: 20px 0; border: 1px solid #eee; }
         #movingHeart { font-size: 50px; position: absolute; cursor: pointer; transition: 0.1s linear; top: 50%; left: 50%; }
+        
         .comment-box { margin-top: 20px; padding: 15px; border-top: 2px solid var(--pink-bg); text-align: left; }
     </style>
 </head>
@@ -44,6 +90,7 @@
 </div>
 
 <div class="container">
+    
     <div id="page1" class="page active">
         <h1>Welcome</h1>
         <p style="color: #888; font-style: italic;">Accessing private server...</p>
@@ -135,123 +182,136 @@
         <div class="timeline-card" onclick="showModal('Chocolate Day', 'Life feels a little sweeter with you around. Just like chocolate makes everything better, your presence makes the days brighter.<br><br><b>Happy Chocolate Day!</b>')">🍫 Chocolate Day</div>
         <div class="timeline-card" onclick="showModal('Teddy Day', 'Just like a teddy brings comfort and a little smile to anyone, I hope today brings you the same warmth and peace.<br><br><b>Happy Teddy Day.</b>')">🧸 Teddy Day</div>
         <div class="timeline-card" onclick="showModal('Promise Day', 'I promise to always respect you, support you, and value the unique bond we share. You can always count on me.<br><br><b>Happy Promise Day.</b>')">💌 Promise Day</div>
-        <div class="timeline-card" style="opacity:0.6; cursor:not-allowed;">🔒 Hug Day (Locked)</div>
-        <div class="timeline-card" style="opacity:0.6; cursor:not-allowed;">🔒 Kiss Day (Locked)</div>
+        <div class="timeline-card" style="opacity:0.6;">🔒 Hug Day (Locked)</div>
+        <div class="timeline-card" style="opacity:0.6;">🔒 Kiss Day (Locked)</div>
         <button class="btn" onclick="goToPage(14)">Final Surprise</button>
     </div>
 
     <div id="page14" class="page">
         <h1>Happy Valentine's Day</h1>
         <button class="btn" onclick="revealSpecialMessage()">❤️ View Special Message</button>
+        
         <div class="comment-box">
-            <h3>Leave a Note ✍️</h3>
-            <input type="text" id="visitorName" placeholder="Your Name" style="margin-bottom:8px;">
-            <textarea id="visitorMsg" placeholder="Type your message here..." style="width:100%; height:80px; margin-bottom:8px;"></textarea>
-            <center><button class="btn" onclick="addComment()">Post Comment</button></center>
-            <div id="commentDisplay" style="margin-top: 15px; max-height: 250px; overflow-y: auto;"></div>
+            <h3 style="font-size: 1.2rem; color: var(--gold);">Leave a Note ✍️</h3>
+            <input type="text" id="visitorName" placeholder="Your Name" style="margin-bottom: 8px;">
+            <textarea id="visitorMsg" placeholder="Type your message here..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Poppins'; height: 80px; resize: none;"></textarea>
+            <center><button class="btn" style="padding: 10px 20px; font-size: 0.65rem;" onclick="addComment()">Post Comment</button></center>
+            
+            <div id="commentDisplay" style="margin-top: 15px; max-height: 150px; overflow-y: auto;"></div>
         </div>
     </div>
 
     <div id="page15" class="page">
-        <h2>Discovery Portal</h2>
+        <h2 style="color: var(--gold);">Discovery Portal</h2>
         <input type="text" id="premiumSearch" class="premium-search" placeholder="Search secrets..." onkeyup="runSearch()">
-        <div id="searchContent" class="empty-zone"><p id="searchText">Page is empty...</p>
-        <div id="secretOption" style="display:none; width:100%;" class="timeline-card" onclick="showModal('Secret Found!', 'You found the hidden path!')">✨ Hidden Treasure Unlocked</div></div>
-        <button class="btn" onclick="goToPage('5b')">Go Back</button>
+        <div id="searchContent" class="empty-zone">
+            <p id="searchText">Page is empty. Try searching...</p>
+            <div id="secretOption" style="display:none; width:100%;" class="timeline-card" onclick="showModal('Secret Found!', 'You found the hidden path!')">✨ Hidden Treasure Unlocked</div>
+        </div>
+        <button class="btn" style="background:#888;" onclick="goToPage('5b')">Go Back</button>
     </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    const sheetDbUrl = 'https://sheetdb.io/api/v1/899s7cpds7109'; 
-    let exitClickCount = 0; let heartInt;
+    let exitClickCount = 0;
+    let heartInt;
 
     function goToPage(p) {
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         const target = document.getElementById('page' + p);
         if(target) target.classList.add('active');
         if(p === 11) startHeartGame(); else clearInterval(heartInt);
-        if(p === 14) loadComments();
+    }
+
+    function moveExitBtn() {
+        const btn = document.getElementById('exitBtn');
+        btn.style.left = Math.random() * 70 + '%';
+        btn.style.top = Math.random() * 70 + '%';
+    }
+
+    function handleExitClick() {
+        exitClickCount++;
+        if(exitClickCount >= 8) goToPage(6);
+        else if(exitClickCount % 3 === 0) goToPage(3);
+    }
+
+    function validateQuiz() {
+        let correct = 0;
+        document.querySelectorAll('.quiz-q').forEach(input => {
+            let valid = JSON.parse(input.getAttribute('data-ans'));
+            if(valid.includes(input.value.toLowerCase().trim())) correct++;
+        });
+        if(correct === 7) {
+            alert("Verification Complete. Exiting Security Layer...");
+            goToPage(1);
+        } else {
+            showModal('Failed', 'Incorrect answers. Access remains locked.');
+        }
+    }
+
+    function signalGame(correct) { if(correct) goToPage(11); else showModal('Error', 'False signal. Please try S-2.'); }
+
+    function startHeartGame() {
+        const h = document.getElementById('movingHeart');
+        heartInt = setInterval(() => { h.style.left = Math.random()*85+'%'; h.style.top = Math.random()*85+'%'; }, 750);
+    }
+
+    function catchHeart() {
+        clearInterval(heartInt);
+        document.getElementById('nextWeekBtn').style.display = 'inline-block';
+        showModal('Sync Success', '“You didn’t chase. You waited. That is why it stayed.”');
     }
 
     function revealSpecialMessage() {
-        const fullMsg = `“You’re not just anyone… you’re important.” 💛 <br><br>
-        “Every line, every animation, every little detail in this website… was made thinking of you.” <br><br>
-        “It wasn’t just about creating a site… it was about making a journey, a little adventure, a memory… just for you.” <br><br>
-        “I hope you felt the care, the effort, and the thought behind every page.” <br><br>
-        “Because nothing here was random — everything was made to make you smile.” <br><br>
-        “And if it worked… then I’ve done exactly what I wanted.” <br><br>
-        “Thank you for being the reason this exists.” ✨`;
-        showModal('To My Gudiya', fullMsg);
+        const msg = `“You’re not just anyone… you’re important.” 💛 <br><br>“Every line, every animation, every little detail in this website… was made thinking of you.” <br><br>“It wasn’t just about creating a site… it was about making a journey, a little adventure, a memory… just for you.” <br><br>“I hope you felt the care, the effort, and the thought behind every page.” <br><br>“Because nothing here was random — everything was made to make you smile.” <br><br>“And if it worked… then I’ve done exactly what I wanted.” <br><br>“Thank you for being the reason this exists.” ✨`;
+        showModal('To My Gudiya', msg);
     }
 
-    function addComment() {
-        const nameVal = document.getElementById('visitorName').value.trim() || "Gudiya";
-        const msgVal = document.getElementById('visitorMsg').value.trim();
-        const timeVal = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
-        
-        if(!msgVal) { alert("Please type a message!"); return; }
-
-        fetch(sheetDbUrl, { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({
-                data: [{
-                    "Name": nameVal,
-                    "Message": msgVal,
-                    "Time": timeVal
-                }]
-            }) 
-        })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('visitorMsg').value = ""; 
-            loadComments();
-        })
-        .catch(err => console.error("Post Error:", err));
-    }
-
-    function loadComments() {
-        // Cache bypass and fresh load
-        fetch(sheetDbUrl + '?t=' + new Date().getTime())
-        .then(res => res.json())
-        .then(data => {
-            const display = document.getElementById('commentDisplay'); 
-            display.innerHTML = '';
-            if(!data || !Array.isArray(data)) return;
-
-            data.reverse().forEach(item => {
-                const n = item.Name || item.name || "Gudiya";
-                const m = item.Message || item.message || "";
-                const t = item.Time || item.time || "";
-
-                if(m && m !== "---") {
-                    const card = document.createElement('div'); 
-                    card.className = 'q-card';
-                    card.innerHTML = `<b>${n}</b> <span style="float:right; font-size:0.6rem; color:#888;">${t}</span><p style="margin-top:5px;">${m}</p>`;
-                    display.appendChild(card);
-                }
-            });
-        }).catch(err => console.error("Load Error"));
-    }
-
-    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else showModal('Denied', 'Referrer not recognized.'); }
-    function startHeartGame() { const h = document.getElementById('movingHeart'); heartInt = setInterval(() => { h.style.left = Math.random()*85+'%'; h.style.top = Math.random()*85+'%'; }, 750); }
-    function catchHeart() { clearInterval(heartInt); document.getElementById('nextWeekBtn').style.display = 'inline-block'; showModal('Sync Success', '“You didn’t chase. You waited. That is why it stayed.”'); }
-    function showModal(title, body) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerHTML = body; document.getElementById('customModal').style.display = 'flex'; }
-    function closeModal() { document.getElementById('customModal').style.display = 'none'; }
-    function moveExitBtn() { const btn = document.getElementById('exitBtn'); btn.style.left = Math.random()*70+'%'; btn.style.top = Math.random()*70+'%'; }
-    function handleExitClick() { exitClickCount++; if(exitClickCount >= 8) goToPage(6); else if(exitClickCount % 3 === 0) goToPage(3); }
-    function validateQuiz() { let c = 0; document.querySelectorAll('.quiz-q').forEach(i => { if(JSON.parse(i.getAttribute('data-ans')).includes(i.value.toLowerCase().trim())) c++; }); if(c===7) { alert("Verification Complete!"); goToPage(1); } else showModal('Failed', 'Incorrect answers.'); }
-    function signalGame(correct) { if(correct) goToPage(11); else showModal('Error', 'Try S-2.'); }
     function runSearch() {
         let input = document.getElementById('premiumSearch').value.toLowerCase().trim();
-        let text = document.getElementById('searchText'); let secret = document.getElementById('secretOption');
+        let text = document.getElementById('searchText');
+        let secret = document.getElementById('secretOption');
         if(input === "hamza" || input === "gudiya") { secret.style.display = "block"; text.style.display = "none"; }
         else { secret.style.display = "none"; text.style.display = "block"; text.innerText = input ? "No results found." : "Page is empty..."; }
     }
-    
+
+    function verifyReferrer() { 
+        if(document.getElementById('refInput').value.toLowerCase().includes('Hayatim')) goToPage('5b'); 
+        else showModal('Denied', 'Referrer not recognized.'); 
+    }
+
+    function showModal(title, body) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerHTML = body; document.getElementById('customModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('customModal').style.display = 'none'; }
+
+    function addComment() {
+        const name = document.getElementById('visitorName').value || "Someone Special";
+        const msg = document.getElementById('visitorMsg').value;
+        const display = document.getElementById('commentDisplay');
+        if(!msg.trim()) return alert("Please enter a message!");
+        
+        // Time Formatting
+        const now = new Date();
+        const timeStr = now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
+
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.style.fontSize = '0.85rem';
+        card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <b>${name}</b>
+                <span style="font-size:0.65rem; color:#888;">${timeStr}</span>
+            </div>
+            <p style="margin:5px 0 0 0;">${msg}</p>
+        `;
+        display.prepend(card);
+        
+        document.getElementById('visitorMsg').value = "";
+        document.getElementById('visitorName').value = "";
+    }
+
     particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "shape": { "type": "heart" }, "color": { "value": "#d4af37" }, "opacity": { "value": 0.3 }, "size": { "value": 4 }, "move": { "enable": true, "speed": 1 } } });
 </script>
 </body>
-    </html>
+            </html>

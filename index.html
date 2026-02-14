@@ -22,14 +22,13 @@
         .empty-zone { padding: 40px 20px; opacity: 0.4; border: 2px dashed #ccc; border-radius: 20px; margin-top: 20px; min-height: 150px; display: flex; align-items: center; justify-content: center; }
         #customModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .modal-content { background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 25px; border: 1px solid var(--gold); overflow-y: auto; max-height: 80vh; text-align: left; animation: modalIn 0.4s ease; }
-        .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); position: relative; }
+        .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); }
         input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: 'Poppins'; }
         .timeline-card { background: white; border: 1px solid var(--gold); padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
         .timeline-card:hover { background: var(--pink-bg); transform: scale(1.02); }
         .game-zone { height: 250px; position: relative; background: rgba(0,0,0,0.02); border-radius: 20px; overflow: hidden; margin: 20px 0; border: 1px solid #eee; }
         #movingHeart { font-size: 50px; position: absolute; cursor: pointer; transition: 0.1s linear; top: 50%; left: 50%; }
         .comment-box { margin-top: 20px; padding: 15px; border-top: 2px solid var(--pink-bg); text-align: left; }
-        .delete-btn { position: absolute; top: 10px; right: 10px; color: #ff7675; cursor: pointer; font-size: 14px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -212,22 +211,8 @@
         .catch(err => console.error("Post Error:", err));
     }
 
-    function deleteComment(messageText) {
-        if(!confirm("Hamesha ke liye delete karun? (Sabke pas se hat jayega)")) return;
-
-        // SheetDB API for DELETE: deletes rows where "Message" equals messageText
-        fetch(`${sheetDbUrl}/Message/${encodeURIComponent(messageText)}`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(res => res.json())
-        .then(data => {
-            loadComments(); // Refresh list after deletion
-        })
-        .catch(err => console.error("Delete Error:", err));
-    }
-
     function loadComments() {
+        // Cache bypass and fresh load
         fetch(sheetDbUrl + '?t=' + new Date().getTime())
         .then(res => res.json())
         .then(data => {
@@ -243,10 +228,7 @@
                 if(m && m !== "---") {
                     const card = document.createElement('div'); 
                     card.className = 'q-card';
-                    card.innerHTML = `
-                        <span class="delete-btn" onclick="deleteComment('${m.replace(/'/g, "\\'")}')">RMV</span>
-                        <b>${n}</b> <span style="float:right; font-size:0.6rem; color:#888;">${t}</span>
-                        <p style="margin-top:5px;">${m}</p>`;
+                    card.innerHTML = `<b>${n}</b> <span style="float:right; font-size:0.6rem; color:#888;">${t}</span><p style="margin-top:5px;">${m}</p>`;
                     display.appendChild(card);
                 }
             });
@@ -273,4 +255,3 @@
 </script>
 </body>
             </html>
-        

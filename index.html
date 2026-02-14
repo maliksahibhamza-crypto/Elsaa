@@ -6,29 +6,26 @@
     <title>Secure Access | Private Vault</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --pink-bg: #fce4ec; --glass: rgba(255, 255, 255, 0.95); --text: #2c3e50; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #d4af37; --pink-bg: #fce4ec; --glass: rgba(255, 255, 255, 0.95); --text: #2c3e50; --status-blue: #3498db; --status-green: #2ecc71; }
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, var(--pink-bg) 0%, #ffffff 100%); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; color: var(--text); }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none; }
-        .container { width: 95%; max-width: 550px; background: var(--glass); backdrop-filter: blur(20px); padding: 35px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.1); text-align: center; z-index: 10; position: relative; max-height: 90vh; overflow-y: auto; }
+        .container { width: 95%; max-width: 550px; background: var(--glass); backdrop-filter: blur(20px); padding: 35px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.1); text-align: center; z-index: 10; position: relative; max-height: 92vh; overflow-y: auto; }
         .page { display: none; animation: fadeIn 0.8s ease forwards; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         h1, h2, h3 { font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #1a1a1a; }
-        p { line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
-        .btn { background: var(--gold); color: white; padding: 14px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; margin: 10px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: inline-block; }
+        .btn { background: var(--gold); color: white; padding: 14px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; margin: 10px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: inline-block; position: relative; z-index: 20; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5); }
-        .premium-search { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2px solid var(--gold); background: white; font-family: 'Poppins'; outline: none; transition: 0.3s; text-align: center; }
-        .empty-zone { padding: 40px 20px; opacity: 0.4; border: 2px dashed #ccc; border-radius: 20px; margin-top: 20px; min-height: 150px; display: flex; align-items: center; justify-content: center; }
+        .premium-search { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2.5px solid var(--gold); background: white; outline: none; text-align: center; font-weight: 600; margin-bottom: 10px; }
         #customModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .modal-content { background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 25px; border: 1px solid var(--gold); overflow-y: auto; max-height: 80vh; text-align: left; animation: modalIn 0.4s ease; }
-        .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: 'Poppins'; }
+        .modal-content { background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 25px; border: 1px solid var(--gold); overflow-y: auto; max-height: 80vh; text-align: left; }
+        .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: 'Poppins'; margin-bottom: 10px; }
         .timeline-card { background: white; border: 1px solid var(--gold); padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
-        .timeline-card:hover { background: var(--pink-bg); transform: scale(1.02); }
         .game-zone { height: 250px; position: relative; background: rgba(0,0,0,0.02); border-radius: 20px; overflow: hidden; margin: 20px 0; border: 1px solid #eee; }
         #movingHeart { font-size: 50px; position: absolute; cursor: pointer; transition: 0.1s linear; top: 50%; left: 50%; }
-        .comment-box { margin-top: 20px; padding: 15px; border-top: 2px solid var(--pink-bg); text-align: left; }
+        .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
     </style>
 </head>
 <body>
@@ -38,49 +35,18 @@
 <div id="customModal" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
         <h3 id="modalTitle" style="color:var(--gold); text-align:center;"></h3>
-        <div id="modalBody" style="line-height:1.8; color:#444; margin-top:15px;"></div>
+        <div id="modalBody" style="line-height:1.8; color:#444; margin-top:15px; font-size: 0.9rem;"></div>
         <center><button class="btn" style="margin-top:20px;" onclick="closeModal()">Close</button></center>
     </div>
 </div>
 
 <div class="container">
-    <div id="page1" class="page active">
-        <h1>Welcome</h1>
-        <p style="color: #888; font-style: italic;">Accessing private server...</p>
-        <button class="btn" onclick="goToPage(2)">Continue</button>
-    </div>
-
-    <div id="page2" class="page">
-        <h2 style="color: #c0392b;">⚠️ Security Alert</h2>
-        <p>Unauthorized entry detected. Confirm identity or exit.</p>
-        <button class="btn" onclick="goToPage(5)">Yes, I’m authorized</button>
-        <button id="exitBtn" class="btn" style="background:#444; position:relative;" onmouseover="moveExitBtn()" onclick="handleExitClick()">No, exit now</button>
-    </div>
-
-    <div id="page3" class="page">
-        <h2 style="color: #c0392b;">CRITICAL ERROR</h2>
-        <p>System breach detected during exit attempt. Sequence reset.</p>
-        <button class="btn" onclick="goToPage(1)">Restart Access</button>
-    </div>
-
-    <div id="page5" class="page">
-        <h2>Identity Check</h2>
-        <p>Identify the person who directed you here:</p>
-        <input type="text" id="refInput" placeholder="Enter Full Name...">
-        <button class="btn" onclick="verifyReferrer()">Verify Access</button>
-    </div>
-
-    <div id="page5b" class="page">
-        <h2 style="color: #27ae60;">Access Granted ✔️</h2>
-        <p>Identity confirmed. This system was built exclusively for you.</p>
-        <button class="btn" onclick="goToPage(8)">Proceed to Memories</button>
-        <button class="btn" onclick="goToPage(7)">Continue Journey</button>
-        <button class="btn" style="background: #e91e63;" onclick="goToPage(15)">Others</button>
-    </div>
-
-    <div id="page6" class="page">
-        <h3>Security Clearance</h3>
-        <p style="color:red; font-size:0.8rem;">Breach detected! Solve to exit safely.</p>
+    <div id="page1" class="page active"><h1>Welcome</h1><p style="color: #888; font-style: italic;">Accessing private server...</p><button class="btn" onclick="goToPage(2)">Continue</button></div>
+    <div id="page2" class="page"><h2>⚠️ Security Alert</h2><p>Unauthorized entry detected. Confirm identity or exit.</p><button class="btn" onclick="goToPage(5)">Yes, I’m authorized</button><button id="exitBtn" class="btn" style="background:#444; position:relative;" onmouseover="moveExitBtn()" onclick="handleExitClick()">No, exit now</button></div>
+    <div id="page3" class="page"><h2>CRITICAL ERROR</h2><p>System breach detected during exit attempt. Sequence reset.</p><button class="btn" onclick="goToPage(1)">Restart Access</button></div>
+    <div id="page5" class="page"><h2>Identity Check</h2><p>Identify the person who directed you here:</p><input type="text" id="refInput" placeholder="Enter Full Name..."><button class="btn" onclick="verifyReferrer()">Verify Access</button></div>
+    <div id="page5b" class="page"><h2 style="color: #27ae60;">Access Granted ✔️</h2><p>Identity confirmed. This system was built exclusively for you.</p><button class="btn" onclick="goToPage(8)">Proceed to Memories</button><button class="btn" onclick="goToPage(7)">Continue Journey</button><button class="btn" style="background: #e91e63;" onclick="goToPage(15)">Discovery Portal</button></div>
+    <div id="page6" class="page"><h3>Security Clearance</h3><p style="color:red; font-size:0.8rem;">Breach detected! Solve to exit safely.</p>
         <div id="qList">
             <div class="q-card"><p>1. Referrer's full name?</p><input type="text" class="quiz-q" data-ans='["hamza malik", "mir hamza malik"]'></div>
             <div class="q-card"><p>2. Where did you first meet? </p><input type="text" class="quiz-q" data-ans='["game", "homescapes", "gangster", "gangster team"]'></div>
@@ -92,46 +58,23 @@
         </div>
         <button class="btn" onclick="validateQuiz()">Leave Portal</button>
     </div>
-
-    <div id="page7" class="page">
-        <h2>⚠ Emotional Firewall</h2>
-        <p>Warning: Proceeding results in extreme happiness.</p>
-        <button class="btn" onclick="goToPage(10)">I accept the risk</button>
-    </div>
-
-    <div id="page8" class="page">
-        <h2>Memory Layer</h2>
+    <div id="page7" class="page"><h2>⚠ Emotional Firewall</h2><p>Warning: Proceeding results in extreme happiness.</p><button class="btn" onclick="goToPage(10)">I accept the risk</button></div>
+    <div id="page8" class="page"><h2>Memory Layer</h2>
         <div class="timeline-card" onclick="showModal('First Connection', 'Some connections don’t start with meetings… they start with time.')">🃏 Card 1 — The Beginning</div>
         <div class="timeline-card" onclick="showModal('The Special Name', 'Gudiya — A name that carries more meaning than a password ever could.')">🃏 Card 2 — Your Identity</div>
         <div class="timeline-card" onclick="showModal('The Choice', 'Not everyone stays. But those who do, change everything. Consistency is what separates a moment from a lifetime.')">🃏 Card 3 — Consistency</div>
         <button class="btn" onclick="goToPage(9)">Next Step</button>
     </div>
-
-    <div id="page9" class="page">
-        <h2>Find the True Signal</h2>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-            <button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-1</button>
-            <button class="btn" style="background:#eee; color:#333;" onclick="signalGame(true)">S-2</button>
-            <button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-3</button>
-        </div>
+    <div id="page9" class="page"><h2>Find the True Signal</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"><button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-1</button><button class="btn" style="background:#eee; color:#333;" onclick="signalGame(true)">S-2</button><button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-3</button></div>
     </div>
-
-    <div id="page10" class="page">
-        <h2>Message Incoming</h2>
-        <p>“Some people choose deeply.”</p>
-        <button class="btn" onclick="goToPage(11)">Open Secure Message</button>
-    </div>
-
-    <div id="page11" class="page">
-        <div class="game-zone"><div id="movingHeart" onclick="catchHeart()">❤️</div></div>
-        <p id="hintText">Catch the heart...</p>
-        <button id="nextWeekBtn" class="btn" style="display:none;" onclick="goToPage(12)">Unlock Valentine Week</button>
-    </div>
+    <div id="page10" class="page"><h2>Message Incoming</h2><p>“Some people choose deeply.”</p><button class="btn" onclick="goToPage(11)">Open Secure Message</button></div>
+    <div id="page11" class="page"><div class="game-zone"><div id="movingHeart" onclick="catchHeart()">❤️</div></div><p id="hintText">Catch the heart...</p><button id="nextWeekBtn" class="btn" style="display:none;" onclick="goToPage(12)">Unlock Valentine Week</button></div>
 
     <div id="page12" class="page">
         <h2>Valentine Week</h2>
         <div class="timeline-card" onclick="showModal('Rose Day', 'Just like a rose adds beauty and fragrance to a garden, you add positivity and light to my life. Every petal represents the respect I have for you.<br><br><b>Happy Rose Day!</b>')">🌹 Rose Day</div>
-        <div class="timeline-card" onclick="showModal('Propose Day', 'I may not say it every day, but I truly appreciate having you in my life. This isn\'t just a day, it\'s a reminder that you are special.<br><br><b>Happy Propose Day.</b>')">💛 Propose Day</div>
+        <div class="timeline-card" onclick="showModal('Propose Day', 'I may not say it every day, but I truly appreciate having you in my life. This isn\'t just a day, it\'s a reminder that you are special.<br><br><b>Happy Propose Day.</b>')">💍 Propose Day</div>
         <div class="timeline-card" onclick="showModal('Chocolate Day', 'Life feels a little sweeter with you around. Just like chocolate makes everything better, your presence makes the days brighter.<br><br><b>Happy Chocolate Day!</b>')">🍫 Chocolate Day</div>
         <div class="timeline-card" onclick="showModal('Teddy Day', 'Just like a teddy brings comfort and a little smile to anyone, I hope today brings you the same warmth and peace.<br><br><b>Happy Teddy Day.</b>')">🧸 Teddy Day</div>
         <div class="timeline-card" onclick="showModal('Promise Day', 'I promise to always respect you, support you, and value the unique bond we share. You can always count on me.<br><br><b>Happy Promise Day.</b>')">💌 Promise Day</div>
@@ -145,26 +88,55 @@
         <button class="btn" onclick="revealSpecialMessage()">❤️ View Special Message</button>
         <div class="comment-box">
             <h3>Leave a Note ✍️</h3>
-            <input type="text" id="visitorName" placeholder="Your Name" style="margin-bottom:8px;">
-            <textarea id="visitorMsg" placeholder="Type your message here..." style="width:100%; height:80px; margin-bottom:8px;"></textarea>
+            <input type="text" id="visitorName" placeholder="Your Name">
+            <textarea id="visitorMsg" placeholder="Type your message here..." style="height:80px;"></textarea>
             <center><button class="btn" onclick="addComment()">Post Comment</button></center>
-            <div id="commentDisplay" style="margin-top: 15px; max-height: 250px; overflow-y: auto;"></div>
+            <div id="commentDisplay" style="margin-top: 15px; max-height: 200px; overflow-y: auto;"></div>
         </div>
+        <button class="btn" style="background:#888;" onclick="goToPage('5b')">Back</button>
     </div>
 
     <div id="page15" class="page">
         <h2>Discovery Portal</h2>
-        <input type="text" id="premiumSearch" class="premium-search" placeholder="Search secrets..." onkeyup="runSearch()">
-        <div id="searchContent" class="empty-zone"><p id="searchText">Page is empty...</p>
-        <div id="secretOption" style="display:none; width:100%;" class="timeline-card" onclick="showModal('Secret Found!', 'You found the hidden path!')">✨ Hidden Treasure Unlocked</div></div>
-        <button class="btn" onclick="goToPage('5b')">Go Back</button>
+        <div style="background:rgba(0,0,0,0.03); padding:15px; border-radius:20px; border:1px solid #ddd;">
+            <div id="statusIndicator" style="text-align:left; font-size:0.7rem; margin-bottom:10px; color:var(--status-blue);">
+                <span class="status-dot" style="background:var(--status-blue);"></span> Status: Waiting...
+            </div>
+            <input type="text" id="premiumSearch" class="premium-search" placeholder="Search Title..." onkeyup="runSearch()">
+            <div id="searchContent"></div>
+        </div>
+        <button class="btn" style="background:#3498db; width:80%; margin-top:15px;" onclick="goToPage(16)">📂 View All Msgs</button>
+        <div class="comment-box" style="border-top:none; background:rgba(212, 175, 55, 0.05); border-radius:20px; padding:15px; margin-top:20px; text-align:left;">
+            <h3>Add New Entry 📝</h3>
+            <input type="text" id="vaultTitle" placeholder="Title">
+            <input type="text" id="vaultName" placeholder="Your Name">
+            <textarea id="vaultMsg" placeholder="Message content..." style="height:70px;"></textarea>
+            <center><button class="btn" style="font-size:0.6rem;" onclick="saveToVault()">Post to Discovery</button></center>
+        </div>
+        <button class="btn" style="background:#888;" onclick="goToPage('5b')">Back</button>
+    </div>
+
+    <div id="page16" class="page">
+        <h2>All Messages</h2>
+        <div id="allMsgsContainer" style="max-height: 450px; overflow-y: auto; padding:10px; background:rgba(0,0,0,0.02); border-radius:20px;"></div>
+        <button class="btn" style="background:#888; margin-top:20px;" onclick="goToPage(15)">Back to Search</button>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    const sheetDbUrl = 'https://sheetdb.io/api/v1/899s7cpds7109'; 
+    const wallApi = 'https://sheetdb.io/api/v1/899s7cpds7109'; 
+    const discoveryApi = 'https://sheetdb.io/api/v1/9eua2hjvu70tw';
     let exitClickCount = 0; let heartInt;
+
+    // SOURCE CODE PRIVACY
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    window.addEventListener('keydown', (e) => {
+        if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+            e.preventDefault();
+            return false;
+        }
+    });
 
     function goToPage(p) {
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
@@ -172,85 +144,62 @@
         if(target) target.classList.add('active');
         if(p === 11) startHeartGame(); else clearInterval(heartInt);
         if(p === 14) loadComments();
+        if(p === 16) loadAllSecrets();
     }
 
     function revealSpecialMessage() {
-        const fullMsg = `“You’re not just anyone… you’re important.” 💛 <br><br>
-        “Every line, every animation, every little detail in this website… was made thinking of you.” <br><br>
-        “It wasn’t just about creating a site… it was about making a journey, a little adventure, a memory… just for you.” <br><br>
-        “I hope you felt the care, the effort, and the thought behind every page.” <br><br>
-        “Because nothing here was random — everything was made to make you smile.” <br><br>
-        “And if it worked… then I’ve done exactly what I wanted.” <br><br>
-        “Thank you for being the reason this exists.” ✨`;
+        const fullMsg = `“You’re not just anyone… you’re important.” 💛 <br><br>“Every line, every animation, every little detail in this website… was made thinking of you.” <br><br>“It wasn’t just about creating a site… it was about making a journey, a little adventure, a memory… just for you.” <br><br>“I hope you felt the care, the effort, and the thought behind every page.” <br><br>“Because nothing here was random — everything was made to make you smile.” <br><br>“And if it worked… then I’ve done exactly what I wanted.” <br><br>“Thank you for being the reason this exists.” ✨`;
         showModal('To My Gudiya', fullMsg);
     }
 
-    function addComment() {
-        const nameVal = document.getElementById('visitorName').value.trim() || "Gudiya";
-        const msgVal = document.getElementById('visitorMsg').value.trim();
-        const timeVal = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
-        
-        if(!msgVal) { alert("Please type a message!"); return; }
-
-        fetch(sheetDbUrl, { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({
-                data: [{
-                    "Name": nameVal,
-                    "Message": msgVal,
-                    "Time": timeVal
-                }]
-            }) 
-        })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('visitorMsg').value = ""; 
-            loadComments();
-        })
-        .catch(err => console.error("Post Error:", err));
+    async function saveToVault() {
+        const t = document.getElementById('vaultTitle').value.trim();
+        const n = document.getElementById('vaultName').value.trim() || "User";
+        const m = document.getElementById('vaultMsg').value.trim();
+        if(!t || !m) return;
+        await fetch(discoveryApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Title:t, Name:n, Message:m, Time:new Date().toLocaleString()}]}) });
+        alert("Posted!"); document.getElementById('vaultTitle').value=""; document.getElementById('vaultMsg').value="";
     }
 
-    function loadComments() {
-        // Cache bypass and fresh load
-        fetch(sheetDbUrl + '?t=' + new Date().getTime())
-        .then(res => res.json())
-        .then(data => {
-            const display = document.getElementById('commentDisplay'); 
-            display.innerHTML = '';
-            if(!data || !Array.isArray(data)) return;
-
-            data.reverse().forEach(item => {
-                const n = item.Name || item.name || "Gudiya";
-                const m = item.Message || item.message || "";
-                const t = item.Time || item.time || "";
-
-                if(m && m !== "---") {
-                    const card = document.createElement('div'); 
-                    card.className = 'q-card';
-                    card.innerHTML = `<b>${n}</b> <span style="float:right; font-size:0.6rem; color:#888;">${t}</span><p style="margin-top:5px;">${m}</p>`;
-                    display.appendChild(card);
-                }
-            });
-        }).catch(err => console.error("Load Error"));
+    async function runSearch() {
+        let input = document.getElementById('premiumSearch').value.toLowerCase().trim();
+        let content = document.getElementById('searchContent');
+        let status = document.getElementById('statusIndicator');
+        if(!input) { content.innerHTML = ""; status.innerHTML = "Status: Waiting..."; return; }
+        const res = await fetch(discoveryApi); const data = await res.json();
+        const results = data.filter(item => item.Title && item.Title.toLowerCase() === input);
+        if(results.length > 0) {
+            status.innerHTML = `<span class="status-dot" style="background:var(--status-green);"></span> ${results.length} Found!`;
+            content.innerHTML = results.map(f => `<div class="q-card" style="border-left:5px solid var(--status-green); background:white;"><small><b>${f.Title}</b></small><p>${f.Message}</p><small style="font-size:0.6rem; color:#999;">${f.Name} | ${f.Time}</small></div>`).join('');
+        } else {
+            status.innerHTML = '<span class="status-dot" style="background:var(--status-blue);"></span> Searching...';
+            content.innerHTML = '<p style="font-size:0.7rem; color:#888;">No match found.</p>';
+        }
     }
 
-    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else showModal('Denied', 'Referrer not recognized.'); }
+    async function loadAllSecrets() {
+        let container = document.getElementById('allMsgsContainer');
+        container.innerHTML = '<p style="font-size:0.8rem; color:#888;">Loading Vault...</p>';
+        const res = await fetch(discoveryApi); const data = await res.json();
+        container.innerHTML = data.reverse().map(item => {
+            const isHamza = item.Name && (item.Name.toLowerCase().includes('hamza') || item.Name.toLowerCase().includes('malik'));
+            const boxColor = isHamza ? 'var(--status-green)' : 'var(--status-blue)';
+            return `<div class="q-card" style="border-left:5px solid ${boxColor}; background:white; margin-bottom:15px; border-radius:15px;"><div style="font-size:0.6rem; color:${boxColor}; font-weight:bold; margin-bottom:3px;">${item.Title ? item.Title.toUpperCase() : 'NO TITLE'}</div><p style="font-size:0.85rem; margin-bottom:5px;">${item.Message}</p><div style="font-size:0.6rem; color:#888; border-top:1px solid #f0f0f0; padding-top:3px;">By: ${item.Name} | ${item.Time}</div></div>`;
+        }).join('');
+    }
+
+    function addComment() { const n = document.getElementById('visitorName').value || "Gudiya"; const m = document.getElementById('visitorMsg').value; if(!m) return; fetch(wallApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Name:n, Message:m, Time:new Date().toLocaleString()}]}) }).then(() => { document.getElementById('visitorMsg').value = ""; loadComments(); }); }
+    function loadComments() { fetch(wallApi + '?t=' + Date.now()).then(res => res.json()).then(data => { const display = document.getElementById('commentDisplay'); display.innerHTML = ''; data.reverse().forEach(item => { const card = document.createElement('div'); card.className = 'q-card'; card.innerHTML = `<b>${item.Name}</b> <span style="float:right; font-size:0.6rem; color:#888;">${item.Time}</span><p>${item.Message}</p>`; display.appendChild(card); }); }); }
+    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else showModal('Denied', 'Try again.'); }
     function startHeartGame() { const h = document.getElementById('movingHeart'); heartInt = setInterval(() => { h.style.left = Math.random()*85+'%'; h.style.top = Math.random()*85+'%'; }, 750); }
-    function catchHeart() { clearInterval(heartInt); document.getElementById('nextWeekBtn').style.display = 'inline-block'; showModal('Sync Success', '“You didn’t chase. You waited. That is why it stayed.”'); }
+    function catchHeart() { clearInterval(heartInt); document.getElementById('nextWeekBtn').style.display = 'inline-block'; showModal('Sync Success', '“You caught my heart.”'); }
     function showModal(title, body) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerHTML = body; document.getElementById('customModal').style.display = 'flex'; }
     function closeModal() { document.getElementById('customModal').style.display = 'none'; }
     function moveExitBtn() { const btn = document.getElementById('exitBtn'); btn.style.left = Math.random()*70+'%'; btn.style.top = Math.random()*70+'%'; }
     function handleExitClick() { exitClickCount++; if(exitClickCount >= 8) goToPage(6); else if(exitClickCount % 3 === 0) goToPage(3); }
-    function validateQuiz() { let c = 0; document.querySelectorAll('.quiz-q').forEach(i => { if(JSON.parse(i.getAttribute('data-ans')).includes(i.value.toLowerCase().trim())) c++; }); if(c===7) { alert("Verification Complete!"); goToPage(1); } else showModal('Failed', 'Incorrect answers.'); }
+    function validateQuiz() { let c = 0; document.querySelectorAll('.quiz-q').forEach(i => { if(JSON.parse(i.getAttribute('data-ans')).includes(i.value.toLowerCase().trim())) c++; }); if(c===7) goToPage(1); else showModal('Failed', 'Incorrect.'); }
     function signalGame(correct) { if(correct) goToPage(11); else showModal('Error', 'Try S-2.'); }
-    function runSearch() {
-        let input = document.getElementById('premiumSearch').value.toLowerCase().trim();
-        let text = document.getElementById('searchText'); let secret = document.getElementById('secretOption');
-        if(input === "hamza" || input === "gudiya") { secret.style.display = "block"; text.style.display = "none"; }
-        else { secret.style.display = "none"; text.style.display = "block"; text.innerText = input ? "No results found." : "Page is empty..."; }
-    }
-    
+
     particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "shape": { "type": "heart" }, "color": { "value": "#d4af37" }, "opacity": { "value": 0.3 }, "size": { "value": 4 }, "move": { "enable": true, "speed": 1 } } });
 </script>
 </body>

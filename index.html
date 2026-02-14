@@ -12,7 +12,7 @@
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none; }
         .container { width: 95%; max-width: 550px; background: var(--glass); backdrop-filter: blur(20px); padding: 35px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.1); text-align: center; z-index: 10; position: relative; max-height: 92vh; overflow-y: auto; }
         .page { display: none; animation: fadeIn 0.8s ease forwards; }
-        .active { display: block; }
+        .active { display: block !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         h1, h2, h3 { font-family: 'Playfair Display', serif; margin-bottom: 20px; color: #1a1a1a; }
         .btn { background: var(--gold); color: white; padding: 14px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; margin: 10px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: inline-block; position: relative; z-index: 20; }
@@ -20,7 +20,9 @@
         .premium-search { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2.5px solid var(--gold); background: white; outline: none; text-align: center; font-weight: 600; margin-bottom: 10px; }
         #customModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .modal-content { background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 25px; border: 1px solid var(--gold); overflow-y: auto; max-height: 80vh; text-align: left; }
-        .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
+        .q-card { background: rgba(0,0,0,0.03); padding: 15px; margin-bottom: 10px; border-radius: 12px; text-align: left; border-left: 5px solid var(--gold); word-wrap: break-word; position: relative; }
+        .del-icon { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 0.8rem; opacity: 0.4; transition: 0.3s; color: #e74c3c; }
+        .del-icon:hover { opacity: 1; transform: scale(1.2); }
         input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: 'Poppins'; margin-bottom: 10px; }
         .timeline-card { background: white; border: 1px solid var(--gold); padding: 15px; margin: 10px 0; border-radius: 15px; cursor: pointer; transition: 0.3s; }
         .game-zone { height: 250px; position: relative; background: rgba(0,0,0,0.02); border-radius: 20px; overflow: hidden; margin: 20px 0; border: 1px solid #eee; }
@@ -41,12 +43,43 @@
 </div>
 
 <div class="container">
-    <div id="page1" class="page active"><h1>Welcome</h1><p style="color: #888; font-style: italic;">Accessing private server...</p><button class="btn" onclick="goToPage(2)">Continue</button></div>
-    <div id="page2" class="page"><h2>⚠️ Security Alert</h2><p>Unauthorized entry detected. Confirm identity or exit.</p><button class="btn" onclick="goToPage(5)">Yes, I’m authorized</button><button id="exitBtn" class="btn" style="background:#444; position:relative;" onmouseover="moveExitBtn()" onclick="handleExitClick()">No, exit now</button></div>
-    <div id="page3" class="page"><h2>CRITICAL ERROR</h2><p>System breach detected during exit attempt. Sequence reset.</p><button class="btn" onclick="goToPage(1)">Restart Access</button></div>
-    <div id="page5" class="page"><h2>Identity Check</h2><p>Identify the person who directed you here:</p><input type="text" id="refInput" placeholder="Enter Full Name..."><button class="btn" onclick="verifyReferrer()">Verify Access</button></div>
-    <div id="page5b" class="page"><h2 style="color: #27ae60;">Access Granted ✔️</h2><p>Identity confirmed. This system was built exclusively for you.</p><button class="btn" onclick="goToPage(8)">Proceed to Memories</button><button class="btn" onclick="goToPage(7)">Continue Journey</button><button class="btn" style="background: #e91e63;" onclick="goToPage(15)">Discovery Portal</button></div>
-    <div id="page6" class="page"><h3>Security Clearance</h3><p style="color:red; font-size:0.8rem;">Breach detected! Solve to exit safely.</p>
+    <div id="page1" class="page active">
+        <h1>Welcome</h1>
+        <p style="color: #888; font-style: italic;">Accessing private server...</p>
+        <button class="btn" onclick="goToPage(2)">Continue</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h2>⚠️ Security Alert</h2>
+        <p>Unauthorized entry detected. Confirm identity or exit.</p>
+        <button class="btn" onclick="goToPage(5)">Yes, I’m authorized</button>
+        <button id="exitBtn" class="btn" style="background:#444;" onmouseover="moveExitBtn()" onclick="handleExitClick()">No, exit now</button>
+    </div>
+
+    <div id="page3" class="page">
+        <h2>CRITICAL ERROR</h2>
+        <p>System breach detected. Sequence reset.</p>
+        <button class="btn" onclick="goToPage(1)">Restart Access</button>
+    </div>
+
+    <div id="page5" class="page">
+        <h2>Identity Check</h2>
+        <p>Identify the person who directed you here:</p>
+        <input type="text" id="refInput" placeholder="Enter Full Name...">
+        <button class="btn" onclick="verifyReferrer()">Verify Access</button>
+    </div>
+
+    <div id="page5b" class="page">
+        <h2 style="color: #27ae60;">Access Granted ✔️</h2>
+        <p>This system was built exclusively for you.</p>
+        <button class="btn" onclick="goToPage(8)">Proceed to Memories</button>
+        <button class="btn" onclick="goToPage(7)">Continue Journey</button>
+        <button class="btn" style="background: #e91e63;" onclick="goToPage(15)">Discovery Portal</button>
+    </div>
+
+    <div id="page6" class="page">
+        <h3>Security Clearance</h3>
+        <p style="color:red; font-size:0.8rem;">Breach detected! Solve to exit safely.</p>
         <div id="qList">
             <div class="q-card"><p>1. Referrer's full name?</p><input type="text" class="quiz-q" data-ans='["hamza malik", "mir hamza malik"]'></div>
             <div class="q-card"><p>2. Where did you first meet? </p><input type="text" class="quiz-q" data-ans='["game", "homescapes", "gangster", "gangster team"]'></div>
@@ -58,26 +91,49 @@
         </div>
         <button class="btn" onclick="validateQuiz()">Leave Portal</button>
     </div>
-    <div id="page7" class="page"><h2>⚠ Emotional Firewall</h2><p>Warning: Proceeding results in extreme happiness.</p><button class="btn" onclick="goToPage(10)">I accept the risk</button></div>
-    <div id="page8" class="page"><h2>Memory Layer</h2>
-        <div class="timeline-card" onclick="showModal('First Connection', 'Some connections don’t start with meetings… they start with time.')">🃏 Card 1 — The Beginning</div>
-        <div class="timeline-card" onclick="showModal('The Special Name', 'Gudiya — A name that carries more meaning than a password ever could.')">🃏 Card 2 — Your Identity</div>
-        <div class="timeline-card" onclick="showModal('The Choice', 'Not everyone stays. But those who do, change everything. Consistency is what separates a moment from a lifetime.')">🃏 Card 3 — Consistency</div>
+
+    <div id="page7" class="page">
+        <h2>⚠ Emotional Firewall</h2>
+        <p>Warning: Proceeding results in extreme happiness.</p>
+        <button class="btn" onclick="goToPage(10)">I accept the risk</button>
+    </div>
+
+    <div id="page8" class="page">
+        <h2>Memory Layer</h2>
+        <div class="timeline-card" onclick="showModal(`First Connection`, `Some connections don’t start with meetings… they start with time. It’s about how someone stays when everyone else is leaving.`)">🃏 Card 1 — The Beginning</div>
+        <div class="timeline-card" onclick="showModal(`The Special Name`, `Gudiya — A name that carries more meaning than a password ever could. It’s not just a word; it’s a feeling of home.`)">🃏 Card 2 — Your Identity</div>
+        <div class="timeline-card" onclick="showModal(`The Choice`, `Not everyone stays. But those who do, change everything. Consistency is what separates a moment from a lifetime.`)">🃏 Card 3 — Consistency</div>
         <button class="btn" onclick="goToPage(9)">Next Step</button>
     </div>
-    <div id="page9" class="page"><h2>Find the True Signal</h2>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"><button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-1</button><button class="btn" style="background:#eee; color:#333;" onclick="signalGame(true)">S-2</button><button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-3</button></div>
+
+    <div id="page9" class="page">
+        <h2>Find the True Signal</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-1</button>
+            <button class="btn" style="background:#eee; color:#333;" onclick="signalGame(true)">S-2</button>
+            <button class="btn" style="background:#eee; color:#333;" onclick="signalGame(false)">S-3</button>
+        </div>
     </div>
-    <div id="page10" class="page"><h2>Message Incoming</h2><p>“Some people choose deeply.”</p><button class="btn" onclick="goToPage(11)">Open Secure Message</button></div>
-    <div id="page11" class="page"><div class="game-zone"><div id="movingHeart" onclick="catchHeart()">❤️</div></div><p id="hintText">Catch the heart...</p><button id="nextWeekBtn" class="btn" style="display:none;" onclick="goToPage(12)">Unlock Valentine Week</button></div>
+
+    <div id="page10" class="page">
+        <h2>Message Incoming</h2>
+        <p>“Some people choose deeply.”</p>
+        <button class="btn" onclick="goToPage(11)">Open Secure Message</button>
+    </div>
+
+    <div id="page11" class="page">
+        <div class="game-zone"><div id="movingHeart" onclick="catchHeart()">❤️</div></div>
+        <p id="hintText">Catch the heart...</p>
+        <button id="nextWeekBtn" class="btn" style="display:none;" onclick="goToPage(12)">Unlock Valentine Week</button>
+    </div>
 
     <div id="page12" class="page">
         <h2>Valentine Week</h2>
-        <div class="timeline-card" onclick="showModal('Rose Day', 'Just like a rose adds beauty and fragrance to a garden, you add positivity and light to my life. Every petal represents the respect I have for you.<br><br><b>Happy Rose Day!</b>')">🌹 Rose Day</div>
-        <div class="timeline-card" onclick="showModal('Propose Day', 'I may not say it every day, but I truly appreciate having you in my life. This isn\'t just a day, it\'s a reminder that you are special.<br><br><b>Happy Propose Day.</b>')">💍 Propose Day</div>
-        <div class="timeline-card" onclick="showModal('Chocolate Day', 'Life feels a little sweeter with you around. Just like chocolate makes everything better, your presence makes the days brighter.<br><br><b>Happy Chocolate Day!</b>')">🍫 Chocolate Day</div>
-        <div class="timeline-card" onclick="showModal('Teddy Day', 'Just like a teddy brings comfort and a little smile to anyone, I hope today brings you the same warmth and peace.<br><br><b>Happy Teddy Day.</b>')">🧸 Teddy Day</div>
-        <div class="timeline-card" onclick="showModal('Promise Day', 'I promise to always respect you, support you, and value the unique bond we share. You can always count on me.<br><br><b>Happy Promise Day.</b>')">💌 Promise Day</div>
+        <div class="timeline-card" onclick="showModal(`Rose Day`, `Just like a rose adds beauty and fragrance to a garden, you add positivity and light to my life. Every petal represents the respect I have for you.<br><br><b>Happy Rose Day!</b>`)">🌹 Rose Day</div>
+        <div class="timeline-card" onclick="showModal(`Propose Day`, `I may not say it every day, but I truly appreciate having you in my life. This isn't just a day, it's a reminder that you are special and I want you to stay.<br><br><b>Happy Propose Day.</b>`)">💍 Propose Day</div>
+        <div class="timeline-card" onclick="showModal(`Chocolate Day`, `Life feels a little sweeter with you around. Just like chocolate makes everything better, your presence makes even the dullest days brighter.<br><br><b>Happy Chocolate Day!</b>`)">🍫 Chocolate Day</div>
+        <div class="timeline-card" onclick="showModal(`Teddy Day`, `Just like a teddy brings comfort and a little smile to anyone, I hope today brings you the same warmth and peace. You deserve all the softness in the world.<br><br><b>Happy Teddy Day.</b>`)">🧸 Teddy Day</div>
+        <div class="timeline-card" onclick="showModal(`Promise Day`, `I promise to always respect you, support you, and value the unique bond we share. You can always count on me, no matter what.<br><br><b>Happy Promise Day.</b>`)">💌 Promise Day</div>
         <div class="timeline-card" style="opacity:0.6; cursor:not-allowed;">🔒 Hug Day (Locked)</div>
         <div class="timeline-card" style="opacity:0.6; cursor:not-allowed;">🔒 Kiss Day (Locked)</div>
         <button class="btn" onclick="goToPage(14)">Final Surprise</button>
@@ -99,18 +155,14 @@
     <div id="page15" class="page">
         <h2>Discovery Portal</h2>
         <div style="background:rgba(0,0,0,0.03); padding:15px; border-radius:20px; border:1px solid #ddd;">
-            <div id="statusIndicator" style="text-align:left; font-size:0.7rem; margin-bottom:10px; color:var(--status-blue);">
-                <span class="status-dot" style="background:var(--status-blue);"></span> Status: Waiting...
-            </div>
+            <div id="statusIndicator" style="text-align:left; font-size:0.7rem; margin-bottom:10px; color:var(--status-blue);"><span class="status-dot" style="background:var(--status-blue);"></span> Status: Waiting...</div>
             <input type="text" id="premiumSearch" class="premium-search" placeholder="Search Title..." onkeyup="runSearch()">
             <div id="searchContent"></div>
         </div>
         <button class="btn" style="background:#3498db; width:80%; margin-top:15px;" onclick="goToPage(16)">📂 View All Msgs</button>
-        <div class="comment-box" style="border-top:none; background:rgba(212, 175, 55, 0.05); border-radius:20px; padding:15px; margin-top:20px; text-align:left;">
+        <div class="comment-box" style="margin-top:20px; text-align:left;">
             <h3>Add New Entry 📝</h3>
-            <input type="text" id="vaultTitle" placeholder="Title">
-            <input type="text" id="vaultName" placeholder="Your Name">
-            <textarea id="vaultMsg" placeholder="Message content..." style="height:70px;"></textarea>
+            <input type="text" id="vaultTitle" placeholder="Title"><input type="text" id="vaultName" placeholder="Your Name"><textarea id="vaultMsg" placeholder="Message content..." style="height:70px;"></textarea>
             <center><button class="btn" style="font-size:0.6rem;" onclick="saveToVault()">Post to Discovery</button></center>
         </div>
         <button class="btn" style="background:#888;" onclick="goToPage('5b')">Back</button>
@@ -118,8 +170,8 @@
 
     <div id="page16" class="page">
         <h2>All Messages</h2>
-        <div id="allMsgsContainer" style="max-height: 450px; overflow-y: auto; padding:10px; background:rgba(0,0,0,0.02); border-radius:20px;"></div>
-        <button class="btn" style="background:#888; margin-top:20px;" onclick="goToPage(15)">Back to Search</button>
+        <div id="allMsgsContainer" style="max-height: 450px; overflow-y: auto; padding:10px;"></div>
+        <button class="btn" style="background:#888; margin-top:20px;" onclick="goToPage(15)">Back</button>
     </div>
 </div>
 
@@ -129,23 +181,16 @@
     const discoveryApi = 'https://sheetdb.io/api/v1/9eua2hjvu70tw';
     let exitClickCount = 0; let heartInt;
 
-    // SOURCE CODE PRIVACY
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    window.addEventListener('keydown', (e) => {
-        if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
     function goToPage(p) {
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         const target = document.getElementById('page' + p);
         if(target) target.classList.add('active');
-        if(p === 11) startHeartGame(); else clearInterval(heartInt);
-        if(p === 14) loadComments();
-        if(p === 16) loadAllSecrets();
+        if(p == 11) startHeartGame(); else clearInterval(heartInt);
+        if(p == 14) loadComments();
+        if(p == 16) loadAllSecrets();
     }
+
+    function removeThisCard(btn) { btn.parentElement.remove(); }
 
     function revealSpecialMessage() {
         const fullMsg = `“You’re not just anyone… you’re important.” 💛 <br><br>“Every line, every animation, every little detail in this website… was made thinking of you.” <br><br>“It wasn’t just about creating a site… it was about making a journey, a little adventure, a memory… just for you.” <br><br>“I hope you felt the care, the effort, and the thought behind every page.” <br><br>“Because nothing here was random — everything was made to make you smile.” <br><br>“And if it worked… then I’ve done exactly what I wanted.” <br><br>“Thank you for being the reason this exists.” ✨`;
@@ -170,35 +215,37 @@
         const results = data.filter(item => item.Title && item.Title.toLowerCase() === input);
         if(results.length > 0) {
             status.innerHTML = `<span class="status-dot" style="background:var(--status-green);"></span> ${results.length} Found!`;
-            content.innerHTML = results.map(f => `<div class="q-card" style="border-left:5px solid var(--status-green); background:white;"><small><b>${f.Title}</b></small><p>${f.Message}</p><small style="font-size:0.6rem; color:#999;">${f.Name} | ${f.Time}</small></div>`).join('');
-        } else {
-            status.innerHTML = '<span class="status-dot" style="background:var(--status-blue);"></span> Searching...';
-            content.innerHTML = '<p style="font-size:0.7rem; color:#888;">No match found.</p>';
-        }
+            content.innerHTML = results.map(f => `<div class="q-card"><span class="del-icon" onclick="removeThisCard(this)">🗑️</span><small><b>${f.Title}</b></small><p>${f.Message}</p></div>`).join('');
+        } else { status.innerHTML = 'Searching...'; }
     }
 
     async function loadAllSecrets() {
-        let container = document.getElementById('allMsgsContainer');
-        container.innerHTML = '<p style="font-size:0.8rem; color:#888;">Loading Vault...</p>';
+        let container = document.getElementById('allMsgsContainer'); container.innerHTML = '<p>Loading Vault...</p>';
         const res = await fetch(discoveryApi); const data = await res.json();
-        container.innerHTML = data.reverse().map(item => {
-            const isHamza = item.Name && (item.Name.toLowerCase().includes('hamza') || item.Name.toLowerCase().includes('malik'));
-            const boxColor = isHamza ? 'var(--status-green)' : 'var(--status-blue)';
-            return `<div class="q-card" style="border-left:5px solid ${boxColor}; background:white; margin-bottom:15px; border-radius:15px;"><div style="font-size:0.6rem; color:${boxColor}; font-weight:bold; margin-bottom:3px;">${item.Title ? item.Title.toUpperCase() : 'NO TITLE'}</div><p style="font-size:0.85rem; margin-bottom:5px;">${item.Message}</p><div style="font-size:0.6rem; color:#888; border-top:1px solid #f0f0f0; padding-top:3px;">By: ${item.Name} | ${item.Time}</div></div>`;
-        }).join('');
+        container.innerHTML = data.reverse().map(item => `<div class="q-card"><span class="del-icon" onclick="removeThisCard(this)">🗑️</span><b>${item.Title}</b><p>${item.Message}</p><small>${item.Name} | ${item.Time}</small></div>`).join('');
     }
 
-    function addComment() { const n = document.getElementById('visitorName').value || "Gudiya"; const m = document.getElementById('visitorMsg').value; if(!m) return; fetch(wallApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Name:n, Message:m, Time:new Date().toLocaleString()}]}) }).then(() => { document.getElementById('visitorMsg').value = ""; loadComments(); }); }
-    function loadComments() { fetch(wallApi + '?t=' + Date.now()).then(res => res.json()).then(data => { const display = document.getElementById('commentDisplay'); display.innerHTML = ''; data.reverse().forEach(item => { const card = document.createElement('div'); card.className = 'q-card'; card.innerHTML = `<b>${item.Name}</b> <span style="float:right; font-size:0.6rem; color:#888;">${item.Time}</span><p>${item.Message}</p>`; display.appendChild(card); }); }); }
-    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else showModal('Denied', 'Try again.'); }
+    function addComment() { 
+        const n = document.getElementById('visitorName').value || "Gudiya"; const m = document.getElementById('visitorMsg').value; if(!m) return;
+        fetch(wallApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Name:n, Message:m, Time:new Date().toLocaleString()}]}) }).then(() => { document.getElementById('visitorMsg').value = ""; loadComments(); }); 
+    }
+
+    function loadComments() { 
+        fetch(wallApi + '?t=' + Date.now()).then(res => res.json()).then(data => { 
+            const display = document.getElementById('commentDisplay'); display.innerHTML = ''; 
+            data.reverse().forEach(item => { const card = document.createElement('div'); card.className = 'q-card'; card.innerHTML = `<span class="del-icon" onclick="removeThisCard(this)">🗑️</span><b>${item.Name}</b><p>${item.Message}</p>`; display.appendChild(card); }); 
+        }); 
+    }
+
+    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else alert('Denied'); }
     function startHeartGame() { const h = document.getElementById('movingHeart'); heartInt = setInterval(() => { h.style.left = Math.random()*85+'%'; h.style.top = Math.random()*85+'%'; }, 750); }
-    function catchHeart() { clearInterval(heartInt); document.getElementById('nextWeekBtn').style.display = 'inline-block'; showModal('Sync Success', '“You caught my heart.”'); }
+    function catchHeart() { clearInterval(heartInt); document.getElementById('nextWeekBtn').style.display = 'inline-block'; showModal('Caught!', 'You caught my heart.'); }
     function showModal(title, body) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerHTML = body; document.getElementById('customModal').style.display = 'flex'; }
     function closeModal() { document.getElementById('customModal').style.display = 'none'; }
-    function moveExitBtn() { const btn = document.getElementById('exitBtn'); btn.style.left = Math.random()*70+'%'; btn.style.top = Math.random()*70+'%'; }
+    function moveExitBtn() { const btn = document.getElementById('exitBtn'); btn.style.position='absolute'; btn.style.left = Math.random()*70+'%'; btn.style.top = Math.random()*70+'%'; }
     function handleExitClick() { exitClickCount++; if(exitClickCount >= 8) goToPage(6); else if(exitClickCount % 3 === 0) goToPage(3); }
-    function validateQuiz() { let c = 0; document.querySelectorAll('.quiz-q').forEach(i => { if(JSON.parse(i.getAttribute('data-ans')).includes(i.value.toLowerCase().trim())) c++; }); if(c===7) goToPage(1); else showModal('Failed', 'Incorrect.'); }
-    function signalGame(correct) { if(correct) goToPage(11); else showModal('Error', 'Try S-2.'); }
+    function validateQuiz() { let c = 0; document.querySelectorAll('.quiz-q').forEach(i => { if(JSON.parse(i.getAttribute('data-ans')).includes(i.value.toLowerCase().trim())) c++; }); if(c===7) goToPage(1); else alert('Failed'); }
+    function signalGame(correct) { if(correct) goToPage(11); else alert('Try S-2'); }
 
     particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "shape": { "type": "heart" }, "color": { "value": "#d4af37" }, "opacity": { "value": 0.3 }, "size": { "value": 4 }, "move": { "enable": true, "speed": 1 } } });
 </script>

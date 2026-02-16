@@ -179,15 +179,27 @@
     const discoveryApi = 'https://sheetdb.io/api/v1/9eua2hjvu70tw';
     let exitClickCount = 0; let heartInt;
 
-    // --- Permanent Delete Logic ---
-    function getHiddenCards() { return JSON.parse(localStorage.getItem('deleted_cards') || '[]'); }
-
-    function hideCardPermanently(btn, key) {
-        if(confirm("Are you sure you want to delete this permanently from your view?")) {
-            let hidden = getHiddenCards();
-            hidden.push(key);
-            localStorage.setItem('deleted_cards', JSON.stringify(hidden));
-            btn.parentElement.remove();
+    // --- REAL PERMANENT DELETE (From Database) ---
+    async function deleteFromDb(api, column, value, element) {
+        if(!confirm("Are you sure? This will delete the message for EVERYONE hamesha ke liye.")) return;
+        
+        element.style.opacity = "0.3"; // Visual feedback
+        try {
+            const res = await fetch(`${api}/${column}/${value}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await res.json();
+            if(result.deleted > 0) {
+                element.remove();
+                alert("Deleted for everyone!");
+            } else {
+                alert("Could not delete. Try again.");
+                element.style.opacity = "1";
+            }
+        } catch (e) {
+            alert("Error connecting to server.");
+            element.style.opacity = "1";
         }
     }
 
@@ -209,8 +221,9 @@
         const t = document.getElementById('vaultTitle').value.trim();
         const n = document.getElementById('vaultName').value.trim() || "User";
         const m = document.getElementById('vaultMsg').value.trim();
+        const timeKey = Date.now().toString(); // Unique key for deletion
         if(!t || !m) return;
-        await fetch(discoveryApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Title:t, Name:n, Message:m, Time:new Date().toLocaleString()}]}) });
+        await fetch(discoveryApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Title:t, Name:n, Message:m, Time:timeKey}]}) });
         alert("Posted!"); document.getElementById('vaultTitle').value=""; document.getElementById('vaultMsg').value="";
     }
 
@@ -219,44 +232,43 @@
         let content = document.getElementById('searchContent');
         if(!input) { content.innerHTML = ""; return; }
         const res = await fetch(discoveryApi); const data = await res.json();
-        const hidden = getHiddenCards();
         const results = data.filter(item => item.Title && item.Title.toLowerCase().includes(input));
-        content.innerHTML = results.map(f => {
-            const key = f.Title + f.Time;
-            if(hidden.includes(key)) return '';
-            return `<div class="q-card"><span class="del-icon" onclick="hideCardPermanently(this, '${key}')">🗑️</span><small><b>${f.Title}</b></small><p>${f.Message}</p></div>`;
-        }).join('');
+        content.innerHTML = results.map(f => `
+            <div class="q-card">
+                <span class="del-icon" onclick="deleteFromDb(discoveryApi, 'Time', '${f.Time}', this.parentElement)">🗑️</span>
+                <small><b>${f.Title}</b></small><p>${f.Message}</p>
+            </div>`).join('');
     }
 
     async function loadAllSecrets() {
         let container = document.getElementById('allMsgsContainer'); container.innerHTML = '<p>Loading Vault...</p>';
         const res = await fetch(discoveryApi); const data = await res.json();
-        const hidden = getHiddenCards();
-        container.innerHTML = data.reverse().map(item => {
-            const key = item.Title + item.Time;
-            if(hidden.includes(key)) return '';
-            return `<div class="q-card"><span class="del-icon" onclick="hideCardPermanently(this, '${key}')">🗑️</span><b>${item.Title}</b><p>${item.Message}</p><small>${item.Name} | ${item.Time}</small></div>`;
-        }).join('');
+        container.innerHTML = data.reverse().map(item => `
+            <div class="q-card">
+                <span class="del-icon" onclick="deleteFromDb(discoveryApi, 'Time', '${item.Time}', this.parentElement)">🗑️</span>
+                <b>${item.Title}</b><p>${item.Message}</p><small>${item.Name}</small>
+            </div>`).join('');
     }
 
-    function addComment() { 
-        const n = document.getElementById('visitorName').value || "Gudiya"; const m = document.getElementById('visitorMsg').value; if(!m) return;
-        fetch(wallApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Name:n, Message:m, Time:new Date().toLocaleString()}]}) }).then(() => { document.getElementById('visitorMsg').value = ""; loadComments(); }); 
+    async function addComment() { 
+        const n = document.getElementById('visitorName').value || "Gudiya"; 
+        const m = document.getElementById('visitorMsg').value; 
+        const timeKey = Date.now().toString();
+        if(!m) return;
+        await fetch(wallApi, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({data:[{Name:n, Message:m, Time:timeKey}]}) });
+        document.getElementById('visitorMsg').value = ""; 
+        loadComments();
     }
 
-    function loadComments() { 
-        fetch(wallApi + '?t=' + Date.now()).then(res => res.json()).then(data => { 
-            const display = document.getElementById('commentDisplay'); display.innerHTML = '';
-            const hidden = getHiddenCards();
-            data.reverse().forEach(item => { 
-                const key = item.Name + item.Time;
-                if(!hidden.includes(key)) {
-                    const card = document.createElement('div'); card.className = 'q-card'; 
-                    card.innerHTML = `<span class="del-icon" onclick="hideCardPermanently(this, '${key}')">🗑️</span><b>${item.Name}</b><p>${item.Message}</p>`; 
-                    display.appendChild(card); 
-                }
-            }); 
-        }); 
+    async function loadComments() { 
+        const res = await fetch(wallApi + '?t=' + Date.now());
+        const data = await res.json();
+        const display = document.getElementById('commentDisplay'); 
+        display.innerHTML = data.reverse().map(item => `
+            <div class="q-card">
+                <span class="del-icon" onclick="deleteFromDb(wallApi, 'Time', '${item.Time}', this.parentElement)">🗑️</span>
+                <b>${item.Name}</b><p>${item.Message}</p>
+            </div>`).join('');
     }
 
     function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else alert('Denied'); }
@@ -272,4 +284,4 @@
     particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "shape": { "type": "heart" }, "color": { "value": "#d4af37" }, "opacity": { "value": 0.3 }, "size": { "value": 4 }, "move": { "enable": true, "speed": 1 } } });
 </script>
 </body>
-        </html>
+    </html>

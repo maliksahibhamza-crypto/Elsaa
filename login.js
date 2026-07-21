@@ -39,7 +39,7 @@ onAuthStateChanged(auth, (user) => {
 
     if (user) {
 
-        window.location.href = "account.html";
+        window.location.href = "accounts.html";
 
     }
 
@@ -105,7 +105,7 @@ const pass = password.value.trim();
 
         alert("Login Successful!");
 
-        window.location.href = "account.html";
+        window.location.href = "accounts.html";
 
     } catch (error) {
 

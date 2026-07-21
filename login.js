@@ -1,4 +1,16 @@
 // ===============================
+// Firebase Imports
+// ===============================
+
+import { auth } from "./firebase-config.js";
+
+import {
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+// ===============================
 // Loading Screen
 // ===============================
 
@@ -9,7 +21,9 @@ window.addEventListener("load", () => {
         document.getElementById("loading-screen").style.opacity = "0";
 
         setTimeout(() => {
+
             document.getElementById("loading-screen").style.display = "none";
+
         }, 800);
 
     }, 1500);
@@ -17,70 +31,142 @@ window.addEventListener("load", () => {
 });
 
 // ===============================
-// Password Show / Hide
+// Auto Login Check
 // ===============================
 
-const password = document.getElementById("password");
-const toggle = document.getElementById("togglePassword");
+onAuthStateChanged(auth, (user) => {
 
-toggle.addEventListener("click", () => {
+    if (user) {
 
-    if (password.type === "password") {
-
-        password.type = "text";
-
-        toggle.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-
-    } else {
-
-        password.type = "password";
-
-        toggle.innerHTML = '<i class="fa-solid fa-eye"></i>';
+        window.location.href = "account.html";
 
     }
 
 });
 
 // ===============================
-// Login
+// Password Toggle
+// ===============================
+
+const password = document.getElementById("password");
+
+const togglePassword = document.getElementById("togglePassword");
+
+togglePassword.addEventListener("click", () => {
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        togglePassword.innerHTML =
+            '<i class="fa-solid fa-eye-slash"></i>';
+
+    } else {
+
+        password.type = "password";
+
+        togglePassword.innerHTML =
+            '<i class="fa-solid fa-eye"></i>';
+
+    }
+
+});
+
+// ===============================
+// Form
 // ===============================
 
 const form = document.getElementById("loginForm");
 const button = document.getElementById("loginBtn");
+// ===============================
+// Login
+// ===============================
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("username").value.trim();
     const pass = password.value.trim();
 
-    if(username === "" || pass === ""){
+    if (email === "" || pass === "") {
 
         alert("Please fill all fields.");
-
         return;
 
     }
 
-    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging In...';
-
     button.disabled = true;
+    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
 
-    setTimeout(()=>{
+    try {
 
-        button.innerHTML = "Redirecting...";
+        await signInWithEmailAndPassword(auth, email, pass);
 
-    },1000);
-
-    setTimeout(()=>{
-
-        // Future:
-        // Replace account.html with Firebase Login
+        alert("Login Successful!");
 
         window.location.href = "account.html";
 
-    },2000);
+    } catch (error) {
+
+        switch (error.code) {
+
+            case "auth/user-not-found":
+                alert("Account not found.");
+                break;
+
+            case "auth/invalid-credential":
+                alert("Incorrect email or password.");
+                break;
+
+            case "auth/wrong-password":
+                alert("Incorrect password.");
+                break;
+
+            case "auth/invalid-email":
+                alert("Invalid email address.");
+                break;
+
+            default:
+                alert(error.message);
+
+        }
+
+        button.disabled = false;
+        button.innerHTML = "Login";
+
+    }
+
+});
+
+// ===============================
+// Forgot Password
+// ===============================
+
+document.getElementById("forgotPassword").addEventListener("click", async (e) => {
+
+    e.preventDefault();
+
+    const email = document.getElementById("username").value.trim();
+
+    if (email === "") {
+
+        alert("Please enter your email first.");
+        return;
+
+    }
+
+    try {
+
+        await sendPasswordResetEmail(auth, email);
+
+        alert("Password reset email has been sent.");
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
 
 });
 
@@ -88,9 +174,9 @@ form.addEventListener("submit", function(e){
 // Enter Key Support
 // ===============================
 
-document.addEventListener("keydown",(e)=>{
+document.addEventListener("keydown", (e) => {
 
-    if(e.key==="Enter"){
+    if (e.key === "Enter") {
 
         form.requestSubmit();
 
@@ -102,33 +188,33 @@ document.addEventListener("keydown",(e)=>{
 // Background Particles
 // ===============================
 
-particlesJS("particles-js",{
+particlesJS("particles-js", {
 
-    particles:{
+    particles: {
 
-        number:{
-            value:45
+        number: {
+            value: 45
         },
 
-        color:{
-            value:"#d4af37"
+        color: {
+            value: "#d4af37"
         },
 
-        shape:{
-            type:"circle"
+        shape: {
+            type: "circle"
         },
 
-        opacity:{
-            value:0.35
+        opacity: {
+            value: 0.35
         },
 
-        size:{
-            value:4
+        size: {
+            value: 4
         },
 
-        move:{
-            enable:true,
-            speed:1
+        move: {
+            enable: true,
+            speed: 1
         }
 
     }

@@ -34,16 +34,16 @@ window.addEventListener("load", () => {
 // Auto Login Check
 // ===============================
 
+
 onAuthStateChanged(auth, (user) => {
 
     if (user) {
 
-        window.location.href = "account.html";
+        window.location.href = "index.html";
 
     }
 
 });
-
 // ===============================
 // Password Toggle
 // ===============================

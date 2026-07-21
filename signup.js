@@ -1,4 +1,14 @@
 // ===============================
+// Firebase Imports
+// ===============================
+
+import { auth } from "./firebase-config.js";
+
+import {
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+// ===============================
 // Loading Screen
 // ===============================
 
@@ -9,7 +19,9 @@ window.addEventListener("load", () => {
         document.getElementById("loading-screen").style.opacity = "0";
 
         setTimeout(() => {
+
             document.getElementById("loading-screen").style.display = "none";
+
         }, 800);
 
     }, 1500);
@@ -28,15 +40,19 @@ const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
 togglePassword.addEventListener("click", () => {
 
-    if(password.type === "password"){
+    if (password.type === "password") {
 
         password.type = "text";
-        togglePassword.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
 
-    }else{
+        togglePassword.innerHTML =
+            '<i class="fa-solid fa-eye-slash"></i>';
+
+    } else {
 
         password.type = "password";
-        togglePassword.innerHTML = '<i class="fa-solid fa-eye"></i>';
+
+        togglePassword.innerHTML =
+            '<i class="fa-solid fa-eye"></i>';
 
     }
 
@@ -44,28 +60,35 @@ togglePassword.addEventListener("click", () => {
 
 toggleConfirmPassword.addEventListener("click", () => {
 
-    if(confirmPassword.type === "password"){
+    if (confirmPassword.type === "password") {
 
         confirmPassword.type = "text";
-        toggleConfirmPassword.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
 
-    }else{
+        toggleConfirmPassword.innerHTML =
+            '<i class="fa-solid fa-eye-slash"></i>';
+
+    } else {
 
         confirmPassword.type = "password";
-        toggleConfirmPassword.innerHTML = '<i class="fa-solid fa-eye"></i>';
+
+        toggleConfirmPassword.innerHTML =
+            '<i class="fa-solid fa-eye"></i>';
 
     }
 
 });
 
 // ===============================
-// Signup Form
+// Form
 // ===============================
 
 const form = document.getElementById("signupForm");
 const button = document.getElementById("signupBtn");
+// ===============================
+// Signup
+// ===============================
 
-form.addEventListener("submit",(e)=>{
+form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
@@ -74,43 +97,63 @@ form.addEventListener("submit",(e)=>{
     const pass = password.value.trim();
     const confirm = confirmPassword.value.trim();
 
-    if(username==="" || email==="" || pass==="" || confirm===""){
+    if (username === "" || email === "" || pass === "" || confirm === "") {
 
         alert("Please fill all fields.");
         return;
 
     }
 
-    if(pass !== confirm){
+    if (pass !== confirm) {
 
         alert("Passwords do not match.");
         return;
 
     }
 
-    if(pass.length < 8){
+    if (pass.length < 8) {
 
         alert("Password must contain at least 8 characters.");
         return;
 
     }
 
-    button.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
-    button.disabled=true;
+    button.disabled = true;
+    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
 
-    setTimeout(()=>{
+    try {
 
-        button.innerHTML="Redirecting...";
+        await createUserWithEmailAndPassword(auth, email, pass);
 
-    },1000);
+        alert("Account created successfully!");
 
-    setTimeout(()=>{
+        window.location.href = "account.html";
 
-        // Future Firebase Signup
+    } catch (error) {
 
-        window.location.href="account.html";
+        switch (error.code) {
 
-    },2200);
+            case "auth/email-already-in-use":
+                alert("This email is already registered.");
+                break;
+
+            case "auth/invalid-email":
+                alert("Please enter a valid email.");
+                break;
+
+            case "auth/weak-password":
+                alert("Password should be at least 6 characters.");
+                break;
+
+            default:
+                alert(error.message);
+
+        }
+
+        button.disabled = false;
+        button.innerHTML = "CREATE ACCOUNT";
+
+    }
 
 });
 
@@ -118,9 +161,9 @@ form.addEventListener("submit",(e)=>{
 // Enter Key Support
 // ===============================
 
-document.addEventListener("keydown",(e)=>{
+document.addEventListener("keydown", (e) => {
 
-    if(e.key==="Enter"){
+    if (e.key === "Enter") {
 
         form.requestSubmit();
 
@@ -132,33 +175,33 @@ document.addEventListener("keydown",(e)=>{
 // Background Particles
 // ===============================
 
-particlesJS("particles-js",{
+particlesJS("particles-js", {
 
-    particles:{
+    particles: {
 
-        number:{
-            value:45
+        number: {
+            value: 45
         },
 
-        color:{
-            value:"#d4af37"
+        color: {
+            value: "#d4af37"
         },
 
-        shape:{
-            type:"circle"
+        shape: {
+            type: "circle"
         },
 
-        opacity:{
-            value:0.35
+        opacity: {
+            value: 0.35
         },
 
-        size:{
-            value:4
+        size: {
+            value: 4
         },
 
-        move:{
-            enable:true,
-            speed:1
+        move: {
+            enable: true,
+            speed: 1
         }
 
     }

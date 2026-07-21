@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Private Vault</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="signup.css">
+
+    <!-- Particles -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+
+    <div id="loading-screen">
+
+        <div class="loader"></div>
+
+        <h2>Private Vault</h2>
+
+        <p>Preparing Your Account...</p>
+
+    </div>
+
+    <!-- Background Particles -->
+
+    <div id="particles-js"></div>
+
+    <!-- Signup Card -->
+
+    <div class="signup-container">
+
+        <!-- Logo -->
+
+        <div class="logo">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+        </div>
+
+        <h1>Create Account</h1>
+
+        <p class="subtitle">
+
+            Join your private journey today.
+
+        </p>
+
+        <!-- Signup Form -->
+
+        <form id="signupForm">
+
+            <!-- Username -->
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    autocomplete="off"
+                    required>
+
+            </div>
+
+            <!-- Email -->
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email Address"
+                    autocomplete="off"
+                    required>
+
+            </div>
+
+            <!-- Password -->
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required>
+
+                <span id="togglePassword">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </span>
+
+            </div>
+
+            <!-- Confirm Password -->
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    required>
+
+                <span id="toggleConfirmPassword">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </span>
+
+            </div>
+
+            <!-- Sign Up Button -->
+
+            <button type="submit" id="signupBtn">
+
+                CREATE ACCOUNT
+
+            </button>
+
+        </form>
+
+        <!-- Login Link -->
+
+        <p class="login-text">
+
+            Already have an account?
+
+            <a href="login.html">
+
+                Login
+
+            </a>
+
+        </p>
+        <!-- Footer -->
+
+        <div class="signup-footer">
+
+            <p>
+
+                Protected by Private Vault Security
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+
+    <script src="signup.js"></script>
+
+</body>
+
+              </html>

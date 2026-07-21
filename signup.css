@@ -1,0 +1,329 @@
+/* ============================= */
+/* Reset */
+/* ============================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+:root{
+    --gold:#d4af37;
+    --pink:#fce4ec;
+    --glass:rgba(255,255,255,.92);
+    --text:#2c3e50;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,var(--pink),#ffffff);
+    position:relative;
+}
+
+/* ============================= */
+/* Particles */
+/* ============================= */
+
+#particles-js{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+
+/* ============================= */
+/* Loading Screen */
+/* ============================= */
+
+#loading-screen{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#fce4ec,#ffffff);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    transition:.8s;
+}
+
+.loader{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    border:5px solid rgba(212,175,55,.25);
+    border-top:5px solid var(--gold);
+    animation:spin 1s linear infinite;
+}
+
+#loading-screen h2{
+    margin-top:25px;
+    font-family:'Playfair Display',serif;
+    color:var(--gold);
+}
+
+#loading-screen p{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
+}
+
+/* ============================= */
+/* Signup Card */
+/* ============================= */
+
+.signup-container{
+    position:relative;
+    z-index:10;
+    width:92%;
+    max-width:450px;
+    padding:40px 35px;
+    background:var(--glass);
+    backdrop-filter:blur(20px);
+    border-radius:30px;
+    border:1px solid rgba(212,175,55,.35);
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+    text-align:center;
+    animation:fade .9s ease;
+}
+
+/* ============================= */
+/* Logo */
+/* ============================= */
+
+.logo{
+    width:85px;
+    height:85px;
+    margin:auto;
+    border-radius:50%;
+    background:var(--gold);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:32px;
+    box-shadow:0 10px 25px rgba(212,175,55,.35);
+}
+
+.signup-container h1{
+    margin-top:20px;
+    font-family:'Playfair Display',serif;
+    color:#222;
+}
+
+.subtitle{
+    margin:10px 0 30px;
+    color:#666;
+    font-size:14px;
+}
+
+/* ============================= */
+/* Input Boxes */
+/* ============================= */
+
+.input-box{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-box input{
+    width:100%;
+    height:55px;
+    border-radius:50px;
+    border:2px solid rgba(212,175,55,.25);
+    outline:none;
+    background:#fff;
+    padding:0 52px;
+    font-size:15px;
+    transition:.3s;
+}
+
+.input-box input:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 15px rgba(212,175,55,.25);
+}
+
+.input-box i:first-child{
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#999;
+}
+
+#togglePassword,
+#toggleConfirmPassword{
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#888;
+    transition:.3s;
+}
+
+#togglePassword:hover,
+#toggleConfirmPassword:hover{
+    color:var(--gold);
+}
+/* ============================= */
+/* Create Account Button */
+/* ============================= */
+
+#signupBtn{
+    width:100%;
+    height:55px;
+    border:none;
+    border-radius:50px;
+    background:var(--gold);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:.35s;
+    box-shadow:0 8px 20px rgba(212,175,55,.35);
+}
+
+#signupBtn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 28px rgba(212,175,55,.45);
+}
+
+#signupBtn:active{
+    transform:scale(.98);
+}
+
+/* ============================= */
+/* Login Link */
+/* ============================= */
+
+.login-text{
+    margin-top:25px;
+    font-size:14px;
+    color:#555;
+}
+
+.login-text a{
+    color:var(--gold);
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.login-text a:hover{
+    text-decoration:underline;
+}
+
+/* ============================= */
+/* Footer */
+/* ============================= */
+
+.signup-footer{
+    margin-top:30px;
+    border-top:1px solid rgba(212,175,55,.25);
+    padding-top:18px;
+}
+
+.signup-footer p{
+    font-size:12px;
+    color:#777;
+    letter-spacing:.5px;
+}
+
+/* ============================= */
+/* Animations */
+/* ============================= */
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* ============================= */
+/* Responsive */
+/* ============================= */
+
+@media(max-width:500px){
+
+    .signup-container{
+
+        width:94%;
+        padding:35px 25px;
+
+    }
+
+    .logo{
+
+        width:75px;
+        height:75px;
+        font-size:28px;
+
+    }
+
+    .signup-container h1{
+
+        font-size:28px;
+
+    }
+
+    .subtitle{
+
+        font-size:13px;
+
+    }
+
+    .input-box input{
+
+        height:52px;
+        font-size:14px;
+
+    }
+
+    #signupBtn{
+
+        height:52px;
+        font-size:15px;
+
+    }
+
+}
+
+/* ============================= */
+/* Smooth Selection */
+/* ============================= */
+
+::selection{
+
+    background:var(--gold);
+    color:#fff;
+
+}

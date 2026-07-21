@@ -1,0 +1,253 @@
+/* Google Style Reset */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+:root{
+    --gold:#d4af37;
+    --pink:#fce4ec;
+    --glass:rgba(255,255,255,.92);
+    --text:#2c3e50;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,var(--pink),#ffffff);
+    position:relative;
+}
+
+/* Particles */
+
+#particles-js{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:1;
+}
+
+/* Loading Screen */
+
+#loading-screen{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#fce4ec,#fff);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    transition:.8s;
+}
+
+.loader{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    border:5px solid rgba(212,175,55,.25);
+    border-top:5px solid var(--gold);
+    animation:spin 1s linear infinite;
+}
+
+#loading-screen h2{
+    margin-top:25px;
+    font-family:'Playfair Display',serif;
+    color:var(--gold);
+    letter-spacing:1px;
+}
+
+#loading-screen p{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
+}
+
+/* Login Card */
+
+.login-container{
+    position:relative;
+    z-index:10;
+    width:92%;
+    max-width:430px;
+    padding:40px 35px;
+    background:var(--glass);
+    border-radius:30px;
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(212,175,55,.35);
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+    text-align:center;
+    animation:fade .9s ease;
+}
+
+/* Logo */
+
+.logo{
+    width:85px;
+    height:85px;
+    margin:auto;
+    border-radius:50%;
+    background:var(--gold);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:35px;
+    color:#fff;
+    box-shadow:0 10px 25px rgba(212,175,55,.35);
+}
+
+.login-container h1{
+    margin-top:20px;
+    font-family:'Playfair Display',serif;
+    color:#222;
+}
+
+.subtitle{
+    margin:10px 0 30px;
+    color:#666;
+    font-size:14px;
+}
+
+/* Input Box */
+
+.input-box{
+    position:relative;
+    margin-bottom:22px;
+}
+
+.input-box input{
+    width:100%;
+    height:55px;
+    padding:0 50px;
+    border-radius:50px;
+    border:2px solid rgba(212,175,55,.25);
+    outline:none;
+    background:#fff;
+    font-size:15px;
+    transition:.3s;
+}
+
+.input-box input:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 15px rgba(212,175,55,.25);
+}
+
+.input-box i:first-child{
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#999;
+}
+
+#togglePassword{
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#888;
+    transition:.3s;
+}
+
+#togglePassword:hover{
+    color:var(--gold);
+}
+
+/* Login Button */
+
+#loginBtn{
+    width:100%;
+    height:55px;
+    border:none;
+    border-radius:50px;
+    background:var(--gold);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.35s;
+    letter-spacing:1px;
+    box-shadow:0 8px 20px rgba(212,175,55,.35);
+}
+
+#loginBtn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 28px rgba(212,175,55,.45);
+}
+
+/* Sign Up */
+
+.signup-text{
+    margin-top:28px;
+    font-size:14px;
+    color:#555;
+}
+
+.signup-text a{
+    color:var(--gold);
+    text-decoration:none;
+    font-weight:600;
+}
+
+.signup-text a:hover{
+    text-decoration:underline;
+}
+
+/* Animations */
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* Responsive */
+
+@media(max-width:500px){
+
+.login-container{
+
+padding:35px 25px;
+
+}
+
+.logo{
+
+width:75px;
+height:75px;
+font-size:30px;
+
+}
+
+.login-container h1{
+
+font-size:28px;
+
+}
+
+  }

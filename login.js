@@ -37,10 +37,10 @@ window.addEventListener("load", () => {
 
 onAuthStateChanged(auth, (user) => {
 
+    console.log(user);
+
     if (user) {
-
         window.location.href = "accounts.html";
-
     }
 
 });

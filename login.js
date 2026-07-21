@@ -86,10 +86,10 @@ form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const email = document.getElementById("username").value.trim();
-    const pass = password.value.trim();
-
-    if (email === "" || pass === "") {
+    const username = document.getElementById("username").value.trim();
+const email = document.getElementById("email").value.trim();
+const pass = password.value.trim();
+    if (username === "" || email === "" || pass === "") {
 
         alert("Please fill all fields.");
         return;

@@ -256,19 +256,25 @@ font-size:28px;
 ================================ */
 
 .forgot-password{
-    text-align:right;
-    margin:10px 0 20px;
+
+    text-align:center;
+    margin:15px 0 20px;
+
 }
 
 .forgot-password a{
+
     color:var(--gold);
     text-decoration:none;
     font-size:14px;
     font-weight:500;
-    transition:0.3s;
+    transition:.3s;
+
 }
 
 .forgot-password a:hover{
+
     text-decoration:underline;
-    opacity:0.8;
+    opacity:.8;
+
 }

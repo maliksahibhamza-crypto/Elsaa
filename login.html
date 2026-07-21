@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Login | Private Vault</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="login.css">
+
+    <!-- Particles -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+
+    <div id="loading-screen">
+
+        <div class="loader"></div>
+
+        <h2>Private Vault</h2>
+
+        <p>Loading Secure Login...</p>
+
+    </div>
+
+    <!-- Background Particles -->
+
+    <div id="particles-js"></div>
+
+    <!-- Login Card -->
+
+    <div class="login-container">
+
+        <!-- Logo -->
+
+        <div class="logo">
+
+            <i class="fa-solid fa-heart"></i>
+
+        </div>
+
+        <h1>Welcome Back</h1>
+
+        <p class="subtitle">
+
+            Access your private account securely.
+
+        </p>
+
+        <!-- Login Form -->
+
+        <form id="loginForm">
+
+            <!-- Username -->
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    autocomplete="off"
+                    required>
+
+            </div>
+
+            <!-- Password -->
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required>
+
+                <span id="togglePassword">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </span>
+
+            </div>
+
+            <!-- Login Button -->
+
+            <button type="submit" id="loginBtn">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <!-- Sign Up -->
+
+        <p class="signup-text">
+
+            Don't have an account?
+
+            <a href="signup.html">
+
+                Sign Up
+
+            </a>
+
+        </p>
+              <!-- Footer -->
+
+        <div class="login-footer">
+
+            <p>
+                Protected by Private Vault Security
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

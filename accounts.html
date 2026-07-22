@@ -1,184 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Private Vault | Dashboard</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Font -->
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS -->
+
     <link rel="stylesheet" href="accounts.css">
+
 </head>
 
 <body>
 
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
 
-        <div class="sidebar-header">
-            <h2>Private Vault</h2>
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+
+            <h2>💖 Private Vault</h2>
+
         </div>
 
         <ul>
 
-            <li><i class="fa-solid fa-user-group"></i> Friends</li>
+            <li id="friendsBtn">
 
-            <li><i class="fa-solid fa-user"></i> My Profile</li>
+                <i class="fa-solid fa-user-group"></i>
 
-            <li><i class="fa-solid fa-gear"></i> Settings</li>
+                <span>Friends</span>
 
-            <li><i class="fa-solid fa-key"></i> Change Password</li>
+            </li>
+
+            <li id="profileBtn">
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>My Profile</span>
+
+            </li>
+
+            <li id="settingsBtn">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>Settings</span>
+
+            </li>
+
+            <li id="changePasswordBtn">
+
+                <i class="fa-solid fa-key"></i>
+
+                <span>Change Password</span>
+
+            </li>
 
             <li id="logoutBtn">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    Logout
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
             </li>
 
         </ul>
 
-    </div>
+    </aside>
 
-    <!-- Main Content -->
-    <div class="main-content">
+    <!-- Overlay -->
+
+    <div id="overlay"></div>
+
+    <!-- Main Container -->
+
+    <main class="container">
 
         <!-- Top Navigation -->
+
         <header class="topbar">
 
-            <!-- Menu -->
-            <i class="fa-solid fa-bars menu-btn" id="menuBtn"></i>
+            <button id="menuBtn" class="icon-btn">
 
-            <!-- Username -->
-            <h2 id="topUsername">
-                Hamza Malik
-            </h2>
+                <i class="fa-solid fa-bars"></i>
 
-            <!-- Search -->
-            <i class="fa-solid fa-magnifying-glass search-btn"></i>
+            </button>
+
+            <!-- Username (Firebase se load hoga) -->
+
+            <h2 id="topUsername"></h2>
+
+            <button id="searchBtn" class="icon-btn">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </button>
 
         </header>
 
+        <!-- Search Popup -->
+
+        <div class="search-popup" id="searchPopup">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search username...">
+
+            <button id="closeSearch">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
         <!-- Profile Section -->
+
         <section class="profile-section">
 
-            <!-- Profile Picture -->
-            <div class="profile-image">
+            <div class="profile-picture">
 
-                <img src="images/default-profile.png"
+                <img
+                    src="images/default-profile.png"
                     id="profilePic"
-                    alt="Profile">
+                    alt="Profile Picture">
+
+                <label
+                    for="profileUpload"
+                    class="camera-btn">
+
+                    <i class="fa-solid fa-camera"></i>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="profileUpload"
+                    accept="image/*"
+                    hidden>
 
             </div>
 
-            <!-- Name -->
-            <h2 id="profileName">
-                Hamza Malik
-            </h2>
+            <!-- Full Name -->
+
+            <h1 id="profileName"></h1>
 
             <!-- Username -->
-            <p id="profileUsername">
-                @hamza_private
-            </p>
 
-            <!-- Online Status -->
-            <p class="status">
-                🟢 Online
-            </p>
-
-            <!-- Last Seen -->
-            <p class="last-seen">
-                Last Seen: Today, 8:42 PM
-            </p>
+            <p id="profileUsername"></p>
 
             <!-- Bio -->
-            <p class="bio">
-                Forever, In Sha Allah ❤️
-            </p>
+
+            <p id="profileBio"></p>
+
+            <!-- Status -->
+
+            <div class="status-box">
+
+                <span id="onlineStatus">
+
+                    🟢 Online
+
+                </span>
+
+                <span id="lastSeen"></span>
+
+            </div>
+
+            <!-- Edit Profile -->
+
+            <button id="editProfileBtn">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Profile
+
+            </button>
 
         </section>
         <!-- Countdown Section -->
+
         <section class="countdown-section">
 
             <div class="countdown-card">
 
-                <i class="fa-solid fa-heart"></i>
+                <div class="countdown-header">
 
-                <h3>Relationship</h3>
+                    <h3>
+                        ❤️ Relationship
+                    </h3>
 
-                <p id="relationshipCounter">
-                    000 Days
+                    <button
+                        class="editCountdownBtn"
+                        id="editRelationshipCountdown">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                    </button>
+
+                </div>
+
+                <h2 id="relationshipDays">
+
+                    0 Days
+
+                </h2>
+
+                <p id="relationshipDate">
+
+                    No Date Selected
+
                 </p>
 
             </div>
 
             <div class="countdown-card">
 
-                <i class="fa-solid fa-calendar-days"></i>
+                <div class="countdown-header">
 
-                <h3>Special Countdown</h3>
+                    <h3>
+                        🎂 Special Countdown
+                    </h3>
 
-                <p id="specialCountdown">
-                    Set Your Date
+                    <button
+                        class="editCountdownBtn"
+                        id="editSpecialCountdown">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                    </button>
+
+                </div>
+
+                <h2 id="specialDays">
+
+                    0 Days
+
+                </h2>
+
+                <p id="specialDate">
+
+                    No Date Selected
+
                 </p>
 
             </div>
 
         </section>
 
-        <!-- Features -->
+        <!-- Dashboard Features -->
 
         <section class="features">
 
-            <div class="feature-card" id="loveLetters">
+            <div class="feature-card"
+                id="loveLetters">
 
                 <i class="fa-solid fa-envelope-open-text"></i>
 
-                <h3>Love Letters</h3>
+                <span>Love Letters</span>
 
             </div>
 
-            <div class="feature-card" id="diary">
+            <div class="feature-card"
+                id="diary">
 
-                <i class="fa-solid fa-book"></i>
+                <i class="fa-solid fa-book-open"></i>
 
-                <h3>Diary</h3>
+                <span>Diary</span>
 
             </div>
 
-            <div class="feature-card" id="secretNotes">
+            <div class="feature-card"
+                id="secretNotes">
 
                 <i class="fa-solid fa-lock"></i>
 
-                <h3>Secret Notes</h3>
+                <span>Secret Notes</span>
 
             </div>
 
-            <div class="feature-card" id="gallery">
+            <div class="feature-card"
+                id="gallery">
 
                 <i class="fa-solid fa-images"></i>
 
-                <h3>Gallery</h3>
+                <span>Gallery</span>
 
             </div>
 
-            <div class="feature-card" id="relationship">
+            <div class="feature-card"
+                id="relationshipCounter">
 
-                <i class="fa-solid fa-heart-circle-check"></i>
+                <i class="fa-solid fa-heart"></i>
 
-                <h3>Relationship Counter</h3>
+                <span>Relationship Counter</span>
 
             </div>
 
-            <div class="feature-card" id="chat">
+            <div class="feature-card"
+                id="chat">
 
                 <i class="fa-solid fa-comments"></i>
 
-                <h3>Chat</h3>
+                <span>Private Chat</span>
 
             </div>
 
@@ -188,27 +327,51 @@
 
         <section class="games-section">
 
-            <h2>🎮 Games</h2>
+            <h2>
+
+                🎮 Games
+
+            </h2>
 
             <div class="games-container">
 
-                <div class="game-card">
+                <div
+                    class="game-card"
+                    id="game1">
 
                     <i class="fa-solid fa-puzzle-piece"></i>
 
-                    <h3>Game One</h3>
+                    <h3>
 
-                    <p>Coming Soon</p>
+                        Game One
+
+                    </h3>
+
+                    <p>
+
+                        Coming Soon
+
+                    </p>
 
                 </div>
 
-                <div class="game-card">
+                <div
+                    class="game-card"
+                    id="game2">
 
                     <i class="fa-solid fa-dice"></i>
 
-                    <h3>Game Two</h3>
+                    <h3>
 
-                    <p>Coming Soon</p>
+                        Game Two
+
+                    </h3>
+
+                    <p>
+
+                        Coming Soon
+
+                    </p>
 
                 </div>
 
@@ -216,9 +379,12 @@
 
         </section>
 
-    </div>
+    </main>
 
-    <script src="accounts.js"></script>
+    <!-- JavaScript -->
+
+    <script type="module" src="accounts.js"></script>
 
 </body>
-                                  </html>
+
+</html>

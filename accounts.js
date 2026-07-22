@@ -1,243 +1,648 @@
-// ===============================
+// ==========================================
 // Firebase Imports
-// ===============================
+// ==========================================
 
 import { auth } from "./firebase-config.js";
 
 import {
+    onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-// ===============================
+// ==========================================
+// Check Login
+// ==========================================
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+        return;
+
+    }
+
+    console.log("Logged In:", user.email);
+
+});
+
+// ==========================================
 // Elements
-// ===============================
+// ==========================================
 
-const sidebar = document.getElementById("sidebar");
-const menuBtn = document.getElementById("menuBtn");
-const searchBtn = document.querySelector(".search-btn");
+const sidebar =
+    document.getElementById("sidebar");
 
-const relationshipCounter =
-    document.getElementById("relationshipCounter");
+const overlay =
+    document.getElementById("overlay");
 
-const specialCountdown =
-    document.getElementById("specialCountdown");
+const menuBtn =
+    document.getElementById("menuBtn");
 
-const status =
-    document.querySelector(".status");
+const searchBtn =
+    document.getElementById("searchBtn");
 
-// ===============================
+const searchPopup =
+    document.getElementById("searchPopup");
+
+const closeSearch =
+    document.getElementById("closeSearch");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+// ==========================================
 // Sidebar
-// ===============================
+// ==========================================
 
 menuBtn.addEventListener("click", () => {
 
-    sidebar.classList.toggle("active");
+    sidebar.classList.add("active");
+
+    overlay.classList.add("active");
 
 });
 
-// Close Sidebar
+overlay.addEventListener("click", () => {
 
-document.addEventListener("click", (e) => {
+    sidebar.classList.remove("active");
 
-    if (
-        !sidebar.contains(e.target) &&
-        !menuBtn.contains(e.target)
-    ) {
-
-        sidebar.classList.remove("active");
-
-    }
+    overlay.classList.remove("active");
 
 });
 
-// ===============================
-// Search
-// ===============================
+// ==========================================
+// Search Popup
+// ==========================================
 
 searchBtn.addEventListener("click", () => {
 
-    alert("Search feature coming soon...");
+    searchPopup.classList.add("active");
+
+    searchInput.focus();
 
 });
 
-// ===============================
-// Online Status
-// ===============================
+closeSearch.addEventListener("click", () => {
 
-status.innerHTML = "🟢 Online";
+    searchPopup.classList.remove("active");
 
-// ===============================
-// Relationship Counter
-// ===============================
+    searchInput.value = "";
 
-function updateRelationshipCounter() {
+});
 
-    const relationshipDate =
-        new Date("2025-06-18");
+// ==========================================
+// Search (Placeholder)
+// ==========================================
 
-    const today = new Date();
+searchInput.addEventListener("keyup", (e) => {
 
-    const diff =
-        today - relationshipDate;
+    if (e.key === "Enter") {
 
-    const days =
-        Math.floor(diff / (1000 * 60 * 60 * 24));
+        const username =
+            searchInput.value.trim();
 
-    relationshipCounter.innerHTML =
-        days + " Days";
+        if (username === "") {
 
-}
+            alert("Enter a username.");
 
-updateRelationshipCounter();
+            return;
 
-// ===============================
-// Countdown
-// ===============================
+        }
 
-function updateCountdown() {
-
-    // Change this date anytime
-
-    const targetDate =
-        new Date("2026-11-14");
-
-    const today =
-        new Date();
-
-    const diff =
-        targetDate - today;
-
-    const days =
-        Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-    if (days > 0) {
-
-        specialCountdown.innerHTML =
-            days + " Days Left";
-
-    } else {
-
-        specialCountdown.innerHTML =
-            "Today 🎉";
+        alert(
+            "Searching for @" + username
+        );
 
     }
 
+});
+
+// ==========================================
+// ESC Key Support
+// ==========================================
+
+document.addEventListener("keydown", (e) => {
+
+    if (e.key === "Escape") {
+
+        sidebar.classList.remove("active");
+
+        overlay.classList.remove("active");
+
+        searchPopup.classList.remove("active");
+
+    }
+
+});
+// ==========================================
+// Profile Elements
+// ==========================================
+
+const profilePic =
+    document.getElementById("profilePic");
+
+const profileName =
+    document.getElementById("profileName");
+
+const profileUsername =
+    document.getElementById("profileUsername");
+
+const profileBio =
+    document.getElementById("profileBio");
+
+const onlineStatus =
+    document.getElementById("onlineStatus");
+
+const lastSeen =
+    document.getElementById("lastSeen");
+
+const editProfileBtn =
+    document.getElementById("editProfileBtn");
+
+const profileUpload =
+    document.getElementById("profileUpload");
+
+// ==========================================
+// Default Profile
+// ==========================================
+
+function loadProfile(user) {
+
+    profileName.textContent =
+        user.displayName || "No Name";
+
+    profileUsername.textContent =
+        "@" +
+        (user.email ?
+        user.email.split("@")[0] :
+        "username");
+
+    profileBio.textContent =
+        "No bio added yet.";
+
+    onlineStatus.textContent =
+        "🟢 Online";
+
+    lastSeen.textContent =
+        "Last Seen : Online";
+
 }
 
-updateCountdown();
+onAuthStateChanged(auth, (user) => {
 
-// ===============================
-// Welcome
-// ===============================
+    if (user) {
 
-console.log("❤️ Welcome to Private Vault");
-// ===============================
-// Feature Cards
-// ===============================
+        loadProfile(user);
 
-document.getElementById("loveLetters").addEventListener("click", () => {
-
-    alert("❤️ Love Letters - Coming Soon");
+    }
 
 });
 
-document.getElementById("diary").addEventListener("click", () => {
+// ==========================================
+// Edit Profile
+// ==========================================
 
-    alert("📖 Diary - Coming Soon");
+editProfileBtn.addEventListener("click", () => {
+
+    const newName =
+        prompt(
+            "Enter your name:",
+            profileName.textContent
+        );
+
+    if (newName &&
+        newName.trim() !== "") {
+
+        profileName.textContent =
+            newName.trim();
+
+    }
+
+    const newBio =
+        prompt(
+            "Enter your bio:",
+            profileBio.textContent
+        );
+
+    if (newBio &&
+        newBio.trim() !== "") {
+
+        profileBio.textContent =
+            newBio.trim();
+
+    }
 
 });
 
-document.getElementById("secretNotes").addEventListener("click", () => {
+// ==========================================
+// Profile Picture Preview
+// ==========================================
 
-    alert("🔒 Secret Notes - Coming Soon");
+profileUpload.addEventListener("change", (e) => {
+
+    const file =
+        e.target.files[0];
+
+    if (!file) return;
+
+    const reader =
+        new FileReader();
+
+    reader.onload = function(event) {
+
+        profilePic.src =
+            event.target.result;
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+// ==========================================
+// Countdown Elements
+// ==========================================
+
+const relationshipDays =
+    document.getElementById("relationshipDays");
+
+const relationshipDate =
+    document.getElementById("relationshipDate");
+
+const specialDays =
+    document.getElementById("specialDays");
+
+const specialDate =
+    document.getElementById("specialDate");
+
+const editRelationshipCountdown =
+    document.getElementById("editRelationshipCountdown");
+
+const editSpecialCountdown =
+    document.getElementById("editSpecialCountdown");
+
+// ==========================================
+// Countdown Function
+// ==========================================
+
+function updateCountdown(date, dayElement, dateElement) {
+
+    if (!date) {
+
+        dayElement.textContent = "0 Days";
+
+        dateElement.textContent = "No Date Selected";
+
+        return;
+
+    }
+
+    const today = new Date();
+
+    const selected = new Date(date);
+
+    const diff =
+        Math.floor(
+            (today - selected) /
+            (1000 * 60 * 60 * 24)
+        );
+
+    dayElement.textContent =
+        diff + " Days";
+
+    dateElement.textContent =
+        selected.toDateString();
+
+}
+
+// ==========================================
+// Load Saved Dates
+// ==========================================
+
+let relationDate =
+    localStorage.getItem("relationshipDate");
+
+let specialEventDate =
+    localStorage.getItem("specialDate");
+
+updateCountdown(
+    relationDate,
+    relationshipDays,
+    relationshipDate
+);
+
+updateCountdown(
+    specialEventDate,
+    specialDays,
+    specialDate
+);
+
+// ==========================================
+// Edit Relationship Countdown
+// ==========================================
+
+editRelationshipCountdown.addEventListener("click", () => {
+
+    const newDate =
+        prompt(
+            "Enter Relationship Date\n(YYYY-MM-DD)"
+        );
+
+    if (!newDate) return;
+
+    localStorage.setItem(
+        "relationshipDate",
+        newDate
+    );
+
+    updateCountdown(
+        newDate,
+        relationshipDays,
+        relationshipDate
+    );
 
 });
 
-document.getElementById("gallery").addEventListener("click", () => {
+// ==========================================
+// Edit Special Countdown
+// ==========================================
 
-    alert("🖼️ Gallery - Coming Soon");
+editSpecialCountdown.addEventListener("click", () => {
+
+    const newDate =
+        prompt(
+            "Enter Special Date\n(YYYY-MM-DD)"
+        );
+
+    if (!newDate) return;
+
+    localStorage.setItem(
+        "specialDate",
+        newDate
+    );
+
+    updateCountdown(
+        newDate,
+        specialDays,
+        specialDate
+    );
+
+});
+// ==========================================
+// Online / Last Seen
+// ==========================================
+
+const statusElement =
+    document.getElementById("onlineStatus");
+
+const lastSeenElement =
+    document.getElementById("lastSeen");
+
+// ==========================================
+// Set Online
+// ==========================================
+
+function setOnline() {
+
+    statusElement.textContent =
+        "🟢 Online";
+
+    statusElement.style.color =
+        "#28a745";
+
+}
+
+// ==========================================
+// Save Last Seen
+// ==========================================
+
+function saveLastSeen() {
+
+    const now =
+        new Date();
+
+    localStorage.setItem(
+        "lastSeen",
+        now.toISOString()
+    );
+
+}
+
+// ==========================================
+// Show Last Seen
+// ==========================================
+
+function showLastSeen() {
+
+    const last =
+        localStorage.getItem("lastSeen");
+
+    if (!last) {
+
+        lastSeenElement.textContent =
+            "Last Seen : Never";
+
+        return;
+
+    }
+
+    const date =
+        new Date(last);
+
+    lastSeenElement.textContent =
+        "Last Seen : " +
+        date.toLocaleString();
+
+}
+
+// ==========================================
+// Page Loaded
+// ==========================================
+
+window.addEventListener("load", () => {
+
+    setOnline();
+
+    showLastSeen();
 
 });
 
-document.getElementById("relationship").addEventListener("click", () => {
+// ==========================================
+// Before Leaving Website
+// ==========================================
 
-    alert("❤️ Relationship Counter - Coming Soon");
+window.addEventListener("beforeunload", () => {
 
-});
-
-document.getElementById("chat").addEventListener("click", () => {
-
-    alert("💬 Private Chat - Coming Soon");
+    saveLastSeen();
 
 });
 
-// ===============================
-// Games
-// ===============================
+// ==========================================
+// Logout Status
+// ==========================================
 
-const gameCards = document.querySelectorAll(".game-card");
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
-gameCards.forEach((card, index) => {
+logoutBtn.addEventListener("click", () => {
 
-    card.addEventListener("click", () => {
+    saveLastSeen();
 
-        if (index === 0) {
+});
+// ==========================================
+// Navigation
+// ==========================================
 
-            alert("🧩 Game 1 - Coming Soon");
+const friendsBtn =
+    document.getElementById("friendsBtn");
 
-        } else {
+const profileBtn =
+    document.getElementById("profileBtn");
 
-            alert("🎲 Game 2 - Coming Soon");
+const settingsBtn =
+    document.getElementById("settingsBtn");
 
-        }
+const changePasswordBtn =
+    document.getElementById("changePasswordBtn");
+
+// ==========================================
+// Friends
+// ==========================================
+
+friendsBtn.addEventListener("click", () => {
+
+    alert("Friends Page - Coming Soon");
+
+});
+
+// ==========================================
+// My Profile
+// ==========================================
+
+profileBtn.addEventListener("click", () => {
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
 
     });
 
 });
 
-// ===============================
+// ==========================================
+// Settings
+// ==========================================
+
+settingsBtn.addEventListener("click", () => {
+
+    alert("Settings - Coming Soon");
+
+});
+
+// ==========================================
+// Change Password
+// ==========================================
+
+changePasswordBtn.addEventListener("click", () => {
+
+    alert("Change Password - Coming Soon");
+
+});
+
+// ==========================================
 // Logout
-// ===============================
+// ==========================================
 
-const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", async () => {
 
-if (logoutBtn) {
+    const confirmLogout = confirm(
+        "Are you sure you want to logout?"
+    );
 
-    logoutBtn.addEventListener("click", async () => {
+    if (!confirmLogout) return;
 
-        const confirmLogout = confirm("Are you sure you want to logout?");
+    try {
 
-        if (!confirmLogout) return;
+        await signOut(auth);
 
-        try {
+        alert("Logged Out Successfully!");
 
-            await signOut(auth);
+        window.location.href = "login.html";
 
-            alert("Logged Out Successfully!");
+    }
 
-            window.location.href = "login.html";
+    catch (error) {
 
-        } catch (error) {
+        alert(error.message);
 
-            alert(error.message);
+    }
 
-        }
+});
 
-    });
+// ==========================================
+// Feature Cards
+// ==========================================
 
-}
+document.getElementById("loveLetters")
+.addEventListener("click", () => {
 
-// ===============================
-// Future Functions
-// ===============================
+    alert("Love Letters - Coming Soon ❤️");
 
-// TODO:
-// Load Profile Picture
-// Load Username
-// Load Bio
-// Load Last Seen
-// Load Friends
-// Load Chat
-// Load Notifications
+});
 
-console.log("✅ Accounts Dashboard Loaded Successfully");
+document.getElementById("diary")
+.addEventListener("click", () => {
+
+    alert("Diary - Coming Soon 📖");
+
+});
+
+document.getElementById("secretNotes")
+.addEventListener("click", () => {
+
+    alert("Secret Notes - Coming Soon 🔒");
+
+});
+
+document.getElementById("gallery")
+.addEventListener("click", () => {
+
+    alert("Gallery - Coming Soon 🖼️");
+
+});
+
+document.getElementById("relationshipCounter")
+.addEventListener("click", () => {
+
+    alert("Relationship Counter - Coming Soon ❤️");
+
+});
+
+document.getElementById("chat")
+.addEventListener("click", () => {
+
+    alert("Private Chat - Coming Soon 💬");
+
+});
+
+document.getElementById("game1")
+.addEventListener("click", () => {
+
+    alert("Game 1 - Coming Soon 🎮");
+
+});
+
+document.getElementById("game2")
+.addEventListener("click", () => {
+
+    alert("Game 2 - Coming Soon 🎲");
+
+});
+
+// ==========================================
+// Dashboard Loaded
+// ==========================================
+
+console.log("✅ Private Vault Loaded Successfully");

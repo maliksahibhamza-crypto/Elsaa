@@ -3,12 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounts</title>
+    <title>Private Vault | Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="accounts.css">
 </head>
+
 <body>
 
-    <h1>Accounts Page</h1>
-    <p>Accounts section working ✅</p>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Private Vault</h2>
+        </div>
+
+        <ul>
+
+            <li><i class="fa-solid fa-user-group"></i> Friends</li>
+
+            <li><i class="fa-solid fa-user"></i> My Profile</li>
+
+            <li><i class="fa-solid fa-gear"></i> Settings</li>
+
+            <li><i class="fa-solid fa-key"></i> Change Password</li>
+
+            <li><i class="fa-solid fa-right-from-bracket"></i> Logout</li>
+
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Top Navigation -->
+        <header class="topbar">
+
+            <!-- Menu -->
+            <i class="fa-solid fa-bars menu-btn" id="menuBtn"></i>
+
+            <!-- Username -->
+            <h2 id="topUsername">
+                Hamza Malik
+            </h2>
+
+            <!-- Search -->
+            <i class="fa-solid fa-magnifying-glass search-btn"></i>
+
+        </header>
+
+        <!-- Profile Section -->
+        <section class="profile-section">
+
+            <!-- Profile Picture -->
+            <div class="profile-image">
+
+                <img src="images/default-profile.png"
+                    id="profilePic"
+                    alt="Profile">
+
+            </div>
+
+            <!-- Name -->
+            <h2 id="profileName">
+                Hamza Malik
+            </h2>
+
+            <!-- Username -->
+            <p id="profileUsername">
+                @hamza_private
+            </p>
+
+            <!-- Online Status -->
+            <p class="status">
+                🟢 Online
+            </p>
+
+            <!-- Last Seen -->
+            <p class="last-seen">
+                Last Seen: Today, 8:42 PM
+            </p>
+
+            <!-- Bio -->
+            <p class="bio">
+                Forever, In Sha Allah ❤️
+            </p>
+
+        </section>
+        <!-- Countdown Section -->
+        <section class="countdown-section">
+
+            <div class="countdown-card">
+
+                <i class="fa-solid fa-heart"></i>
+
+                <h3>Relationship</h3>
+
+                <p id="relationshipCounter">
+                    000 Days
+                </p>
+
+            </div>
+
+            <div class="countdown-card">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <h3>Special Countdown</h3>
+
+                <p id="specialCountdown">
+                    Set Your Date
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- Features -->
+
+        <section class="features">
+
+            <div class="feature-card" id="loveLetters">
+
+                <i class="fa-solid fa-envelope-open-text"></i>
+
+                <h3>Love Letters</h3>
+
+            </div>
+
+            <div class="feature-card" id="diary">
+
+                <i class="fa-solid fa-book"></i>
+
+                <h3>Diary</h3>
+
+            </div>
+
+            <div class="feature-card" id="secretNotes">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <h3>Secret Notes</h3>
+
+            </div>
+
+            <div class="feature-card" id="gallery">
+
+                <i class="fa-solid fa-images"></i>
+
+                <h3>Gallery</h3>
+
+            </div>
+
+            <div class="feature-card" id="relationship">
+
+                <i class="fa-solid fa-heart-circle-check"></i>
+
+                <h3>Relationship Counter</h3>
+
+            </div>
+
+            <div class="feature-card" id="chat">
+
+                <i class="fa-solid fa-comments"></i>
+
+                <h3>Chat</h3>
+
+            </div>
+
+        </section>
+
+        <!-- Games -->
+
+        <section class="games-section">
+
+            <h2>🎮 Games</h2>
+
+            <div class="games-container">
+
+                <div class="game-card">
+
+                    <i class="fa-solid fa-puzzle-piece"></i>
+
+                    <h3>Game One</h3>
+
+                    <p>Coming Soon</p>
+
+                </div>
+
+                <div class="game-card">
+
+                    <i class="fa-solid fa-dice"></i>
+
+                    <h3>Game Two</h3>
+
+                    <p>Coming Soon</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="accounts.js"></script>
 
 </body>
-</html>
+                                  </html>

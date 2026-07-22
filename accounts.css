@@ -1,6 +1,6 @@
-/* ===========================
-   Google Font
-=========================== */
+/* ====================================
+   Google Reset
+==================================== */
 
 *{
     margin:0;
@@ -10,334 +10,749 @@
 }
 
 body{
-    background:#0b0b0b;
-    color:#fff;
+    background:#fff7fb;
+    color:#333;
     overflow-x:hidden;
 }
 
-/* ===========================
-   Sidebar
-=========================== */
+/* ====================================
+   Main Container
+==================================== */
 
-.sidebar{
-    position:fixed;
-    top:0;
-    left:-270px;
-    width:270px;
-    height:100vh;
-    background:#111;
-    border-right:1px solid rgba(212,175,55,.25);
-    transition:.35s ease;
-    z-index:1000;
-    padding:25px;
-}
-
-.sidebar.active{
-    left:0;
-}
-
-.sidebar-header{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.sidebar-header h2{
-    color:#d4af37;
-    font-size:24px;
-}
-
-.sidebar ul{
-    list-style:none;
-}
-
-.sidebar ul li{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:16px;
-    margin:10px 0;
-    border-radius:12px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.sidebar ul li:hover{
-    background:#d4af37;
-    color:#000;
-}
-
-.sidebar ul li i{
-    font-size:18px;
-}
-
-/* ===========================
-   Main Content
-=========================== */
-
-.main-content{
+.container{
     width:100%;
     min-height:100vh;
 }
 
-/* ===========================
-   Top Bar
-=========================== */
+/* ====================================
+   Top Navigation
+==================================== */
 
 .topbar{
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 22px;
+
     position:sticky;
+
     top:0;
-    background:rgba(15,15,15,.92);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid rgba(212,175,55,.15);
-    z-index:500;
+
+    width:100%;
+
+    height:70px;
+
+    background:#ffffff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    box-shadow:0 4px 20px rgba(255,105,180,.15);
+
+    z-index:100;
+
 }
 
-.topbar h2{
-    color:#d4af37;
-    font-size:22px;
-    font-weight:600;
-}
+.icon-btn{
 
-.menu-btn,
-.search-btn{
-    font-size:22px;
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:50%;
+
+    background:#ffe4ef;
+
+    color:#ff4f9a;
+
     cursor:pointer;
-    color:#d4af37;
+
+    font-size:18px;
+
     transition:.3s;
+
 }
 
-.menu-btn:hover,
-.search-btn:hover{
-    transform:scale(1.15);
+.icon-btn:hover{
+
+    background:#ff4f9a;
+
+    color:#fff;
+
+    transform:scale(1.08);
+
 }
 
-/* ===========================
-   Profile
-=========================== */
+#topUsername{
+
+    font-size:20px;
+
+    font-weight:600;
+
+    color:#ff4f9a;
+
+}
+
+/* ====================================
+   Sidebar
+==================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:-280px;
+
+    width:280px;
+
+    height:100vh;
+
+    background:#ffffff;
+
+    box-shadow:5px 0 20px rgba(255,105,180,.15);
+
+    transition:.35s;
+
+    z-index:999;
+
+    padding:25px;
+
+}
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+.sidebar-logo{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+.sidebar-logo h2{
+
+    color:#ff4f9a;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+}
+
+.sidebar ul li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.sidebar ul li i{
+
+    color:#ff4f9a;
+
+    font-size:20px;
+
+}
+
+.sidebar ul li:hover{
+
+    background:#ffe4ef;
+
+}
+
+/* ====================================
+   Overlay
+==================================== */
+
+#overlay{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.25);
+
+    display:none;
+
+    z-index:500;
+
+}
+
+#overlay.active{
+
+    display:block;
+
+}
+
+/* ====================================
+   Search Popup
+==================================== */
+
+.search-popup{
+
+    display:none;
+
+    width:90%;
+
+    max-width:420px;
+
+    margin:20px auto;
+
+    background:#ffffff;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 25px rgba(255,105,180,.15);
+
+}
+
+.search-popup.active{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.search-popup input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:#ffeef5;
+
+    padding:12px 15px;
+
+    border-radius:12px;
+
+}
+
+#closeSearch{
+
+    border:none;
+
+    background:#ff4f9a;
+
+    color:#fff;
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+}
+
+/* ====================================
+   Profile Section
+==================================== */
 
 .profile-section{
+
     text-align:center;
-    padding:40px 20px;
+
+    padding:35px 20px;
+
 }
 
-.profile-image img{
-    width:140px;
-    height:140px;
+.profile-picture{
+
+    position:relative;
+
+    width:150px;
+
+    height:150px;
+
+    margin:auto;
+
+}
+
+.profile-picture img{
+
+    width:150px;
+
+    height:150px;
+
     border-radius:50%;
+
     object-fit:cover;
-    border:4px solid #d4af37;
-    box-shadow:0 0 25px rgba(212,175,55,.45);
+
+    border:5px solid #ff8fbf;
+
+    box-shadow:0 8px 30px rgba(255,105,180,.25);
+
+}
+
+.camera-btn{
+
+    position:absolute;
+
+    right:5px;
+
+    bottom:5px;
+
+    width:40px;
+
+    height:40px;
+
+    background:#ff4f9a;
+
+    color:#fff;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
 }
 
 #profileName{
+
     margin-top:18px;
+
     font-size:28px;
+
+    color:#ff4f9a;
+
 }
 
 #profileUsername{
-    color:#c8c8c8;
-    margin-top:6px;
+
+    color:#777;
+
+    margin-top:5px;
+
 }
 
-.status{
-    margin-top:14px;
-    color:#4CAF50;
-    font-weight:500;
-}
+#profileBio{
 
-.last-seen{
-    margin-top:8px;
-    color:#aaa;
-    font-size:14px;
-}
+    margin:18px auto;
 
-.bio{
-    margin-top:18px;
-    color:#ddd;
-    max-width:450px;
-    margin-left:auto;
-    margin-right:auto;
+    max-width:320px;
+
+    color:#555;
+
     line-height:1.6;
+
 }
-/* ===========================
+
+.status-box{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    align-items:center;
+
+}
+
+#onlineStatus{
+
+    color:#28a745;
+
+    font-weight:600;
+
+}
+
+#lastSeen{
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+#editProfileBtn{
+
+    margin-top:20px;
+
+    padding:12px 25px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#ff4f9a;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+#editProfileBtn:hover{
+
+    background:#ff2d86;
+
+    transform:translateY(-2px);
+
+}
+/* ====================================
    Countdown Section
-=========================== */
+==================================== */
 
 .countdown-section{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-    padding:10px 20px 35px;
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    padding:20px;
+
 }
 
 .countdown-card{
-    width:170px;
-    background:#111;
-    border:1px solid rgba(212,175,55,.25);
-    border-radius:18px;
-    padding:22px;
-    text-align:center;
-    transition:.35s;
-    box-shadow:0 0 20px rgba(0,0,0,.35);
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    box-shadow:0 8px 25px rgba(255,105,180,.12);
+
+    transition:.3s;
+
 }
 
 .countdown-card:hover{
-    transform:translateY(-8px);
-    border-color:#d4af37;
-    box-shadow:0 0 25px rgba(212,175,55,.35);
+
+    transform:translateY(-5px);
+
+    box-shadow:0 12px 30px rgba(255,105,180,.20);
+
 }
 
-.countdown-card i{
-    font-size:30px;
-    color:#d4af37;
-    margin-bottom:12px;
+.countdown-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
 }
 
-.countdown-card h3{
+.countdown-header h3{
+
+    color:#ff4f9a;
+
     font-size:17px;
-    margin-bottom:8px;
+
+}
+
+.editCountdownBtn{
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ffe4ef;
+
+    color:#ff4f9a;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.editCountdownBtn:hover{
+
+    background:#ff4f9a;
+
+    color:#fff;
+
+}
+
+.countdown-card h2{
+
+    margin-top:18px;
+
+    color:#ff2d86;
+
+    font-size:28px;
+
 }
 
 .countdown-card p{
-    color:#ddd;
-    font-size:15px;
+
+    margin-top:8px;
+
+    color:#777;
+
 }
 
-/* ===========================
-   Feature Cards
-=========================== */
+/* ====================================
+   Features
+==================================== */
 
 .features{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-    gap:20px;
+
     padding:20px;
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
 }
 
 .feature-card{
-    background:#111;
-    border:1px solid rgba(212,175,55,.20);
-    border-radius:18px;
-    padding:28px 20px;
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:22px;
+
     text-align:center;
+
     cursor:pointer;
-    transition:.35s;
+
+    transition:.3s;
+
+    box-shadow:0 8px 20px rgba(255,105,180,.12);
+
 }
 
 .feature-card:hover{
-    transform:translateY(-8px);
-    border-color:#d4af37;
-    box-shadow:0 0 25px rgba(212,175,55,.30);
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 30px rgba(255,105,180,.20);
+
 }
 
 .feature-card i{
-    font-size:34px;
-    color:#d4af37;
-    margin-bottom:15px;
+
+    font-size:32px;
+
+    color:#ff4f9a;
+
+    margin-bottom:12px;
+
 }
 
-.feature-card h3{
-    font-size:18px;
-    color:#fff;
+.feature-card span{
+
+    display:block;
+
+    color:#555;
+
+    font-weight:500;
+
 }
 
-/* ===========================
-   Games Section
-=========================== */
+/* ====================================
+   Games
+==================================== */
 
 .games-section{
-    padding:30px 20px 50px;
+
+    padding:20px;
+
 }
 
 .games-section h2{
+
     text-align:center;
-    color:#d4af37;
-    margin-bottom:25px;
+
+    color:#ff4f9a;
+
+    margin-bottom:20px;
+
 }
 
 .games-container{
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:20px;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
 }
 
 .game-card{
-    background:#111;
-    border:1px solid rgba(212,175,55,.20);
-    border-radius:18px;
-    padding:30px 20px;
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:25px;
+
     text-align:center;
-    transition:.35s;
+
+    box-shadow:0 8px 20px rgba(255,105,180,.12);
+
+    transition:.3s;
+
+    cursor:pointer;
+
 }
 
 .game-card:hover{
-    transform:translateY(-8px);
-    border-color:#d4af37;
-    box-shadow:0 0 25px rgba(212,175,55,.30);
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 30px rgba(255,105,180,.20);
+
 }
 
 .game-card i{
-    font-size:42px;
-    color:#d4af37;
+
+    font-size:40px;
+
+    color:#ff4f9a;
+
     margin-bottom:15px;
+
 }
 
 .game-card h3{
-    margin-bottom:8px;
+
+    color:#444;
+
+    margin-bottom:6px;
+
 }
 
 .game-card p{
-    color:#bbb;
+
+    color:#888;
+
+    font-size:14px;
+
 }
 
-/* ===========================
-   Scrollbar
-=========================== */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#d4af37;
-    border-radius:10px;
-}
-
-::-webkit-scrollbar-track{
-    background:#0b0b0b;
-}
-
-/* ===========================
+/* ====================================
    Mobile Responsive
-=========================== */
+==================================== */
 
 @media(max-width:768px){
 
-    .topbar h2{
-        font-size:18px;
+    .countdown-section{
+
+        grid-template-columns:1fr;
+
     }
 
-    .profile-image img{
-        width:110px;
-        height:110px;
+    .features{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .games-container{
+
+        grid-template-columns:1fr;
+
     }
 
     #profileName{
+
         font-size:24px;
+
     }
 
-    .countdown-card{
-        width:150px;
+    .profile-picture{
+
+        width:130px;
+
+        height:130px;
+
     }
 
-    .feature-card{
-        padding:24px 15px;
+    .profile-picture img{
+
+        width:130px;
+
+        height:130px;
+
     }
 
 }
+
+/* ====================================
+   Scrollbar
+==================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#ff4f9a;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ffeef5;
+
+   }

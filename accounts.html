@@ -10,7 +10,7 @@
 
     <title>Private Vault | Home</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Font -->
 
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
           href="https://fonts.gstatic.com"
           crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -34,16 +34,16 @@
 
 </head>
 
-<body>
+<body data-theme="pink">
 
     <!-- ==========================
-         Sidebar Overlay
+         SIDEBAR OVERLAY
     =========================== -->
 
     <div id="sidebarOverlay"></div>
 
     <!-- ==========================
-         Sidebar
+         SIDEBAR
     =========================== -->
 
     <aside id="sidebar">
@@ -119,12 +119,14 @@
     </aside>
 
     <!-- ==========================
-         Main Container
+         HOME CONTAINER
     =========================== -->
 
     <main class="home-container">
 
-        <!-- Header -->
+        <!-- ==========================
+             HEADER
+        =========================== -->
 
         <header class="top-header">
 
@@ -152,6 +154,12 @@
 
             <div class="header-actions">
 
+                <button id="searchBtn">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </button>
+
                 <button id="notificationBtn">
 
                     <i class="fa-solid fa-bell"></i>
@@ -164,22 +172,14 @@
 
                 </button>
 
-                <button id="searchBtn">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                </button>
-
             </div>
 
         </header>
         <!-- ==========================
-             Profile Section
+             PROFILE SECTION
         =========================== -->
 
         <section class="profile-section">
-
-            <!-- Profile Picture -->
 
             <div class="profile-picture-container">
 
@@ -195,15 +195,11 @@
 
             </div>
 
-            <!-- Display Name -->
-
             <h2 id="displayName">
 
                 Your Name
 
             </h2>
-
-            <!-- Username -->
 
             <p id="profileUsername">
 
@@ -211,15 +207,11 @@
 
             </p>
 
-            <!-- Bio -->
-
             <p id="profileBio">
 
-                Your bio will appear here...
+                Welcome to my Private Vault ❤️
 
             </p>
-
-            <!-- Online Status -->
 
             <div class="status-container">
 
@@ -242,7 +234,7 @@
         </section>
 
         <!-- ==========================
-             Countdown Section
+             COUNTDOWN SECTION
         =========================== -->
 
         <section class="countdown-section">
@@ -307,7 +299,7 @@
 
         </section>
         <!-- ==========================
-             Dashboard Features
+             DASHBOARD SECTION
         =========================== -->
 
         <section class="dashboard-section">
@@ -321,15 +313,11 @@
 
                     <div class="feature-icon">
 
-                        <i class="fa-solid fa-envelope-open-heart"></i>
+                        <i class="fa-solid fa-envelope-open-text"></i>
 
                     </div>
 
-                    <span>
-
-                        Love Letters
-
-                    </span>
+                    <span>Love Letters</span>
 
                 </button>
 
@@ -340,15 +328,11 @@
 
                     <div class="feature-icon">
 
-                        <i class="fa-solid fa-book-open"></i>
+                        <i class="fa-solid fa-book"></i>
 
                     </div>
 
-                    <span>
-
-                        Diary
-
-                    </span>
+                    <span>Diary</span>
 
                 </button>
 
@@ -363,11 +347,7 @@
 
                     </div>
 
-                    <span>
-
-                        Secret Notes
-
-                    </span>
+                    <span>Secret Notes</span>
 
                 </button>
 
@@ -382,15 +362,11 @@
 
                     </div>
 
-                    <span>
-
-                        Gallery
-
-                    </span>
+                    <span>Gallery</span>
 
                 </button>
 
-                <!-- Chat -->
+                <!-- Chats -->
 
                 <button class="feature-card"
                         id="chatBtn">
@@ -401,11 +377,7 @@
 
                     </div>
 
-                    <span>
-
-                        Chats
-
-                    </span>
+                    <span>Chats</span>
 
                 </button>
 
@@ -420,15 +392,11 @@
 
                     </div>
 
-                    <span>
-
-                        Task Tracker
-
-                    </span>
+                    <span>Tasks</span>
 
                 </button>
 
-                <!-- Relationship Counter -->
+                <!-- Relationship -->
 
                 <button class="feature-card"
                         id="relationshipBtn">
@@ -439,11 +407,7 @@
 
                     </div>
 
-                    <span>
-
-                        Relationship
-
-                    </span>
+                    <span>Love</span>
 
                 </button>
 
@@ -458,11 +422,7 @@
 
                     </div>
 
-                    <span>
-
-                        Games
-
-                    </span>
+                    <span>Games</span>
 
                 </button>
 
@@ -470,7 +430,7 @@
 
         </section>
         <!-- ==========================
-             Search Panel
+             SEARCH PANEL
         =========================== -->
 
         <div id="searchPanel">
@@ -487,26 +447,16 @@
 
             </div>
 
-            <div class="search-input-box">
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-                <input type="text"
-                       id="searchInput"
-                       placeholder="Search users or settings...">
-
-            </div>
-
             <div id="searchResults">
 
-                <!-- Search Results -->
+                <!-- Search results will appear here -->
 
             </div>
 
         </div>
 
         <!-- ==========================
-             Notification Panel
+             NOTIFICATION PANEL
         =========================== -->
 
         <div id="notificationPanel">
@@ -538,16 +488,17 @@
     </main>
 
     <!-- ==========================
-         Hidden File Input
+         HIDDEN INPUTS
     =========================== -->
 
-    <input type="file"
-           id="profilePictureInput"
-           accept="image/*"
-           hidden>
+    <input
+        type="file"
+        id="profilePictureInput"
+        accept="image/*"
+        hidden>
 
     <!-- ==========================
-         JavaScript
+         JAVASCRIPT
     =========================== -->
 
     <script type="module"
@@ -555,4 +506,4 @@
 
 </body>
 
-</html>
+    </html>

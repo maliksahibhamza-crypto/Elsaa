@@ -1923,19 +1923,6 @@ img{
     padding:14px;
 
     border-radius:15px;
-
-    transition:.3s;
-
-}
-
-.sidebar-menu a:hover{
-
-    background:var(--primary);
-
-    color:#fff;
-
-   }
 /* ===================================
    END OF FILE
 =================================== */
-

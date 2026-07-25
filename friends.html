@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Friends | Elsa & Me</title>
+
+<link rel="stylesheet" href="friends.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="friends-container">
+
+    <!-- Header -->
+
+    <header class="friends-header">
+
+        <button id="backBtn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+        </button>
+
+        <h2>Friends</h2>
+
+        <button id="addFriendBtn">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+        </button>
+
+    </header>
+    <!-- Search Section -->
+
+    <section class="friends-search">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchUser"
+                placeholder="Search by username..."
+                autocomplete="off"
+            >
+
+            <button id="searchBtn">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Search Result -->
+
+    <section id="searchResult" class="search-result hidden">
+
+        <img
+            src="https://via.placeholder.com/70"
+            alt="Profile"
+            id="resultProfile"
+        >
+
+        <div class="result-info">
+
+            <h3 id="resultName">User Name</h3>
+
+            <p id="resultUsername">@username</p>
+
+        </div>
+
+        <button id="sendRequestBtn">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Add
+
+        </button>
+
+    </section>
+
+
+    <!-- Pending Requests -->
+
+    <section class="request-section">
+
+        <h3>Pending Requests</h3>
+
+        <div id="pendingRequests">
+
+            <!-- Requests will load here -->
+
+        </div>
+
+    </section>
+    <!-- Friends List -->
+
+    <section class="friends-list-section">
+
+        <div class="section-title">
+
+            <h3>Your Friends</h3>
+
+            <span id="friendsCount">0 Friends</span>
+
+        </div>
+
+        <div id="friendsList">
+
+            <!-- Friend Card -->
+
+            <div class="friend-card">
+
+                <img
+                    src="https://via.placeholder.com/70"
+                    alt="Friend"
+                    class="friend-profile"
+                >
+
+                <div class="friend-info">
+
+                    <h4>Friend Name</h4>
+
+                    <p>@username</p>
+
+                    <span class="online-status online">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        Online
+
+                    </span>
+
+                </div>
+
+                <div class="friend-actions">
+
+                    <button class="chat-btn">
+
+                        <i class="fa-solid fa-comments"></i>
+
+                    </button>
+
+                    <button class="profile-btn">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Friends will load here dynamically -->
+
+        </div>
+
+    </section>
+    <!-- Empty State -->
+
+    <section id="emptyFriends" class="empty-state">
+
+        <i class="fa-solid fa-user-group"></i>
+
+        <h3>No Friends Yet</h3>
+
+        <p>
+            Search for your friends by username and send them a friend request.
+        </p>
+
+    </section>
+
+
+    <!-- Loading -->
+
+    <div id="loadingScreen" class="loading hidden">
+
+        <div class="loader"></div>
+
+        <p>Loading...</p>
+
+    </div>
+
+
+    <!-- Bottom Navigation -->
+
+    <nav class="bottom-nav">
+
+        <button id="homeBtn">
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>Home</span>
+
+        </button>
+
+        <button id="friendsNavBtn" class="active">
+
+            <i class="fa-solid fa-user-group"></i>
+
+            <span>Friends</span>
+
+        </button>
+
+        <button id="chatBtn">
+
+            <i class="fa-solid fa-comments"></i>
+
+            <span>Chats</span>
+
+        </button>
+
+        <button id="settingsBtn">
+
+            <i class="fa-solid fa-gear"></i>
+
+            <span>Settings</span>
+
+        </button>
+
+    </nav>
+
+</div>
+
+<script type="module" src="friends.js"></script>
+
+</body>
+
+</html>

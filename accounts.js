@@ -1,573 +1,598 @@
-// ==========================================
-// Firebase Imports
-// ==========================================
+// ===================================
+// FIREBASE IMPORTS
+// ===================================
 
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
 import {
+
     onAuthStateChanged,
     signOut
+
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-// ==========================================
-// Check Login
-// ==========================================
+import {
 
-onAuthStateChanged(auth, (user) => {
+    doc,
+    getDoc,
+    updateDoc
 
-    if (!user) {
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-        window.location.href = "login.html";
-        return;
 
-    }
+// ===================================
+// DOM ELEMENTS
+// ===================================
 
-    console.log("Logged In:", user.email);
+const openSidebar = document.getElementById("openSidebar");
 
-});
+const closeSidebar = document.getElementById("closeSidebar");
 
-// ==========================================
-// Elements
-// ==========================================
+const sidebar = document.getElementById("sidebar");
 
-const sidebar =
-    document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
 
-const overlay =
-    document.getElementById("overlay");
+const searchBtn = document.getElementById("searchBtn");
 
-const menuBtn =
-    document.getElementById("menuBtn");
+const closeSearch = document.getElementById("closeSearch");
 
-const searchBtn =
-    document.getElementById("searchBtn");
+const searchPanel = document.getElementById("searchPanel");
 
-const searchPopup =
-    document.getElementById("searchPopup");
+const notificationBtn = document.getElementById("notificationBtn");
 
-const closeSearch =
-    document.getElementById("closeSearch");
+const closeNotification = document.getElementById("closeNotification");
 
-const searchInput =
-    document.getElementById("searchInput");
+const notificationPanel = document.getElementById("notificationPanel");
 
-// ==========================================
-// Sidebar
-// ==========================================
 
-menuBtn.addEventListener("click", () => {
+// ===================================
+// SIDEBAR
+// ===================================
+
+function openMenu() {
 
     sidebar.classList.add("active");
 
-    overlay.classList.add("active");
+    sidebarOverlay.classList.add("active");
 
-});
+}
 
-overlay.addEventListener("click", () => {
+function closeMenu() {
 
     sidebar.classList.remove("active");
 
-    overlay.classList.remove("active");
+    sidebarOverlay.classList.remove("active");
 
-});
+}
 
-// ==========================================
-// Search Popup
-// ==========================================
+openSidebar.addEventListener("click", openMenu);
+
+closeSidebar.addEventListener("click", closeMenu);
+
+sidebarOverlay.addEventListener("click", closeMenu);
+
+
+// ===================================
+// SEARCH PANEL
+// ===================================
 
 searchBtn.addEventListener("click", () => {
 
-    searchPopup.classList.add("active");
+    searchPanel.classList.add("active");
 
-    searchInput.focus();
+    notificationPanel.classList.remove("active");
 
 });
 
 closeSearch.addEventListener("click", () => {
 
-    searchPopup.classList.remove("active");
-
-    searchInput.value = "";
+    searchPanel.classList.remove("active");
 
 });
 
-// ==========================================
-// Search (Placeholder)
-// ==========================================
 
-searchInput.addEventListener("keyup", (e) => {
+// ===================================
+// NOTIFICATION PANEL
+// ===================================
 
-    if (e.key === "Enter") {
+notificationBtn.addEventListener("click", () => {
 
-        const username =
-            searchInput.value.trim();
+    notificationPanel.classList.add("active");
 
-        if (username === "") {
+    searchPanel.classList.remove("active");
 
-            alert("Enter a username.");
+});
+
+closeNotification.addEventListener("click", () => {
+
+    notificationPanel.classList.remove("active");
+
+});
+
+
+// ===================================
+// ESC KEY SUPPORT
+// ===================================
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape") {
+
+        closeMenu();
+
+        searchPanel.classList.remove("active");
+
+        notificationPanel.classList.remove("active");
+
+    }
+
+});
+// ===================================
+// PROFILE ELEMENTS
+// ===================================
+
+const headerUsername = document.getElementById("headerUsername");
+
+const displayName = document.getElementById("displayName");
+
+const profileUsername = document.getElementById("profileUsername");
+
+const profileBio = document.getElementById("profileBio");
+
+const profilePicture = document.getElementById("profilePicture");
+
+const profilePictureInput = document.getElementById("profilePictureInput");
+
+const editProfilePicture = document.getElementById("editProfilePicture");
+
+
+// ===================================
+// CURRENT USER
+// ===================================
+
+let currentUser = null;
+
+let currentUserData = null;
+
+
+// ===================================
+// AUTH STATE
+// ===================================
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+
+    }
+
+    currentUser = user;
+
+    await loadUserProfile();
+
+});
+
+
+// ===================================
+// LOAD USER PROFILE
+// ===================================
+
+async function loadUserProfile() {
+
+    try {
+
+        const userRef = doc(db, "users", currentUser.uid);
+
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+
+            console.log("User profile not found.");
 
             return;
 
         }
 
-        alert(
-            "Searching for @" + username
-        );
+        currentUserData = userSnap.data();
+
+        displayProfile(currentUserData);
 
     }
 
-});
+    catch (error) {
 
-// ==========================================
-// ESC Key Support
-// ==========================================
-
-document.addEventListener("keydown", (e) => {
-
-    if (e.key === "Escape") {
-
-        sidebar.classList.remove("active");
-
-        overlay.classList.remove("active");
-
-        searchPopup.classList.remove("active");
+        console.error(error);
 
     }
-
-});
-// ==========================================
-// Profile Elements
-// ==========================================
-
-const profilePic =
-    document.getElementById("profilePic");
-
-const profileName =
-    document.getElementById("profileName");
-
-const profileUsername =
-    document.getElementById("profileUsername");
-
-const profileBio =
-    document.getElementById("profileBio");
-
-const onlineStatus =
-    document.getElementById("onlineStatus");
-
-const lastSeen =
-    document.getElementById("lastSeen");
-
-const editProfileBtn =
-    document.getElementById("editProfileBtn");
-
-const profileUpload =
-    document.getElementById("profileUpload");
-
-// ==========================================
-// Default Profile
-// ==========================================
-
-function loadProfile(user) {
-
-    profileName.textContent =
-        user.displayName || "No Name";
-
-    profileUsername.textContent =
-        "@" +
-        (user.email ?
-        user.email.split("@")[0] :
-        "username");
-
-    profileBio.textContent =
-        "No bio added yet.";
-
-    onlineStatus.textContent =
-        "🟢 Online";
-
-    lastSeen.textContent =
-        "Last Seen : Online";
 
 }
 
-onAuthStateChanged(auth, (user) => {
 
-    if (user) {
+// ===================================
+// DISPLAY PROFILE
+// ===================================
 
-        loadProfile(user);
+function displayProfile(data) {
+
+    headerUsername.textContent =
+
+        data.username || "Username";
+
+    displayName.textContent =
+
+        data.name || "No Name";
+
+    profileUsername.textContent =
+
+        "@" + (data.username || "username");
+
+    profileBio.textContent =
+
+        data.bio || "No bio yet.";
+
+    if (data.photoURL) {
+
+        profilePicture.src = data.photoURL;
 
     }
+
+}
+
+
+// ===================================
+// PROFILE PICTURE PICKER
+// ===================================
+
+editProfilePicture.addEventListener("click", () => {
+
+    profilePictureInput.click();
 
 });
 
-// ==========================================
-// Edit Profile
-// ==========================================
 
-editProfileBtn.addEventListener("click", () => {
+profilePictureInput.addEventListener("change", () => {
 
-    const newName =
-        prompt(
-            "Enter your name:",
-            profileName.textContent
-        );
-
-    if (newName &&
-        newName.trim() !== "") {
-
-        profileName.textContent =
-            newName.trim();
-
-    }
-
-    const newBio =
-        prompt(
-            "Enter your bio:",
-            profileBio.textContent
-        );
-
-    if (newBio &&
-        newBio.trim() !== "") {
-
-        profileBio.textContent =
-            newBio.trim();
-
-    }
-
-});
-
-// ==========================================
-// Profile Picture Preview
-// ==========================================
-
-profileUpload.addEventListener("change", (e) => {
-
-    const file =
-        e.target.files[0];
+    const file = profilePictureInput.files[0];
 
     if (!file) return;
 
-    const reader =
-        new FileReader();
+    const reader = new FileReader();
 
-    reader.onload = function(event) {
+    reader.onload = () => {
 
-        profilePic.src =
-            event.target.result;
+        profilePicture.src = reader.result;
 
     };
 
     reader.readAsDataURL(file);
 
 });
-// ==========================================
-// Countdown Elements
-// ==========================================
+// ===================================
+// ONLINE STATUS
+// ===================================
 
-const relationshipDays =
-    document.getElementById("relationshipDays");
+const onlineIndicator = document.getElementById("onlineIndicator");
 
-const relationshipDate =
-    document.getElementById("relationshipDate");
+const lastSeen = document.getElementById("lastSeen");
 
-const specialDays =
-    document.getElementById("specialDays");
 
-const specialDate =
-    document.getElementById("specialDate");
+// ===================================
+// SET USER ONLINE
+// ===================================
 
-const editRelationshipCountdown =
-    document.getElementById("editRelationshipCountdown");
+async function setUserOnline() {
 
-const editSpecialCountdown =
-    document.getElementById("editSpecialCountdown");
-
-// ==========================================
-// Countdown Function
-// ==========================================
-
-function updateCountdown(date, dayElement, dateElement) {
-
-    if (!date) {
-
-        dayElement.textContent = "0 Days";
-
-        dateElement.textContent = "No Date Selected";
-
-        return;
-
-    }
-
-    const today = new Date();
-
-    const selected = new Date(date);
-
-    const diff =
-        Math.floor(
-            (today - selected) /
-            (1000 * 60 * 60 * 24)
-        );
-
-    dayElement.textContent =
-        diff + " Days";
-
-    dateElement.textContent =
-        selected.toDateString();
-
-}
-
-// ==========================================
-// Load Saved Dates
-// ==========================================
-
-let relationDate =
-    localStorage.getItem("relationshipDate");
-
-let specialEventDate =
-    localStorage.getItem("specialDate");
-
-updateCountdown(
-    relationDate,
-    relationshipDays,
-    relationshipDate
-);
-
-updateCountdown(
-    specialEventDate,
-    specialDays,
-    specialDate
-);
-
-// ==========================================
-// Edit Relationship Countdown
-// ==========================================
-
-editRelationshipCountdown.addEventListener("click", () => {
-
-    const newDate =
-        prompt(
-            "Enter Relationship Date\n(YYYY-MM-DD)"
-        );
-
-    if (!newDate) return;
-
-    localStorage.setItem(
-        "relationshipDate",
-        newDate
-    );
-
-    updateCountdown(
-        newDate,
-        relationshipDays,
-        relationshipDate
-    );
-
-});
-
-// ==========================================
-// Edit Special Countdown
-// ==========================================
-
-editSpecialCountdown.addEventListener("click", () => {
-
-    const newDate =
-        prompt(
-            "Enter Special Date\n(YYYY-MM-DD)"
-        );
-
-    if (!newDate) return;
-
-    localStorage.setItem(
-        "specialDate",
-        newDate
-    );
-
-    updateCountdown(
-        newDate,
-        specialDays,
-        specialDate
-    );
-
-});
-// ==========================================
-// Online / Last Seen
-// ==========================================
-
-const statusElement =
-    document.getElementById("onlineStatus");
-
-const lastSeenElement =
-    document.getElementById("lastSeen");
-
-// ==========================================
-// Set Online
-// ==========================================
-
-function setOnline() {
-
-    statusElement.textContent =
-        "🟢 Online";
-
-    statusElement.style.color =
-        "#28a745";
-
-}
-
-// ==========================================
-// Save Last Seen
-// ==========================================
-
-function saveLastSeen() {
-
-    const now =
-        new Date();
-
-    localStorage.setItem(
-        "lastSeen",
-        now.toISOString()
-    );
-
-}
-
-// ==========================================
-// Show Last Seen
-// ==========================================
-
-function showLastSeen() {
-
-    const last =
-        localStorage.getItem("lastSeen");
-
-    if (!last) {
-
-        lastSeenElement.textContent =
-            "Last Seen : Never";
-
-        return;
-
-    }
-
-    const date =
-        new Date(last);
-
-    lastSeenElement.textContent =
-        "Last Seen : " +
-        date.toLocaleString();
-
-}
-
-// ==========================================
-// Page Loaded
-// ==========================================
-
-window.addEventListener("load", () => {
-
-    setOnline();
-
-    showLastSeen();
-
-});
-
-// ==========================================
-// Before Leaving Website
-// ==========================================
-
-window.addEventListener("beforeunload", () => {
-
-    saveLastSeen();
-
-});
-
-// ==========================================
-// Logout Status
-// ==========================================
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-logoutBtn.addEventListener("click", () => {
-
-    saveLastSeen();
-
-});
-// ==========================================
-// Navigation
-// ==========================================
-
-const friendsBtn =
-    document.getElementById("friendsBtn");
-
-const profileBtn =
-    document.getElementById("profileBtn");
-
-const settingsBtn =
-    document.getElementById("settingsBtn");
-
-const changePasswordBtn =
-    document.getElementById("changePasswordBtn");
-
-// ==========================================
-// Friends
-// ==========================================
-
-friendsBtn.addEventListener("click", () => {
-
-    alert("Friends Page - Coming Soon");
-
-});
-
-// ==========================================
-// My Profile
-// ==========================================
-
-profileBtn.addEventListener("click", () => {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-});
-
-// ==========================================
-// Settings
-// ==========================================
-
-settingsBtn.addEventListener("click", () => {
-
-    alert("Settings - Coming Soon");
-
-});
-
-// ==========================================
-// Change Password
-// ==========================================
-
-changePasswordBtn.addEventListener("click", () => {
-
-    alert("Change Password - Coming Soon");
-
-});
-
-// ==========================================
-// Logout
-// ==========================================
-
-logoutBtn.addEventListener("click", async () => {
-
-    const confirmLogout = confirm(
-        "Are you sure you want to logout?"
-    );
-
-    if (!confirmLogout) return;
+    if (!currentUser) return;
 
     try {
 
-        await signOut(auth);
+        await updateDoc(
 
-        alert("Logged Out Successfully!");
+            doc(db, "users", currentUser.uid),
+
+            {
+
+                online: true,
+
+                lastSeen: new Date()
+
+            }
+
+        );
+
+        onlineIndicator.innerHTML =
+
+            '<i class="fa-solid fa-circle"></i> Online';
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ===================================
+// SET USER OFFLINE
+// ===================================
+
+async function setUserOffline() {
+
+    if (!currentUser) return;
+
+    try {
+
+        await updateDoc(
+
+            doc(db, "users", currentUser.uid),
+
+            {
+
+                online: false,
+
+                lastSeen: new Date()
+
+            }
+
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ===================================
+// SHOW LAST SEEN
+// ===================================
+
+function updateLastSeen(data) {
+
+    if (data.online) {
+
+        onlineIndicator.innerHTML =
+
+            '<i class="fa-solid fa-circle"></i> Online';
+
+        lastSeen.textContent =
+
+            "Last Seen: Online";
+
+        return;
+
+    }
+
+    onlineIndicator.innerHTML =
+
+        '<i class="fa-solid fa-circle"></i> Offline';
+
+    if (data.lastSeen) {
+
+        const date = data.lastSeen.toDate();
+
+        lastSeen.textContent =
+
+            "Last Seen: " +
+
+            date.toLocaleString();
+
+    }
+
+    else {
+
+        lastSeen.textContent =
+
+            "Last Seen: Unknown";
+
+    }
+
+}
+
+
+// ===================================
+// WINDOW EVENTS
+// ===================================
+
+window.addEventListener("load", () => {
+
+    setUserOnline();
+
+});
+
+window.addEventListener("beforeunload", () => {
+
+    setUserOffline();
+
+});
+
+document.addEventListener("visibilitychange", () => {
+
+    if (document.hidden) {
+
+        setUserOffline();
+
+    }
+
+    else {
+
+        setUserOnline();
+
+    }
+
+});
+// ===================================
+// COUNTDOWN ELEMENTS
+// ===================================
+
+const relationshipTime = document.getElementById("relationshipTime");
+
+const specialTime = document.getElementById("specialTime");
+
+
+// ===================================
+// RELATIONSHIP COUNTDOWN
+// ===================================
+
+function updateRelationshipCountdown(date) {
+
+    if (!date) {
+
+        relationshipTime.textContent = "Not Set";
+
+        return;
+
+    }
+
+    const now = new Date();
+
+    const target = new Date(date);
+
+    const diff = now - target;
+
+    const totalDays = Math.floor(
+
+        diff / (1000 * 60 * 60 * 24)
+
+    );
+
+    const years = Math.floor(totalDays / 365);
+
+    const months = Math.floor(
+
+        (totalDays % 365) / 30
+
+    );
+
+    const days = (totalDays % 365) % 30;
+
+    relationshipTime.textContent =
+
+        `${years} Years • ${months} Months • ${days} Days`;
+
+}
+
+
+// ===================================
+// SPECIAL COUNTDOWN
+// ===================================
+
+function updateSpecialCountdown(date) {
+
+    if (!date) {
+
+        specialTime.textContent = "Not Set";
+
+        return;
+
+    }
+
+    const now = new Date();
+
+    const target = new Date(date);
+
+    const diff = target - now;
+
+    if (diff <= 0) {
+
+        specialTime.textContent = "Today 🎉";
+
+        return;
+
+    }
+
+    const days = Math.ceil(
+
+        diff / (1000 * 60 * 60 * 24)
+
+    );
+
+    specialTime.textContent =
+
+        `${days} Days Remaining`;
+
+}
+
+
+// ===================================
+// LOAD BOTH COUNTDOWNS
+// ===================================
+
+function loadCountdowns(userData) {
+
+    if (!userData) return;
+
+    updateRelationshipCountdown(
+
+        userData.relationshipDate
+
+    );
+
+    updateSpecialCountdown(
+
+        userData.specialDate
+
+    );
+
+}
+
+
+// ===================================
+// AUTO REFRESH
+// ===================================
+
+setInterval(() => {
+
+    if (currentUserData) {
+
+        loadCountdowns(currentUserData);
+
+    }
+
+}, 60000);
+// ===================================
+// THEME SYSTEM
+// ===================================
+
+const savedTheme = localStorage.getItem("theme") || "pink";
+
+document.body.setAttribute("data-theme", savedTheme);
+
+
+// ===================================
+// CHANGE THEME
+// ===================================
+
+function changeTheme(theme) {
+
+    document.body.setAttribute("data-theme", theme);
+
+    localStorage.setItem("theme", theme);
+
+}
+
+
+// ===================================
+// LOGOUT
+// ===================================
+
+logoutBtn.addEventListener("click", async () => {
+
+    try {
+
+        await setUserOffline();
+
+        await signOut(auth);
 
         window.location.href = "login.html";
 
@@ -575,74 +600,128 @@ logoutBtn.addEventListener("click", async () => {
 
     catch (error) {
 
-        alert(error.message);
+        console.error(error);
 
     }
 
 });
 
-// ==========================================
-// Feature Cards
-// ==========================================
 
-document.getElementById("loveLetters")
-.addEventListener("click", () => {
+// ===================================
+// NAVIGATION
+// ===================================
 
-    alert("Love Letters - Coming Soon ❤️");
+friendsBtn.addEventListener("click", () => {
 
-});
-
-document.getElementById("diary")
-.addEventListener("click", () => {
-
-    alert("Diary - Coming Soon 📖");
+    window.location.href = "friends.html";
 
 });
 
-document.getElementById("secretNotes")
-.addEventListener("click", () => {
+profileBtn.addEventListener("click", () => {
 
-    alert("Secret Notes - Coming Soon 🔒");
-
-});
-
-document.getElementById("gallery")
-.addEventListener("click", () => {
-
-    alert("Gallery - Coming Soon 🖼️");
+    window.location.href = "home.html";
 
 });
 
-document.getElementById("relationshipCounter")
-.addEventListener("click", () => {
+taskTrackerBtn.addEventListener("click", () => {
 
-    alert("Relationship Counter - Coming Soon ❤️");
-
-});
-
-document.getElementById("chat")
-.addEventListener("click", () => {
-
-    alert("Private Chat - Coming Soon 💬");
+    window.location.href = "tasks.html";
 
 });
 
-document.getElementById("game1")
-.addEventListener("click", () => {
+settingsBtn.addEventListener("click", () => {
 
-    alert("Game 1 - Coming Soon 🎮");
-
-});
-
-document.getElementById("game2")
-.addEventListener("click", () => {
-
-    alert("Game 2 - Coming Soon 🎲");
+    window.location.href = "settings.html";
 
 });
 
-// ==========================================
-// Dashboard Loaded
-// ==========================================
+changePasswordBtn.addEventListener("click", () => {
 
-console.log("✅ Private Vault Loaded Successfully");
+    window.location.href = "change-password.html";
+
+});
+
+loveLettersBtn.addEventListener("click", () => {
+
+    window.location.href = "loveletters.html";
+
+});
+
+diaryBtn.addEventListener("click", () => {
+
+    window.location.href = "diary.html";
+
+});
+
+secretNotesBtn.addEventListener("click", () => {
+
+    window.location.href = "secret-notes.html";
+
+});
+
+galleryBtn.addEventListener("click", () => {
+
+    window.location.href = "gallery.html";
+
+});
+
+chatBtn.addEventListener("click", () => {
+
+    window.location.href = "chat.html";
+
+});
+
+taskTrackerHomeBtn.addEventListener("click", () => {
+
+    window.location.href = "tasks.html";
+
+});
+
+relationshipBtn.addEventListener("click", () => {
+
+    window.location.href = "relationship.html";
+
+});
+
+gamesBtn.addEventListener("click", () => {
+
+    window.location.href = "games.html";
+
+});
+
+
+// ===================================
+// PROFILE PICTURE PLACEHOLDER
+// ===================================
+
+profilePictureInput.addEventListener("change", () => {
+
+    const file = profilePictureInput.files[0];
+
+    if (!file) return;
+
+    console.log("Selected:", file.name);
+
+    // Firebase Storage upload
+    // will be added later.
+
+});
+
+
+// ===================================
+// INITIALIZE APP
+// ===================================
+
+function initializeHome() {
+
+    if (currentUserData) {
+
+        loadCountdowns(currentUserData);
+
+        updateLastSeen(currentUserData);
+
+    }
+
+}
+
+window.addEventListener("load", initializeHome);

@@ -2,11 +2,21 @@
 // Firebase Imports
 // ===============================
 
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
 import {
-    createUserWithEmailAndPassword
+createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+
+doc,
+
+setDoc,
+
+serverTimestamp
+
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 // ===============================
 // Loading Screen
@@ -14,17 +24,17 @@ import {
 
 window.addEventListener("load", () => {
 
-    setTimeout(() => {
+setTimeout(() => {
 
-        document.getElementById("loading-screen").style.opacity = "0";
+document.getElementById("loading-screen").style.opacity = "0";
 
-        setTimeout(() => {
+setTimeout(() => {
 
-            document.getElementById("loading-screen").style.display = "none";
+document.getElementById("loading-screen").style.display = "none";
 
-        }, 800);
+}, 800);
 
-    }, 1500);
+}, 1500);
 
 });
 
@@ -40,41 +50,41 @@ const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
 togglePassword.addEventListener("click", () => {
 
-    if (password.type === "password") {
+if (password.type === "password") {
 
-        password.type = "text";
+password.type = "text";
 
-        togglePassword.innerHTML =
-            '<i class="fa-solid fa-eye-slash"></i>';
+togglePassword.innerHTML =
+'<i class="fa-solid fa-eye-slash"></i>';
 
-    } else {
+} else {
 
-        password.type = "password";
+password.type = "password";
 
-        togglePassword.innerHTML =
-            '<i class="fa-solid fa-eye"></i>';
+togglePassword.innerHTML =
+'<i class="fa-solid fa-eye"></i>';
 
-    }
+}
 
 });
 
 toggleConfirmPassword.addEventListener("click", () => {
 
-    if (confirmPassword.type === "password") {
+if (confirmPassword.type === "password") {
 
-        confirmPassword.type = "text";
+confirmPassword.type = "text";
 
-        toggleConfirmPassword.innerHTML =
-            '<i class="fa-solid fa-eye-slash"></i>';
+toggleConfirmPassword.innerHTML =
+'<i class="fa-solid fa-eye-slash"></i>';
 
-    } else {
+} else {
 
-        confirmPassword.type = "password";
+confirmPassword.type = "password";
 
-        toggleConfirmPassword.innerHTML =
-            '<i class="fa-solid fa-eye"></i>';
+toggleConfirmPassword.innerHTML =
+'<i class="fa-solid fa-eye"></i>';
 
-    }
+}
 
 });
 
@@ -90,70 +100,104 @@ const button = document.getElementById("signupBtn");
 
 form.addEventListener("submit", async (e) => {
 
-    e.preventDefault();
+e.preventDefault();
 
-    const username = document.getElementById("username").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const pass = password.value.trim();
-    const confirm = confirmPassword.value.trim();
+const username = document.getElementById("username").value.trim();
+const email = document.getElementById("email").value.trim();
+const pass = password.value.trim();
+const confirm = confirmPassword.value.trim();
 
-    if (username === "" || email === "" || pass === "" || confirm === "") {
+if (username === "" || email === "" || pass === "" || confirm === "") {
 
-        alert("Please fill all fields.");
-        return;
+alert("Please fill all fields.");
+return;
 
-    }
+}
 
-    if (pass !== confirm) {
+if (pass !== confirm) {
 
-        alert("Passwords do not match.");
-        return;
+alert("Passwords do not match.");
+return;
 
-    }
+}
 
-    if (pass.length < 8) {
+if (pass.length < 8) {
 
-        alert("Password must contain at least 8 characters.");
-        return;
+alert("Password must contain at least 8 characters.");
+return;
 
-    }
+}
 
-    button.disabled = true;
-    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+button.disabled = true;
+button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
 
-    try {
+try {
 
-        await createUserWithEmailAndPassword(auth, email, pass);
+const userCredential = await createUserWithEmailAndPassword(
 
-        alert("Account created successfully!");
+auth,
 
-        window.location.href = "account.html";
+email,
 
-    } catch (error) {
+pass
 
-        switch (error.code) {
+);
 
-            case "auth/email-already-in-use":
-                alert("This email is already registered.");
-                break;
+const user = userCredential.user;
 
-            case "auth/invalid-email":
-                alert("Please enter a valid email.");
-                break;
+// Save User in Firestore
 
-            case "auth/weak-password":
-                alert("Password should be at least 6 characters.");
-                break;
+await setDoc(doc(db, "users", user.uid), {
 
-            default:
-                alert(error.message);
+uid: user.uid,
 
-        }
+displayName: username,
 
-        button.disabled = false;
-        button.innerHTML = "CREATE ACCOUNT";
+username: username.trim().toLowerCase(),
 
-    }
+email: email,
+
+profilePicture: "",
+
+bio: "Welcome to my Private Vault ❤️",
+
+online: true,
+
+lastSeen: serverTimestamp(),
+
+createdAt: serverTimestamp()
+
+});
+
+alert("Account created successfully!");
+
+window.location.href = "accounts.html";
+
+} catch (error) {
+
+switch (error.code) {
+
+case "auth/email-already-in-use":      
+    alert("This email is already registered.");      
+    break;      
+
+case "auth/invalid-email":      
+    alert("Please enter a valid email.");      
+    break;      
+
+case "auth/weak-password":      
+    alert("Password should be at least 6 characters.");      
+    break;      
+
+default:      
+    alert(error.message);
+
+}
+
+button.disabled = false;
+button.innerHTML = "CREATE ACCOUNT";
+
+}
 
 });
 
@@ -163,11 +207,11 @@ form.addEventListener("submit", async (e) => {
 
 document.addEventListener("keydown", (e) => {
 
-    if (e.key === "Enter") {
+if (e.key === "Enter") {
 
-        form.requestSubmit();
+form.requestSubmit();
 
-    }
+}
 
 });
 
@@ -177,33 +221,33 @@ document.addEventListener("keydown", (e) => {
 
 particlesJS("particles-js", {
 
-    particles: {
+particles: {
 
-        number: {
-            value: 45
-        },
+number: {
+value: 45
+},
 
-        color: {
-            value: "#d4af37"
-        },
+color: {
+value: "#d4af37"
+},
 
-        shape: {
-            type: "circle"
-        },
+shape: {
+type: "circle"
+},
 
-        opacity: {
-            value: 0.35
-        },
+opacity: {
+value: 0.35
+},
 
-        size: {
-            value: 4
-        },
+size: {
+value: 4
+},
 
-        move: {
-            enable: true,
-            speed: 1
-        }
+move: {
+enable: true,
+speed: 1
+}
 
-    }
+}
 
 });

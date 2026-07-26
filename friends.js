@@ -53,11 +53,17 @@ const backBtn = document.getElementById("backBtn");
 
 const addFriendBtn = document.getElementById("addFriendBtn");
 
-const searchBtn = document.getElementById("searchBtn");
-
 const searchUser = document.getElementById("searchUser");
 
+const searchBtn = document.getElementById("searchBtn");
+
 const searchResult = document.getElementById("searchResult");
+
+const resultProfile = document.getElementById("resultProfile");
+
+const resultName = document.getElementById("resultName");
+
+const resultUsername = document.getElementById("resultUsername");
 
 const sendRequestBtn = document.getElementById("sendRequestBtn");
 
@@ -71,6 +77,12 @@ const emptyFriends = document.getElementById("emptyFriends");
 
 const loadingScreen = document.getElementById("loadingScreen");
 
+const homeBtn = document.getElementById("homeBtn");
+
+const chatBtn = document.getElementById("chatBtn");
+
+const settingsBtn = document.getElementById("settingsBtn");
+
 
 // ===================================
 // GLOBAL VARIABLES
@@ -81,6 +93,23 @@ let currentUser = null;
 let currentUserData = null;
 
 let selectedUser = null;
+
+
+// ===================================
+// LOADING FUNCTIONS
+// ===================================
+
+function showLoading() {
+
+    loadingScreen.classList.remove("hidden");
+
+}
+
+function hideLoading() {
+
+    loadingScreen.classList.add("hidden");
+
+}
 
 
 // ===================================
@@ -101,23 +130,29 @@ onAuthStateChanged(auth, async (user) => {
 
     const userRef = doc(db, "users", user.uid);
 
-const userSnap = await getDoc(userRef);
+    const userSnap = await getDoc(userRef);
 
-alert("UID: " + user.uid);
+    if (!userSnap.exists()) {
 
-alert("Exists: " + userSnap.exists());
+        alert("User profile not found.");
 
-if (userSnap.exists()) {
+        return;
+
+    }
 
     currentUserData = userSnap.data();
 
-    alert(JSON.stringify(currentUserData));
+    loadPendingRequests();
 
-}
+    loadFriends();
+
+    setOnlineStatus(true);
+
+});
 
 
 // ===================================
-// BACK BUTTON
+// HEADER BUTTONS
 // ===================================
 
 backBtn.addEventListener("click", () => {
@@ -125,11 +160,6 @@ backBtn.addEventListener("click", () => {
     window.location.href = "accounts.html";
 
 });
-
-
-// ===================================
-// ADD FRIEND BUTTON
-// ===================================
 
 addFriendBtn.addEventListener("click", () => {
 
@@ -165,7 +195,7 @@ async function searchFriend() {
 
     }
 
-    loadingScreen.classList.remove("hidden");
+    showLoading();
 
     searchResult.classList.add("hidden");
 
@@ -173,7 +203,7 @@ async function searchFriend() {
 
     try {
 
-        const q = query(
+        const searchQuery = query(
 
             collection(db, "users"),
 
@@ -181,9 +211,9 @@ async function searchFriend() {
 
         );
 
-        const snapshot = await getDocs(q);
+        const snapshot = await getDocs(searchQuery);
 
-        loadingScreen.classList.add("hidden");
+        hideLoading();
 
         if (snapshot.empty) {
 
@@ -199,7 +229,7 @@ async function searchFriend() {
 
         if (userDoc.id === currentUser.uid) {
 
-            alert("You can't search yourself.");
+            alert("You can't add yourself.");
 
             return;
 
@@ -213,21 +243,27 @@ async function searchFriend() {
 
         };
 
-        document.getElementById("resultName").textContent =
-
-            userData.displayName || "Unknown User";
-
-        document.getElementById("resultUsername").textContent =
-
-            "@" + userData.username;
-
-        document.getElementById("resultProfile").src =
+        resultProfile.src =
 
             userData.profilePicture || "images/default-profile.png";
 
+        resultName.textContent =
+
+            userData.displayName || "Unknown User";
+
+        resultUsername.textContent =
+
+            "@" + userData.username;
+
         sendRequestBtn.disabled = false;
 
-        sendRequestBtn.textContent = "Add";
+        sendRequestBtn.innerHTML = `
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Add
+
+        `;
 
         searchResult.classList.remove("hidden");
 
@@ -235,11 +271,11 @@ async function searchFriend() {
 
     catch (error) {
 
-        loadingScreen.classList.add("hidden");
+        hideLoading();
 
         console.error(error);
 
-        alert("Something went wrong.");
+        alert(error.message);
 
     }
 
@@ -252,24 +288,23 @@ sendRequestBtn.addEventListener("click", sendFriendRequest);
 
 async function sendFriendRequest() {
 
-    alert(JSON.stringify(currentUserData));
-
     if (!selectedUser) {
 
-        alert("Please search and select a user first.");
+        alert("Please search a user first.");
 
         return;
 
     }
 
-
-    loadingScreen.classList.remove("hidden");
+    showLoading();
 
     try {
 
-        // Check if request already exists
+        // ===========================
+        // Already Sent Request?
+        // ===========================
 
-        const existingRequest = query(
+        const requestQuery = query(
 
             collection(db, "friendRequests"),
 
@@ -279,11 +314,11 @@ async function sendFriendRequest() {
 
         );
 
-        const existingSnapshot = await getDocs(existingRequest);
+        const requestSnapshot = await getDocs(requestQuery);
 
-        if (!existingSnapshot.empty) {
+        if (!requestSnapshot.empty) {
 
-            loadingScreen.classList.add("hidden");
+            hideLoading();
 
             alert("Friend request already sent.");
 
@@ -292,56 +327,96 @@ async function sendFriendRequest() {
         }
 
 
+        // ===========================
+        // Already Friends?
+        // ===========================
+
+        const friendDoc1 = await getDoc(
+
+            doc(db, "friends", `${currentUser.uid}_${selectedUser.uid}`)
+
+        );
+
+        const friendDoc2 = await getDoc(
+
+            doc(db, "friends", `${selectedUser.uid}_${currentUser.uid}`)
+
+        );
+
+        if (friendDoc1.exists() || friendDoc2.exists()) {
+
+            hideLoading();
+
+            alert("You are already friends.");
+
+            return;
+
+        }
+
+
+        // ===========================
         // Create Friend Request
+        // ===========================
 
-        await addDoc(collection(db, "friendRequests"), {
+        await addDoc(
 
-            senderId: currentUser.uid,
+            collection(db, "friendRequests"),
 
-            senderName: currentUserData.displayName,
+            {
 
-            senderUsername: currentUserData.username,
+                senderId: currentUser.uid,
 
-            senderPhoto: currentUserData.profilePicture || "",
+                senderName: currentUserData.displayName,
 
-            receiverId: selectedUser.uid,
+                senderUsername: currentUserData.username,
 
-            receiverName: selectedUser.displayName,
+                senderPhoto: currentUserData.profilePicture || "",
 
-            receiverUsername: selectedUser.username,
+                receiverId: selectedUser.uid,
 
-            receiverPhoto: selectedUser.profilePicture || "",
+                receiverName: selectedUser.displayName,
 
-            status: "pending",
+                receiverUsername: selectedUser.username,
 
-            createdAt: serverTimestamp()
+                receiverPhoto: selectedUser.profilePicture || "",
 
-        });
+                status: "pending",
 
+                createdAt: serverTimestamp()
 
-        loadingScreen.classList.add("hidden");
+            }
+
+        );
+
+        hideLoading();
 
         alert("Friend request sent successfully!");
 
         sendRequestBtn.disabled = true;
 
-        sendRequestBtn.textContent = "Request Sent";
+        sendRequestBtn.innerHTML = `
+
+            <i class="fa-solid fa-check"></i>
+
+            Request Sent
+
+        `;
 
     }
 
     catch (error) {
 
-    loadingScreen.classList.add("hidden");
+        hideLoading();
 
-    console.error(error);
+        console.error(error);
 
-    alert(error.message);
+        alert(error.message);
 
     }
 
 }
 // ===================================
-// LOAD PENDING FRIEND REQUESTS
+// LOAD PENDING REQUESTS
 // ===================================
 
 function loadPendingRequests() {
@@ -363,9 +438,13 @@ function loadPendingRequests() {
         if (snapshot.empty) {
 
             pendingRequests.innerHTML = `
-                <p style="text-align:center;color:gray;">
-                    No pending requests
+
+                <p class="no-request">
+
+                    No Pending Requests
+
                 </p>
+
             `;
 
             return;
@@ -399,14 +478,18 @@ function loadPendingRequests() {
                             class="accept-btn"
                             onclick="acceptRequest('${requestDoc.id}')"
                         >
+
                             ✓
+
                         </button>
 
                         <button
                             class="reject-btn"
                             onclick="rejectRequest('${requestDoc.id}')"
                         >
+
                             ✕
+
                         </button>
 
                     </div>
@@ -428,25 +511,41 @@ function loadPendingRequests() {
 
 window.acceptRequest = async function(requestId) {
 
+    showLoading();
+
     try {
 
         const requestRef = doc(db, "friendRequests", requestId);
 
         const requestSnap = await getDoc(requestRef);
 
-        if (!requestSnap.exists()) return;
+        if (!requestSnap.exists()) {
+
+            hideLoading();
+
+            return;
+
+        }
 
         const request = requestSnap.data();
 
         await setDoc(
 
-            doc(db, "friends", `${currentUser.uid}_${request.senderId}`),
+            doc(
+
+                db,
+
+                "friends",
+
+                `${request.senderId}_${request.receiverId}`
+
+            ),
 
             {
 
-                user1: currentUser.uid,
+                user1: request.senderId,
 
-                user2: request.senderId,
+                user2: request.receiverId,
 
                 createdAt: serverTimestamp()
 
@@ -454,19 +553,31 @@ window.acceptRequest = async function(requestId) {
 
         );
 
-        await updateDoc(requestRef, {
+        await updateDoc(
 
-            status: "accepted"
+            requestRef,
 
-        });
+            {
 
-        alert("Friend Added!");
+                status: "accepted"
+
+            }
+
+        );
+
+        hideLoading();
+
+        alert("Friend Added Successfully!");
 
     }
 
     catch (error) {
 
+        hideLoading();
+
         console.error(error);
+
+        alert(error.message);
 
     }
 
@@ -479,50 +590,48 @@ window.acceptRequest = async function(requestId) {
 
 window.rejectRequest = async function(requestId) {
 
+    showLoading();
+
     try {
 
         await deleteDoc(
 
-            doc(db, "friendRequests", requestId)
+            doc(
+
+                db,
+
+                "friendRequests",
+
+                requestId
+
+            )
 
         );
+
+        hideLoading();
+
+        alert("Request Rejected.");
 
     }
 
     catch (error) {
 
+        hideLoading();
+
         console.error(error);
+
+        alert(error.message);
 
     }
 
 };
-
-
-// ===================================
-// START REQUEST LISTENER
-// ===================================
-
-onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-
-        loadPendingRequests();
-
-    }
-
-});
-
 // ===================================
 // LOAD FRIENDS LIST
 // ===================================
 
 function loadFriends() {
 
-    const friendsQuery = query(
-
-        collection(db, "friends")
-
-    );
+    const friendsQuery = collection(db, "friends");
 
     onSnapshot(friendsQuery, async (snapshot) => {
 
@@ -560,7 +669,11 @@ function loadFriends() {
 
             );
 
-            if (!userSnap.exists()) continue;
+            if (!userSnap.exists()) {
+
+                continue;
+
+            }
 
             const user = userSnap.data();
 
@@ -576,19 +689,11 @@ function loadFriends() {
 
         }
 
-        friendsCount.textContent = totalFriends;
+        friendsCount.textContent = `${totalFriends} Friends`;
 
-        if (totalFriends === 0) {
+        emptyFriends.style.display =
 
-            emptyFriends.style.display = "block";
-
-        }
-
-        else {
-
-            emptyFriends.style.display = "none";
-
-        }
+            totalFriends === 0 ? "block" : "none";
 
     });
 
@@ -606,8 +711,13 @@ function createFriendCard(user, friendId) {
         <div class="friend-card">
 
             <img
+
                 src="${user.profilePicture || "images/default-profile.png"}"
+
                 class="friend-profile"
+
+                alt="Profile"
+
             >
 
             <div class="friend-info">
@@ -616,19 +726,26 @@ function createFriendCard(user, friendId) {
 
                 <p>@${user.username}</p>
 
-                ${user.online
-                    ? '<span class="online-status">🟢 Online</span>'
-                    : '<span class="offline-status">⚪ Offline</span>'}
+                <span class="${user.online ? "online-status" : "offline-status"}">
+
+                    ${user.online ? "🟢 Online" : "⚪ Offline"}
+
+                </span>
 
             </div>
 
             <div class="friend-actions">
 
                 <button
+
                     class="chat-btn"
+
                     onclick="openChat('${friendId}')"
+
                 >
-                    Chat
+
+                    <i class="fa-solid fa-comments"></i>
+
                 </button>
 
             </div>
@@ -646,103 +763,11 @@ function createFriendCard(user, friendId) {
 
 window.openChat = function(friendId) {
 
-    window.location.href = `chat.html?uid=${friendId}`;
+    window.location.href =
+
+        `chat.html?uid=${friendId}`;
 
 };
-
-
-// ===================================
-// START FRIENDS LIST
-// ===================================
-
-onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-
-        loadFriends();
-
-    }
-
-});
-// ===================================
-// SEARCH FRIENDS LIST
-// ===================================
-
-const friendSearch = document.getElementById("friendSearch");
-
-if (friendSearch) {
-
-    friendSearch.addEventListener("input", () => {
-
-        const keyword = friendSearch.value
-            .trim()
-            .toLowerCase();
-
-        const cards = document.querySelectorAll(".friend-card");
-
-        cards.forEach((card) => {
-
-            const name = card.querySelector("h4")
-                .textContent
-                .toLowerCase();
-
-            const username = card.querySelector("p")
-                .textContent
-                .toLowerCase();
-
-            if (
-
-                name.includes(keyword) ||
-
-                username.includes(keyword)
-
-            ) {
-
-                card.style.display = "flex";
-
-            }
-
-            else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-    });
-
-}
-
-
-// ===================================
-// REFRESH FRIENDS
-// ===================================
-
-async function refreshFriends() {
-
-    friendsList.innerHTML = "";
-
-    friendsCount.textContent = "0";
-
-    loadFriends();
-
-}
-
-
-// ===================================
-// AUTO REFRESH
-// ===================================
-
-setInterval(() => {
-
-    if (currentUser) {
-
-        refreshFriends();
-
-    }
-
-}, 30000);
 // ===================================
 // USER ONLINE STATUS
 // ===================================
@@ -779,7 +804,7 @@ async function setOnlineStatus(status) {
 
 
 // ===================================
-// USER ONLINE
+// PAGE EVENTS
 // ===================================
 
 window.addEventListener("load", () => {
@@ -788,21 +813,11 @@ window.addEventListener("load", () => {
 
 });
 
-
-// ===================================
-// USER OFFLINE
-// ===================================
-
 window.addEventListener("beforeunload", () => {
 
     setOnlineStatus(false);
 
 });
-
-
-// ===================================
-// PAGE VISIBILITY
-// ===================================
 
 document.addEventListener("visibilitychange", () => {
 
@@ -819,3 +834,55 @@ document.addEventListener("visibilitychange", () => {
     }
 
 });
+
+
+// ===================================
+// BOTTOM NAVIGATION
+// ===================================
+
+homeBtn?.addEventListener("click", () => {
+
+    window.location.href = "accounts.html";
+
+});
+
+chatBtn?.addEventListener("click", () => {
+
+    window.location.href = "chat.html";
+
+});
+
+settingsBtn?.addEventListener("click", () => {
+
+    window.location.href = "settings.html";
+
+});
+
+
+// ===================================
+// SEARCH INPUT AUTO TRIM
+// ===================================
+
+searchUser?.addEventListener("input", () => {
+
+    searchUser.value = searchUser.value.replace(/\s+/g, " ");
+
+});
+
+
+// ===================================
+// GLOBAL ERROR HANDLER
+// ===================================
+
+window.addEventListener("error", (event) => {
+
+    console.error("Friends.js Error:", event.error);
+
+});
+
+
+// ===================================
+// FINISHED
+// ===================================
+
+console.log("Friends.js Loaded Successfully ✅");

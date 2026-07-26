@@ -248,6 +248,8 @@ sendRequestBtn.addEventListener("click", sendFriendRequest);
 
 async function sendFriendRequest() {
 
+    alert(JSON.stringify(currentUserData));
+
     if (!selectedUser) {
 
         alert("Please search and select a user first.");
@@ -255,6 +257,8 @@ async function sendFriendRequest() {
         return;
 
     }
+
+    ...
 
     loadingScreen.classList.remove("hidden");
 

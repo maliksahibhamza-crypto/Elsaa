@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Friends | Elsa & Me</title>
+    <title>Friends | Elsa & Me</title>
 
-<link rel="stylesheet" href="friends.css">
+    <link rel="stylesheet" href="friends.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -26,11 +25,13 @@
 
 <div class="friends-container">
 
-    <!-- Header -->
+    <!-- ========================= -->
+    <!-- HEADER -->
+    <!-- ========================= -->
 
     <header class="friends-header">
 
-        <button id="backBtn">
+        <button id="backBtn" class="icon-btn">
 
             <i class="fa-solid fa-arrow-left"></i>
 
@@ -38,14 +39,17 @@
 
         <h2>Friends</h2>
 
-        <button id="addFriendBtn">
+        <button id="addFriendBtn" class="icon-btn">
 
             <i class="fa-solid fa-user-plus"></i>
 
         </button>
 
     </header>
-    <!-- Search Section -->
+
+    <!-- ========================= -->
+    <!-- SEARCH SECTION -->
+    <!-- ========================= -->
 
     <section class="friends-search">
 
@@ -70,22 +74,34 @@
 
     </section>
 
+    <!-- ========================= -->
+    <!-- SEARCH RESULT -->
+    <!-- ========================= -->
 
-    <!-- Search Result -->
-
-    <section id="searchResult" class="search-result hidden">
+    <section
+        id="searchResult"
+        class="search-result hidden"
+    >
 
         <img
-            src="https://via.placeholder.com/70"
-            alt="Profile"
             id="resultProfile"
+            src="images/default-profile.png"
+            alt="Profile"
         >
 
         <div class="result-info">
 
-            <h3 id="resultName">User Name</h3>
+            <h3 id="resultName">
 
-            <p id="resultUsername">@username</p>
+                User Name
+
+            </h3>
+
+            <p id="resultUsername">
+
+                @username
+
+            </p>
 
         </div>
 
@@ -98,9 +114,9 @@
         </button>
 
     </section>
-
-
-    <!-- Pending Requests -->
+    <!-- ========================= -->
+    <!-- PENDING REQUESTS -->
+    <!-- ========================= -->
 
     <section class="request-section">
 
@@ -108,12 +124,16 @@
 
         <div id="pendingRequests">
 
-            <!-- Requests will load here -->
+            <!-- Friend Requests will load here -->
 
         </div>
 
     </section>
-    <!-- Friends List -->
+
+
+    <!-- ========================= -->
+    <!-- FRIENDS LIST -->
+    <!-- ========================= -->
 
     <section class="friends-list-section">
 
@@ -121,77 +141,50 @@
 
             <h3>Your Friends</h3>
 
-            <span id="friendsCount">0 Friends</span>
+            <span id="friendsCount">
+
+                0
+
+            </span>
 
         </div>
 
         <div id="friendsList">
-
-            <!-- Friend Card -->
-
-            <div class="friend-card">
-
-                <img
-                    src="https://via.placeholder.com/70"
-                    alt="Friend"
-                    class="friend-profile"
-                >
-
-                <div class="friend-info">
-
-                    <h4>Friend Name</h4>
-
-                    <p>@username</p>
-
-                    <span class="online-status online">
-
-                        <i class="fa-solid fa-circle"></i>
-
-                        Online
-
-                    </span>
-
-                </div>
-
-                <div class="friend-actions">
-
-                    <button class="chat-btn">
-
-                        <i class="fa-solid fa-comments"></i>
-
-                    </button>
-
-                    <button class="profile-btn">
-
-                        <i class="fa-solid fa-user"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
 
             <!-- Friends will load here dynamically -->
 
         </div>
 
     </section>
-    <!-- Empty State -->
 
-    <section id="emptyFriends" class="empty-state">
+
+    <!-- ========================= -->
+    <!-- EMPTY STATE -->
+    <!-- ========================= -->
+
+    <section
+        id="emptyFriends"
+        class="empty-state"
+    >
 
         <i class="fa-solid fa-user-group"></i>
 
-        <h3>No Friends Yet</h3>
+        <h3>
+
+            No Friends Yet
+
+        </h3>
 
         <p>
-            Search for your friends by username and send them a friend request.
+
+            Search for users by username and send your first friend request.
+
         </p>
 
     </section>
-
-
-    <!-- Loading -->
+    <!-- ========================= -->
+    <!-- LOADING SCREEN -->
+    <!-- ========================= -->
 
     <div id="loadingScreen" class="loading hidden">
 
@@ -202,7 +195,9 @@
     </div>
 
 
-    <!-- Bottom Navigation -->
+    <!-- ========================= -->
+    <!-- BOTTOM NAVIGATION -->
+    <!-- ========================= -->
 
     <nav class="bottom-nav">
 
@@ -246,4 +241,4 @@
 
 </body>
 
-</html>
+    </html>

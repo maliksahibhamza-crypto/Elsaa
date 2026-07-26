@@ -324,11 +324,11 @@ async function sendFriendRequest() {
 
     catch (error) {
 
-        loadingScreen.classList.add("hidden");
+    loadingScreen.classList.add("hidden");
 
-        console.error(error);
+    console.error(error);
 
-        alert("Failed to send friend request.");
+    alert(error.message);
 
     }
 

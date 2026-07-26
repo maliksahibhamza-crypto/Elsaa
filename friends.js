@@ -258,7 +258,6 @@ async function sendFriendRequest() {
 
     }
 
-    ...
 
     loadingScreen.classList.remove("hidden");
 

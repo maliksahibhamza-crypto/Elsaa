@@ -121,32 +121,47 @@ onAuthStateChanged(auth, async (user) => {
     if (!user) {
 
         window.location.href = "login.html";
-
         return;
 
     }
 
     currentUser = user;
 
-    const userRef = doc(db, "users", user.uid);
+    alert("Auth UID:\n" + user.uid);
 
-    const userSnap = await getDoc(userRef);
+    try {
 
-    if (!userSnap.exists()) {
+        const userRef = doc(db, "users", user.uid);
 
-        alert("User profile not found.");
+        const userSnap = await getDoc(userRef);
 
-        return;
+        alert("Document Exists: " + userSnap.exists());
+
+        if (!userSnap.exists()) {
+
+            alert("User profile not found.");
+            return;
+
+        }
+
+        currentUserData = userSnap.data();
+
+        alert("Current User Loaded:\n" + currentUserData.displayName);
+
+        loadPendingRequests();
+
+        loadFriends();
+
+        setOnlineStatus(true);
 
     }
 
-    currentUserData = userSnap.data();
+    catch (error) {
 
-    loadPendingRequests();
+        alert("AUTH ERROR:\n" + error.message);
+        console.error(error);
 
-    loadFriends();
-
-    setOnlineStatus(true);
+    }
 
 });
 

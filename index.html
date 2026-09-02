@@ -71,6 +71,20 @@
     <div id="page5b" class="page">
         <h2 style="color: #27ae60;">Access Granted ✔️</h2>
         <p>This system was built exclusively for you.</p>
+        <div id="relationshipTimer" style="margin: 20px 0;">
+  <p style="font-size: 0.75rem; color: #999; margin-bottom: 5px;">
+    Since 18 June 2025 • 1:35 PM
+  </p>
+
+  <div id="timerDisplay" style="
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    font-weight: 700;
+  ">
+    0 Years 0 Months 0 Days 0 Hours 0 Minutes
+  </div>
+        </div>
         <button class="btn" onclick="goToPage(8)">Proceed to Memories</button>
         <button class="btn" onclick="goToPage(7)">Continue Journey</button>
         <button class="btn" style="background: #e91e63;" onclick="goToPage(15)">Discovery Portal</button>
@@ -182,6 +196,51 @@ onclick="window.location.href='login.html'">
     const wallApi = 'https://sheetdb.io/api/v1/899s7cpds7109'; 
     const discoveryApi = 'https://sheetdb.io/api/v1/9eua2hjvu70tw';
     let exitClickCount = 0; let heartInt;
+    const startDate = new Date("2025-06-18T13:35:00");
+
+function updateRelationshipTimer() {
+    const now = new Date();
+
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+
+    if (days < 0) {
+        months--;
+
+        const previousMonth = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            0
+        );
+
+        days += previousMonth.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    let hours = now.getHours() - startDate.getHours();
+    let minutes = now.getMinutes() - startDate.getMinutes();
+
+    if (minutes < 0) {
+        hours--;
+        minutes += 60;
+    }
+
+    if (hours < 0) {
+        days--;
+        hours += 24;
+    }
+
+    document.getElementById("timerDisplay").textContent =
+        `${years} Years ${months} Months ${days} Days ${hours} Hours ${minutes} Minutes`;
+}
+
+updateRelationshipTimer();
+setInterval(updateRelationshipTimer, 1000);
 
     // --- REAL PERMANENT DELETE (From Database) ---
     async function deleteFromDb(api, column, value, element) {

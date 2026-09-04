@@ -349,6 +349,14 @@ setInterval(updateRelationshipTimer, 1000);
     function signalGame(correct) { if(correct) goToPage(11); else alert('Try S-2'); }
 
     particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "shape": { "type": "heart" }, "color": { "value": "#d4af37" }, "opacity": { "value": 0.3 }, "size": { "value": 4 }, "move": { "enable": true, "speed": 1 } } });
+    const birthdayBtn = document.createElement('button');
+birthdayBtn.className = 'btn';
+birthdayBtn.innerText = 'Gudiya Birthday 2026';
+birthdayBtn.onclick = function() {
+    window.location.href = 'birthday.html';
+};
+
+document.getElementById('page11').appendChild(birthdayBtn);
 </script>
 </body>
     </html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Happy One Year of Us ❤️</title>
+
+    <!-- Stylish Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            font-family: "Montserrat", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255,255,255,0.35),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(255,255,255,0.25),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffd6e7,
+                    #f8a8c8,
+                    #e987b1
+                );
+
+            overflow-x: hidden;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 560px;
+
+            padding: 38px 25px 32px;
+
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 28px;
+
+            background: rgba(255,255,255,0.20);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 55px rgba(130, 40, 80, 0.20),
+                inset 0 1px 0 rgba(255,255,255,0.55);
+
+            text-align: center;
+        }
+
+        /* Heart */
+
+        .heart {
+            width: 62px;
+            height: 62px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.40);
+
+            border: 1px solid rgba(255,255,255,0.65);
+
+            box-shadow:
+                0 10px 30px rgba(150, 40, 90, 0.15);
+
+            font-size: 29px;
+        }
+
+        /* Heading */
+
+        h1 {
+            font-family: "Cormorant Garamond", serif;
+
+            color: #7d214b;
+
+            font-size: 40px;
+            font-weight: 700;
+
+            letter-spacing: -0.5px;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #713b54;
+
+            font-size: 14px;
+            line-height: 1.7;
+
+            margin-bottom: 28px;
+        }
+
+        /* PDF Cards */
+
+        .pdf-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .pdf-button {
+            width: 100%;
+            min-height: 82px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 15px 18px;
+
+            border-radius: 19px;
+
+            text-decoration: none;
+
+            color: white;
+
+            box-shadow:
+                0 12px 28px rgba(80, 20, 50, 0.18);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .pdf-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 17px 35px rgba(80, 20, 50, 0.25);
+        }
+
+        .pdf-button:active {
+            transform: translateY(0);
+        }
+
+        /* Blue PDF */
+
+        .blue-pdf {
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #3b82f6
+                );
+        }
+
+        /* Black PDF */
+
+        .black-pdf {
+            background:
+                linear-gradient(
+                    135deg,
+                    #111111,
+                    #292929
+                );
+        }
+
+        .pdf-icon {
+            width: 48px;
+            height: 48px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.16);
+
+            border: 1px solid rgba(255,255,255,0.22);
+
+            font-size: 24px;
+        }
+
+        .pdf-info {
+            text-align: left;
+
+            margin-left: 14px;
+
+            flex: 1;
+        }
+
+        .pdf-title {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 24px;
+            font-weight: 700;
+
+            line-height: 1.1;
+
+            margin-bottom: 5px;
+        }
+
+        .pdf-created {
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 10px;
+            font-weight: 500;
+
+            opacity: 0.88;
+
+            letter-spacing: 0.2px;
+        }
+
+        .arrow {
+            font-size: 20px;
+            opacity: 0.85;
+
+            margin-left: 10px;
+        }
+
+        /* White Memory Box */
+
+        .memory-card {
+            margin-top: 25px;
+
+            padding: 25px 21px;
+
+            border-radius: 21px;
+
+            background: rgba(255,255,255,0.94);
+
+            border: 1px solid rgba(255,255,255,0.95);
+
+            box-shadow:
+                0 15px 40px rgba(100, 20, 55, 0.16);
+
+            text-align: left;
+        }
+
+        .memory-title {
+            font-family: "Cormorant Garamond", serif;
+
+            color: #7d214b;
+
+            font-size: 25px;
+            font-weight: 700;
+
+            text-align: center;
+
+            margin-bottom: 14px;
+        }
+
+        .memory-card p {
+            color: #713b54;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 12px;
+
+            line-height: 1.85;
+
+            margin-bottom: 13px;
+        }
+
+        .memory-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .closing {
+            text-align: center;
+
+            font-family: "Cormorant Garamond", serif !important;
+
+            font-size: 17px !important;
+
+            font-weight: 600;
+
+            color: #8b3159 !important;
+
+            margin-top: 17px !important;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 16px;
+            }
+
+            .page {
+                padding: 32px 19px 25px;
+
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .pdf-title {
+                font-size: 22px;
+            }
+
+            .memory-card {
+                padding: 23px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page">
+
+        <div class="heart">
+            ❤️
+        </div>
+
+
+        <h1>
+            Happy One Year of Us
+        </h1>
+
+
+        <p class="subtitle">
+            Two little pieces of our story, kept here as memories. 💗
+        </p>
+
+
+        <div class="pdf-container">
+
+
+            <!-- One Year Letter -->
+
+            <a
+                class="pdf-button blue-pdf"
+                href="https://drive.google.com/file/d/1cZzKZlPaY6EApvObTNU59qtvVIWDoIoH/view?usp=drivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="pdf-icon">
+                    📄
+                </div>
+
+                <div class="pdf-info">
+
+                    <div class="pdf-title">
+                        One Year Letter
+                    </div>
+
+                    <div class="pdf-created">
+                        Created by Elsa
+                    </div>
+
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+            </a>
+
+
+            <!-- 365 Reasons to Love You -->
+
+            <a
+                class="pdf-button black-pdf"
+                href="https://drive.google.com/file/d/1KCcVAZGdZQu5fKVzcaC5G_Qp3jocfPmK/view?usp=drivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="pdf-icon">
+                    📄
+                </div>
+
+                <div class="pdf-info">
+
+                    <div class="pdf-title">
+                        365 Reasons to Love You
+                    </div>
+
+                    <div class="pdf-created">
+                        Created by Hamza
+                    </div>
+
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- Memory Message -->
+
+        <div class="memory-card">
+
+            <div class="memory-title">
+                A Little Part of Our Story 💌
+            </div>
+
+
+            <p>
+                Some memories are too special to simply leave behind,
+                so I wanted to keep these little pieces of our journey
+                here — somewhere they can stay safe and be remembered
+                whenever we come back to this page.
+            </p>
+
+
+            <p>
+                <strong>One Year Letter</strong> is a little part of
+                the story created by Elsa, while
+                <strong>365 Reasons to Love You</strong> is something
+                created by Hamza. They may be just two PDF files,
+                but behind those pages are thoughts, effort, memories,
+                and little moments that became part of our story.
+            </p>
+
+
+            <p>
+                This page isn't only about looking back at what we made.
+                It's about keeping the little things that might
+                otherwise get forgotten with time. Years from now,
+                we can open these again and remember what we were like,
+                what we thought, and all the little things that mattered
+                to us during this chapter.
+            </p>
+
+
+            <p>
+                So these aren't here just as documents.
+                They're here as little time capsules of our memories —
+                two pieces of a journey that deserve to be kept.
+            </p>
+
+
+            <p class="closing">
+                Some things are worth saving, simply because they remind
+                us of a time we never want to forget. ❤️
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

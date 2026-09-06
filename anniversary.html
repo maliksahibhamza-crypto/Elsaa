@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Happy One Year of Us ❤️</title>
+
+    <!-- Stylish Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            font-family: "Montserrat", sans-serif;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255,255,255,0.35), transparent 25%),
+                radial-gradient(circle at 85% 80%, rgba(255,255,255,0.25), transparent 25%),
+                linear-gradient(135deg, #ffd6e7, #f8a8c8, #e987b1);
+            overflow-x: hidden;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 520px;
+            padding: 38px 25px 32px;
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 28px;
+            background: rgba(255,255,255,0.20);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow:
+                0 20px 55px rgba(130, 40, 80, 0.20),
+                inset 0 1px 0 rgba(255,255,255,0.55);
+            text-align: center;
+        }
+
+        .heart {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.40);
+            border: 1px solid rgba(255,255,255,0.65);
+            box-shadow: 0 10px 30px rgba(150, 40, 90, 0.15);
+            font-size: 29px;
+        }
+
+        h1 {
+            font-family: "Cormorant Garamond", serif;
+            color: #7d214b;
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: "Montserrat", sans-serif;
+            color: #713b54;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .form-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 57px;
+            padding: 0 18px;
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 17px;
+            outline: none;
+            background: rgba(255,255,255,0.78);
+            color: #5c2340;
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow:
+                0 8px 22px rgba(120, 30, 70, 0.08),
+                inset 0 1px 2px rgba(255,255,255,0.8);
+            transition: all 0.25s ease;
+        }
+
+        .input-box::placeholder {
+            color: #9a637b;
+            opacity: 1;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+        }
+
+        .input-box:focus {
+            border-color: rgba(180, 55, 110, 0.55);
+            background: rgba(255,255,255,0.95);
+            box-shadow:
+                0 0 0 4px rgba(210, 91, 140, 0.12),
+                0 10px 28px rgba(120, 30, 70, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .next-btn {
+            width: 100%;
+            height: 56px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 17px;
+            background: linear-gradient(135deg, #b93670, #d95b91);
+            color: white;
+            font-family: "Montserrat", sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(150, 35, 85, 0.25);
+            transition: all 0.25s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(150, 35, 85, 0.30);
+        }
+
+        .next-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Wrong Details Bubble */
+        .error-bubble {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translate(-50%, 25px);
+            width: calc(100% - 40px);
+            max-width: 390px;
+            padding: 17px 20px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.94);
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 15px 40px rgba(100, 20, 55, 0.20);
+            color: #71304f;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s ease;
+            z-index: 10;
+        }
+
+        .error-bubble.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .error-title {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .error-text {
+            font-family: "Montserrat", sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 16px;
+            }
+
+            .page {
+                padding: 32px 19px 25px;
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page">
+
+        <div class="heart">❤️</div>
+
+        <h1>Happy One Year of Us</h1>
+
+        <p class="subtitle">
+            Before we continue, let's see if you remember
+            a few little details from the beginning. 💗
+        </p>
+
+        <div class="form-box">
+
+            <input
+                type="text"
+                id="dateInput"
+                class="input-box"
+                placeholder="Enter the date we met"
+                autocomplete="off"
+            >
+
+            <input
+                type="text"
+                id="placeInput"
+                class="input-box"
+                placeholder="Enter the place we met"
+                autocomplete="off"
+            >
+
+            <input
+                type="text"
+                id="nameInput"
+                class="input-box"
+                placeholder="Enter the name we decided for us"
+                autocomplete="off"
+            >
+
+            <button class="next-btn" onclick="checkAnswers()">
+                Next →
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- Wrong Details Bubble -->
+    <div id="errorBubble" class="error-bubble">
+
+        <div class="error-title">
+            Wrong Details 💭
+        </div>
+
+        <div class="error-text">
+            Hmm... some details don't match.
+            Try again. ❤️
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function checkAnswers() {
+
+            const date = document.getElementById("dateInput").value
+                .trim()
+                .toLowerCase();
+
+            const place = document.getElementById("placeInput").value
+                .trim()
+                .toLowerCase();
+
+            const name = document.getElementById("nameInput").value
+                .trim()
+                .toLowerCase();
+
+
+            const correctDate = "24 june";
+            const correctPlace = "gangster life";
+            const correctName = "hazel";
+
+
+            if (
+                date === correctDate &&
+                place === correctPlace &&
+                name === correctName
+            ) {
+
+                showSuccess();
+
+            } else {
+
+                showError();
+
+            }
+        }
+
+
+        function showError() {
+
+            const bubble = document.getElementById("errorBubble");
+
+            bubble.innerHTML = `
+                <div class="error-title">
+                    Wrong Details 💭
+                </div>
+
+                <div class="error-text">
+                    Hmm... some details don't match.
+                    Try again. ❤️
+                </div>
+            `;
+
+            bubble.classList.add("show");
+
+            setTimeout(function() {
+                bubble.classList.remove("show");
+            }, 2800);
+        }
+
+
+        function showSuccess() {
+
+            const bubble = document.getElementById("errorBubble");
+
+            bubble.innerHTML = `
+                <div class="error-title">
+                    Details Matched 💗
+                </div>
+
+                <div class="error-text">
+                    Perfect. You remembered them all. ✨
+                </div>
+            `;
+
+            bubble.classList.add("show");
+
+            setTimeout(function() {
+                window.location.href = "anniversary2.html";
+            }, 2500);
+        }
+
+    </script>
+
+</body>
+</html>

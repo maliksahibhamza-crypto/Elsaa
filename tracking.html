@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Tracking</title>
+
+    <!-- Stylish Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            font-family: "Montserrat", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255,255,255,0.95),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(245,245,245,0.9),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f7f7f7,
+                    #eeeeee
+                );
+
+            overflow: hidden;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 460px;
+
+            padding: 42px 28px 34px;
+
+            background: rgba(255,255,255,0.88);
+
+            border: 1px solid rgba(0,0,0,0.07);
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 22px 60px rgba(0,0,0,0.10),
+                inset 0 1px 0 rgba(255,255,255,1);
+
+            text-align: center;
+        }
+
+        .icon {
+            width: 64px;
+            height: 64px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #f4f4f4;
+
+            border: 1px solid #e5e5e5;
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.07);
+
+            font-size: 28px;
+        }
+
+        h1 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 40px;
+
+            color: #202020;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+
+            color: #777;
+
+            line-height: 1.7;
+
+            margin-bottom: 28px;
+        }
+
+        .form-box {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 57px;
+
+            padding: 0 18px;
+
+            border: 1px solid #dedede;
+
+            border-radius: 17px;
+
+            outline: none;
+
+            background: #fafafa;
+
+            color: #222;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: all 0.25s ease;
+
+            box-shadow:
+                inset 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .input-box::placeholder {
+            color: #999;
+
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .input-box:focus {
+            background: #ffffff;
+
+            border-color: #999;
+
+            box-shadow:
+                0 0 0 4px rgba(0,0,0,0.05),
+                0 8px 22px rgba(0,0,0,0.06);
+
+            transform: translateY(-1px);
+        }
+
+        .login-btn {
+            width: 100%;
+
+            height: 56px;
+
+            margin-top: 7px;
+
+            border: none;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #202020,
+                    #3b3b3b
+                );
+
+            color: white;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 25px rgba(0,0,0,0.16);
+
+            transition: all 0.25s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 30px rgba(0,0,0,0.20);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Error Bubble */
+
+        .error-bubble {
+            position: fixed;
+
+            left: 50%;
+            bottom: 25px;
+
+            width: calc(100% - 40px);
+
+            max-width: 380px;
+
+            padding: 16px 20px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.96);
+
+            border: 1px solid #e5e5e5;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.15);
+
+            color: #333;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform:
+                translate(-50%, 25px);
+
+            transition: all 0.35s ease;
+
+            z-index: 10;
+        }
+
+        .error-bubble.show {
+            opacity: 1;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+        .error-title {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            margin-bottom: 4px;
+        }
+
+        .error-text {
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            color: #777;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 16px;
+            }
+
+            .login-card {
+                padding: 34px 19px 27px;
+
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="login-card">
+
+        <div class="icon">
+            🔐
+        </div>
+
+        <h1>
+            Daily Tracking
+        </h1>
+
+        <p class="subtitle">
+            Enter your details to continue.
+        </p>
+
+
+        <div class="form-box">
+
+            <input
+                type="text"
+                id="loginId"
+                class="input-box"
+                placeholder="Login ID"
+                autocomplete="off"
+            >
+
+            <input
+                type="password"
+                id="password"
+                class="input-box"
+                placeholder="Password"
+                autocomplete="off"
+            >
+
+            <button
+                class="login-btn"
+                onclick="login()"
+            >
+                Login →
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- Error Bubble -->
+
+    <div
+        id="errorBubble"
+        class="error-bubble"
+    >
+
+        <div class="error-title">
+            Access Denied 💭
+        </div>
+
+        <div class="error-text">
+            Incorrect login ID or password. Try again.
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function login() {
+
+            const loginId =
+                document.getElementById("loginId")
+                .value
+                .trim();
+
+            const password =
+                document.getElementById("password")
+                .value;
+
+
+            const correctLoginId = "imirhamza14";
+            const correctPassword = "hazel18";
+
+
+            if (
+                loginId === correctLoginId &&
+                password === correctPassword
+            ) {
+
+                window.location.href = "tracking2.html";
+
+            } else {
+
+                showError();
+
+            }
+        }
+
+
+        function showError() {
+
+            const bubble =
+                document.getElementById("errorBubble");
+
+            bubble.classList.add("show");
+
+            setTimeout(function() {
+
+                bubble.classList.remove("show");
+
+            }, 2800);
+        }
+
+
+        /* Enter key support */
+
+        document
+            .getElementById("password")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+                    login();
+                }
+
+            });
+
+    </script>
+
+</body>
+  </html>

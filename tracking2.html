@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Forever Yours E ❤️</title>
+
+    <!-- Elegant Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f8f8f7;
+            color: #222;
+
+            font-family: "Montserrat", sans-serif;
+
+            padding: 28px 18px 45px;
+
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 620px;
+
+            margin: 0 auto;
+        }
+
+
+        /* ========================================
+           TOP WHITE PREMIUM CARD
+        ======================================== */
+
+        .forever-card {
+            background: #ffffff;
+
+            border: 1px solid #e7e7e5;
+
+            border-radius: 28px;
+
+            padding: 40px 26px 34px;
+
+            text-align: center;
+
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.07);
+        }
+
+        .forever-title {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 42px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.5px;
+
+            color: #202020;
+
+            margin-bottom: 18px;
+        }
+
+        .dua {
+            max-width: 500px;
+
+            margin: 0 auto;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 14px;
+
+            line-height: 1.85;
+
+            color: #555;
+
+            font-weight: 500;
+        }
+
+        .second-line {
+            max-width: 470px;
+
+            margin: 17px auto 0;
+
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            font-style: italic;
+
+            color: #888;
+        }
+
+
+        /* ========================================
+           MOTIVATION SECTION
+        ======================================== */
+
+        .motivation-section {
+            margin-top: 85px;
+        }
+
+        .section-heading {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 29px;
+
+            font-weight: 700;
+
+            color: #222;
+
+            margin-bottom: 62px;
+
+            text-align: center;
+        }
+
+
+        /* ========================================
+           QUOTES
+        ======================================== */
+
+        .quote {
+            margin-bottom: 76px;
+
+            opacity: 0;
+
+            transform: translateY(28px);
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .quote.visible {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+        .quote-number {
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 2.5px;
+
+            color: #999;
+
+            margin-bottom: 12px;
+        }
+
+        .quote-label {
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            color: #444;
+
+            margin-bottom: 15px;
+
+            text-transform: uppercase;
+        }
+
+        .quote-text {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 28px;
+
+            line-height: 1.35;
+
+            font-weight: 600;
+
+            color: #242424;
+
+            max-width: 570px;
+        }
+
+
+        /* ========================================
+           NEXT BUTTON
+        ======================================== */
+
+        .next-area {
+            margin-top: 5px;
+
+            text-align: center;
+        }
+
+        .next-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 190px;
+
+            height: 54px;
+
+            padding: 0 28px;
+
+            border: 1px solid #252525;
+
+            border-radius: 28px;
+
+            background: #252525;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            letter-spacing: 1.5px;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .next-btn:active {
+            transform: translateY(0);
+        }
+
+
+        /* ========================================
+           MOBILE
+        ======================================== */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 18px 15px 38px;
+            }
+
+            .forever-card {
+                padding: 34px 20px 29px;
+
+                border-radius: 24px;
+            }
+
+            .forever-title {
+                font-size: 36px;
+            }
+
+            .dua {
+                font-size: 13px;
+
+                line-height: 1.8;
+            }
+
+            .second-line {
+                font-size: 17px;
+            }
+
+            .motivation-section {
+                margin-top: 72px;
+            }
+
+            .section-heading {
+                font-size: 27px;
+
+                margin-bottom: 52px;
+            }
+
+            .quote {
+                margin-bottom: 66px;
+            }
+
+            .quote-text {
+                font-size: 25px;
+
+                line-height: 1.38;
+            }
+
+            .quote-label {
+                font-size: 10px;
+
+                letter-spacing: 1.8px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <main class="container">
+
+
+        <!-- ========================================
+             FOREVER YOURS CARD
+        ======================================== -->
+
+        <section class="forever-card">
+
+            <h1 class="forever-title">
+                Forever Yours E ❤️
+            </h1>
+
+            <p class="dua">
+                “Left in Allah’s hands, carried by hope —
+                InshaAllah, one day we’ll be one. ❤️”
+            </p>
+
+            <p class="second-line">
+                “Among all the things life may change,
+                may this remain unchanged.”
+            </p>
+
+        </section>
+
+
+
+        <!-- ========================================
+             MOTIVATION SECTION
+        ======================================== -->
+
+        <section class="motivation-section">
+
+            <h2 class="section-heading">
+                ✦ Motivation
+            </h2>
+
+
+            <!-- 01 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    01 —
+                </div>
+
+                <div class="quote-label">
+                    THE BECOMING
+                </div>
+
+                <p class="quote-text">
+                    “The person you dream of becoming is built
+                    in the moments nobody sees.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 02 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    02 —
+                </div>
+
+                <div class="quote-label">
+                    YOUR FUTURE SELF
+                </div>
+
+                <p class="quote-text">
+                    “Do not betray your future self for the comfort
+                    of your present self.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 03 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    03 —
+                </div>
+
+                <div class="quote-label">
+                    FORGED, NOT FOUND
+                </div>
+
+                <p class="quote-text">
+                    “Your destiny is not found. It is forged—
+                    one decision, one sacrifice, one day at a time.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 04 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    04 —
+                </div>
+
+                <div class="quote-label">
+                    KEEP WALKING
+                </div>
+
+                <p class="quote-text">
+                    “When the road becomes difficult, remember:
+                    the destination was never meant to be easy.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 05 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    05 —
+                </div>
+
+                <div class="quote-label">
+                    BUILD TODAY
+                </div>
+
+                <p class="quote-text">
+                    “The future is not waiting for you.
+                    It is being built by what you do today.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 06 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    06 —
+                </div>
+
+                <div class="quote-label">
+                    YOUR TIME
+                </div>
+
+                <p class="quote-text">
+                    “Every day you waste is a page of your future
+                    written by someone else.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 07 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    07 —
+                </div>
+
+                <div class="quote-label">
+                    TAKE CONTROL
+                </div>
+
+                <p class="quote-text">
+                    “You either shape your days,
+                    or your days will shape you.”
+                </p>
+
+            </article>
+
+
+
+            <!-- 08 -->
+
+            <article class="quote">
+
+                <div class="quote-number">
+                    08 —
+                </div>
+
+                <div class="quote-label">
+                    START TODAY
+                </div>
+
+                <p class="quote-text">
+                    “There will come a day when you’ll wish
+                    you had started today.”
+                </p>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- ========================================
+             NEXT
+        ======================================== -->
+
+        <div class="next-area">
+
+            <a
+                href="tracklogin.html"
+                class="next-btn"
+            >
+                Next →
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+
+    <script>
+
+        /* ========================================
+           SCROLL FADE-UP ANIMATION
+        ======================================== */
+
+        const quotes =
+            document.querySelectorAll(".quote");
+
+
+        const observer =
+            new IntersectionObserver(
+                function(entries) {
+
+                    entries.forEach(function(entry) {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            observer.unobserve(entry.target);
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.15
+                }
+            );
+
+
+        quotes.forEach(function(quote) {
+
+            observer.observe(quote);
+
+        });
+
+    </script>
+
+</body>
+  </html>

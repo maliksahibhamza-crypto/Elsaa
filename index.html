@@ -365,6 +365,15 @@ anniversaryBtn.onclick = function() {
 };
 
 document.getElementById('page11').appendChild(anniversaryBtn);
+    const trackingBtn = document.createElement('button');
+trackingBtn.className = 'btn';
+trackingBtn.innerText = 'Daily Tracking 📅';
+
+trackingBtn.onclick = function() {
+    window.location.href = 'tracking.html';
+};
+
+document.getElementById('page11').appendChild(trackingBtn);
 </script>
 </body>
     </html>

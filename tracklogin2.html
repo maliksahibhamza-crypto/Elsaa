@@ -2716,6 +2716,60 @@ setInterval(
 
 
 
+/* =========================================================
+   CLOSE MODAL BY CLICKING OUTSIDE
+========================================================= */
+
+document
+.getElementById("manageModal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === this){
+
+            closeManage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ENTER KEY TO ADD GOAL
+========================================================= */
+
+document
+.getElementById("goalPoints")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            addGoal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   START APPLICATION
+========================================================= */
+
+createTodayRecord();
+
+renderAll();
+
+</script>
+
+</body>
+</html>
+
+
 
     
 

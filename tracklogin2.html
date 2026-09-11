@@ -1,195 +1,2721 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Daily Goal Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<title>Daily Goal Tracker</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #fff7fa;
-            color: #292126;
-            min-height: 100vh;
-        }
+<style>
 
-        .container {
-            width: 100%;
-            max-width: 700px;
-            margin: auto;
-            padding: 25px 16px 40px;
-        }
+/* =========================================================
+   BASIC
+========================================================= */
 
-        .header {
-            text-align: center;
-            margin-bottom: 22px;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#fff7fa;
+    color:#292126;
+    min-height:100vh;
+}
 
-        .date {
-            font-size: 14px;
-            color: #9b7c87;
-        }
+button,
+input{
+    font-family:inherit;
+}
 
-        .streak {
-            display: inline-block;
-            margin-top: 12px;
-            background: white;
-            padding: 9px 16px;
-            border-radius: 30px;
-            border: 1px solid #f0dce3;
-            font-size: 13px;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
-        }
+button{
+    cursor:pointer;
+}
 
-        .streak strong {
-            color: #c64d78;
-        }
+.container{
+    width:100%;
+    max-width:720px;
+    margin:auto;
+    padding:24px 16px 50px;
+}
 
-        .card {
-            background: white;
-            border-radius: 22px;
-            padding: 22px;
-            border: 1px solid #f1e1e6;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-            margin-bottom: 18px;
-        }
 
-        .card-title {
-            font-size: 13px;
-            color: #9b7c87;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
+/* =========================================================
+   HEADER
+========================================================= */
 
-        .progress {
-            font-size: 25px;
-            font-weight: bold;
-            color: #c64d78;
-        }
+.header{
+    text-align:center;
+    margin-bottom:22px;
+}
 
-        .points {
-            margin-top: 8px;
-            font-size: 14px;
-            color: #806a72;
-        }
+.header h1{
+    font-size:29px;
+    font-weight:700;
+    margin-bottom:8px;
+}
 
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #f5e8ed;
-            border-radius: 20px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
+.date{
+    color:#9b7c87;
+    font-size:14px;
+}
 
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: #d66b91;
-            border-radius: 20px;
-        }
 
-        .section-title {
-            font-size: 18px;
-            margin: 25px 2px 12px;
-        }
+/* =========================================================
+   STREAK
+========================================================= */
 
-        .empty {
-            background: white;
-            border: 1px dashed #dfc5cf;
-            border-radius: 18px;
-            padding: 30px 20px;
-            text-align: center;
-            color: #9b7c87;
-            font-size: 13px;
-        }
-    </style>
+.streak-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+
+    margin-top:12px;
+
+    background:#ffffff;
+
+    border:1px solid #efdce3;
+
+    border-radius:30px;
+
+    padding:9px 17px;
+
+    font-size:13px;
+
+    box-shadow:0 5px 18px rgba(80,40,55,.06);
+}
+
+.streak-pill strong{
+    color:#c64d78;
+}
+
+
+/* =========================================================
+   MAIN PROGRESS CARD
+========================================================= */
+
+.progress-card{
+    background:#ffffff;
+
+    border:1px solid #f0dfe5;
+
+    border-radius:23px;
+
+    padding:23px;
+
+    box-shadow:0 8px 28px rgba(90,45,62,.07);
+
+    margin-bottom:22px;
+}
+
+.progress-heading{
+    color:#9b7c87;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.2px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.progress-percent{
+    font-size:31px;
+
+    font-weight:800;
+
+    color:#c64d78;
+
+    margin-bottom:5px;
+}
+
+.progress-points{
+    color:#806a72;
+
+    font-size:14px;
+
+    margin-bottom:16px;
+}
+
+.progress-bar{
+    width:100%;
+
+    height:11px;
+
+    background:#f4e7ec;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0%;
+
+    height:100%;
+
+    background:#d66b91;
+
+    border-radius:20px;
+
+    transition:width .3s ease;
+}
+
+.progress-message{
+    margin-top:13px;
+
+    font-size:12px;
+
+    color:#8c747e;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   GOALS HEADER
+========================================================= */
+
+.section-header{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin:25px 2px 12px;
+}
+
+.section-title{
+    font-size:19px;
+
+    font-weight:700;
+}
+
+.manage-button{
+    border:none;
+
+    background:#292126;
+
+    color:white;
+
+    border-radius:11px;
+
+    padding:9px 13px;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   GOALS
+========================================================= */
+
+.goals-container{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.goal-card{
+    background:#ffffff;
+
+    border:1px solid #f0e1e6;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    box-shadow:0 5px 18px rgba(90,45,62,.05);
+
+    transition:transform .15s ease,
+                box-shadow .15s ease;
+}
+
+.goal-card:active{
+    transform:scale(.985);
+}
+
+.goal-left{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    min-width:0;
+}
+
+.goal-status{
+    width:37px;
+
+    height:37px;
+
+    min-width:37px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:17px;
+
+    font-weight:800;
+}
+
+.goal-status.pending{
+    background:#fff0f3;
+
+    color:#c85b72;
+}
+
+.goal-status.completed{
+    background:#eaf7ef;
+
+    color:#328453;
+}
+
+.goal-info{
+    min-width:0;
+}
+
+.goal-name{
+    font-size:14px;
+
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+.goal-state{
+    font-size:10px;
+
+    color:#9c858d;
+
+    margin-top:4px;
+}
+
+.goal-points{
+    color:#c64d78;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state{
+    background:#ffffff;
+
+    border:1px dashed #dfc7d0;
+
+    border-radius:18px;
+
+    padding:29px 20px;
+
+    text-align:center;
+
+    color:#9b7c87;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:18px;
+}
+
+.stat-card{
+    background:#ffffff;
+
+    border:1px solid #f0e1e6;
+
+    border-radius:18px;
+
+    padding:17px 15px;
+
+    box-shadow:0 5px 18px rgba(90,45,62,.05);
+}
+
+.stat-label{
+    color:#9b7c87;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+
+    font-weight:700;
+}
+
+.stat-value{
+    margin-top:7px;
+
+    font-size:21px;
+
+    font-weight:800;
+
+    color:#292126;
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.history-section{
+    margin-top:28px;
+}
+
+.history-title{
+    font-size:19px;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+}
+
+.history-box{
+    background:#ffffff;
+
+    border:1px solid #f0e1e6;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 18px rgba(90,45,62,.05);
+}
+
+.history-row{
+    display:grid;
+
+    grid-template-columns:1.35fr 1fr 1fr .8fr;
+
+    gap:5px;
+
+    padding:13px 12px;
+
+    border-bottom:1px solid #f4eaed;
+
+    align-items:center;
+
+    font-size:11px;
+}
+
+.history-row:last-child{
+    border-bottom:none;
+}
+
+.history-head{
+    color:#9b7c87;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+}
+
+.history-success{
+    color:#328453;
+
+    font-weight:800;
+}
+
+.history-failed{
+    color:#c85b72;
+
+    font-weight:800;
+}
+
+.history-empty{
+    padding:25px 15px;
+
+    text-align:center;
+
+    color:#9b7c87;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(35,24,29,.48);
+
+    display:none;
+
+    align-items:flex-end;
+
+    justify-content:center;
+
+    z-index:1000;
+
+    padding:10px;
+}
+
+.modal{
+    width:100%;
+
+    max-width:620px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:#ffffff;
+
+    border-radius:25px 25px 18px 18px;
+
+    padding:22px;
+
+    box-shadow:0 -10px 40px rgba(0,0,0,.12);
+}
+
+.modal-header{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:19px;
+}
+
+.modal-header h2{
+    font-size:21px;
+}
+
+.close-button{
+    width:34px;
+
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f8edf0;
+
+    font-size:19px;
+
+    color:#292126;
+}
+
+
+/* =========================================================
+   ADD GOAL FORM
+========================================================= */
+
+.form{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    margin-bottom:23px;
+}
+
+.input{
+    width:100%;
+
+    border:1px solid #ead7de;
+
+    background:#fffafb;
+
+    border-radius:12px;
+
+    padding:13px;
+
+    outline:none;
+
+    font-size:13px;
+}
+
+.input:focus{
+    border-color:#d66b91;
+}
+
+.add-button{
+    width:100%;
+
+    border:none;
+
+    background:#c64d78;
+
+    color:#ffffff;
+
+    border-radius:12px;
+
+    padding:13px;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   MANAGE GOALS
+========================================================= */
+
+.manage-list{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.manage-item{
+    background:#fffafb;
+
+    border:1px solid #f0e1e6;
+
+    border-radius:15px;
+
+    padding:14px;
+}
+
+.manage-top{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.manage-name{
+    font-size:13px;
+
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+.manage-points{
+    font-size:12px;
+
+    color:#c64d78;
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.manage-status{
+    margin-top:5px;
+
+    font-size:10px;
+
+    color:#9b7c87;
+}
+
+.manage-actions{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-top:10px;
+}
+
+.small-button{
+    border:none;
+
+    padding:8px 10px;
+
+    border-radius:9px;
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.edit-button{
+    background:#eee9ff;
+
+    color:#62538b;
+}
+
+.deactivate-button{
+    background:#fff0f2;
+
+    color:#bd536d;
+}
+
+.activate-button{
+    background:#eaf7ef;
+
+    color:#328453;
+}
+
+.delete-button{
+    background:#f3f3f3;
+
+    color:#555;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+
+    left:50%;
+
+    bottom:22px;
+
+    transform:translate(-50%,20px);
+
+    background:#292126;
+
+    color:white;
+
+    padding:11px 17px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.25s;
+
+    z-index:2000;
+
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+
+    transform:translate(-50%,0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:430px){
+
+    .container{
+        padding-left:14px;
+        padding-right:14px;
+    }
+
+    .header h1{
+        font-size:27px;
+    }
+
+    .history-row{
+        padding-left:9px;
+        padding-right:9px;
+        font-size:10px;
+    }
+
+    .history-head{
+        font-size:8px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
+
 <div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
     <div class="header">
 
         <h1>Daily Goal Tracker</h1>
 
-        <div class="date" id="todayDate"></div>
+        <div
+            class="date"
+            id="todayDate">
+        </div>
 
-        <div class="streak">
+        <div class="streak-pill">
+
             🔥 Current Streak:
-            <strong>0 Days</strong>
+
+            <strong id="currentStreak">
+                0 Days
+            </strong>
+
         </div>
 
     </div>
 
 
-    <div class="card">
 
-        <div class="card-title">
+    <!-- =====================================================
+         PROGRESS
+    ====================================================== -->
+
+    <div class="progress-card">
+
+        <div class="progress-heading">
             Today's Progress
         </div>
 
-        <div class="progress">
+        <div
+            class="progress-percent"
+            id="percentage">
             0%
         </div>
 
-        <div class="points">
+        <div
+            class="progress-points"
+            id="pointsText">
             0 / 0 Points
         </div>
 
         <div class="progress-bar">
-            <div class="progress-fill"></div>
+
+            <div
+                class="progress-fill"
+                id="progressFill">
+            </div>
+
+        </div>
+
+        <div
+            class="progress-message"
+            id="progressMessage">
+            Add your goals and start your day.
         </div>
 
     </div>
 
 
-    <div class="section-title">
-        Today's Goals
+
+    <!-- =====================================================
+         GOALS
+    ====================================================== -->
+
+    <div class="section-header">
+
+        <div class="section-title">
+            Today's Goals
+        </div>
+
+        <button
+            class="manage-button"
+            onclick="openManage()">
+
+            ⚙ Manage Goals
+
+        </button>
+
     </div>
 
 
-    <div class="empty">
+    <div
+        class="goals-container"
+        id="goalsContainer">
+    </div>
 
-        No goals added yet.
 
-        <br><br>
 
-        Your goals will appear here.
+    <!-- =====================================================
+         STATS
+    ====================================================== -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Points
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalPoints">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Best Streak
+            </div>
+
+            <div
+                class="stat-value"
+                id="bestStreak">
+                0 Days
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         HISTORY
+    ====================================================== -->
+
+    <div class="history-section">
+
+        <div class="history-title">
+            Daily History
+        </div>
+
+        <div
+            class="history-box"
+            id="historyBox">
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MANAGE GOALS MODAL
+========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="manageModal">
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Manage Goals
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeManage()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <!-- ADD -->
+
+        <div class="form">
+
+            <input
+                class="input"
+                id="goalName"
+                type="text"
+                placeholder="Goal name"
+                maxlength="80"
+            >
+
+            <input
+                class="input"
+                id="goalPoints"
+                type="number"
+                placeholder="Maximum points"
+                min="1"
+                max="1000000"
+            >
+
+            <button
+                class="add-button"
+                onclick="addGoal()">
+
+                + Add Goal
+
+            </button>
+
+        </div>
+
+
+
+        <!-- EXISTING -->
+
+        <div
+            class="manage-list"
+            id="manageList">
+        </div>
+
 
     </div>
 
 </div>
 
 
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+
 <script>
 
-    const today = new Date();
+/* =========================================================
+   STORAGE KEYS
+========================================================= */
 
-    document.getElementById("todayDate").textContent =
-        today.toLocaleDateString("en-US", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
+const GOALS_KEY =
+    "dailyGoalTracker_goals_v2";
+
+const RECORDS_KEY =
+    "dailyGoalTracker_records_v2";
+
+
+/* =========================================================
+   STORAGE FUNCTIONS
+========================================================= */
+
+function loadGoals(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(GOALS_KEY) || "[]"
+        );
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+function saveGoals(goals){
+
+    localStorage.setItem(
+        GOALS_KEY,
+        JSON.stringify(goals)
+    );
+
+}
+
+
+function loadRecords(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(RECORDS_KEY) || "{}"
+        );
+
+    }catch(error){
+
+        return {};
+
+    }
+
+}
+
+
+function saveRecords(records){
+
+    localStorage.setItem(
+        RECORDS_KEY,
+        JSON.stringify(records)
+    );
+
+}
+
+
+/* =========================================================
+   DATE FUNCTIONS
+========================================================= */
+
+function getTodayKey(){
+
+    const date = new Date();
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1)
+        .padStart(2,"0");
+
+    const day =
+        String(date.getDate())
+        .padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+function dateFromKey(key){
+
+    return new Date(
+        key + "T00:00:00"
+    );
+
+}
+
+
+function formatDate(key){
+
+    return dateFromKey(key)
+        .toLocaleDateString(
+            "en-US",
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+function displayToday(){
+
+    const date = new Date();
+
+    document.getElementById(
+        "todayDate"
+    ).textContent =
+        date.toLocaleDateString(
+            "en-US",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   CREATE TODAY'S SNAPSHOT
+========================================================= */
+
+/*
+   Every day has its own snapshot.
+
+   Example:
+
+   Monday:
+   Study = 300 points
+
+   Tuesday:
+   Study edited to 500 points
+
+   Monday will STILL show 300.
+
+   This protects old history.
+*/
+
+function createTodayRecord(){
+
+    const today =
+        getTodayKey();
+
+    const records =
+        loadRecords();
+
+    if(records[today]){
+        return;
+    }
+
+    const goals =
+        loadGoals();
+
+    records[today] = {
+
+        goals:
+            goals
+            .filter(goal => goal.active)
+            .map(goal => ({
+
+                id:goal.id,
+
+                name:goal.name,
+
+                maxPoints:Number(goal.points),
+
+                completed:false
+
+            }))
+
+    };
+
+
+    saveRecords(records);
+
+}
+
+
+/* =========================================================
+   SYNC TODAY WITH CURRENT GOALS
+========================================================= */
+
+function syncToday(){
+
+    createTodayRecord();
+
+    const today =
+        getTodayKey();
+
+    const records =
+        loadRecords();
+
+    const goals =
+        loadGoals();
+
+    const record =
+        records[today];
+
+
+    /*
+       Add newly added or reactivated goals.
+    */
+
+    goals
+    .filter(goal => goal.active)
+    .forEach(goal => {
+
+        const existing =
+            record.goals.find(
+                item => item.id === goal.id
+            );
+
+        if(!existing){
+
+            record.goals.push({
+
+                id:goal.id,
+
+                name:goal.name,
+
+                maxPoints:Number(goal.points),
+
+                completed:false
+
+            });
+
+        }
+
+    });
+
+
+    /*
+       Remove goals deactivated today.
+       Past records remain untouched.
+    */
+
+    record.goals =
+        record.goals.filter(snapshot => {
+
+            const current =
+                goals.find(
+                    goal => goal.id === snapshot.id
+                );
+
+            return current && current.active;
+
         });
 
-</script>
 
-</body>
-</html>
+    /*
+       Update today's name and points.
+       Old records are never changed.
+    */
+
+    record.goals.forEach(snapshot => {
+
+        const current =
+            goals.find(
+                goal => goal.id === snapshot.id
+            );
+
+        if(current && current.active){
+
+            snapshot.name =
+                current.name;
+
+            snapshot.maxPoints =
+                Number(current.points);
+
+        }
+
+    });
+
+
+    records[today] =
+        record;
+
+    saveRecords(records);
+
+}
+
+
+/* =========================================================
+   TODAY STATS
+========================================================= */
+
+function getTodayStats(){
+
+    syncToday();
+
+    const records =
+        loadRecords();
+
+    const today =
+        getTodayKey();
+
+    const record =
+        records[today];
+
+    let earned = 0;
+
+    let max = 0;
+
+
+    record.goals.forEach(goal => {
+
+        max +=
+            Number(goal.maxPoints);
+
+        if(goal.completed){
+
+            earned +=
+                Number(goal.maxPoints);
+
+        }
+
+    });
+
+
+    const percentage =
+        max > 0
+        ? Math.round(
+            (earned / max) * 100
+        )
+        : 0;
+
+
+    return {
+
+        earned:earned,
+
+        max:max,
+
+        percentage:percentage
+
+    };
+
+}
+
+
+/* =========================================================
+   RENDER GOALS
+========================================================= */
+
+function renderGoals(){
+
+    syncToday();
+
+    const records =
+        loadRecords();
+
+    const today =
+        getTodayKey();
+
+    const record =
+        records[today];
+
+    const container =
+        document.getElementById(
+            "goalsContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if(record.goals.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <strong>No goals added yet.</strong>
+
+                <br>
+
+                Add your first goal from
+                <strong>Manage Goals</strong>.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    record.goals.forEach(goal => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "goal-card";
+
+
+        card.onclick = function(){
+
+            toggleGoal(goal.id);
+
+        };
+
+
+        card.innerHTML = `
+
+            <div class="goal-left">
+
+                <div class="
+                    goal-status
+                    ${goal.completed
+                        ? "completed"
+                        : "pending"}
+                ">
+
+                    ${goal.completed
+                        ? "✓"
+                        : "✕"}
+
+                </div>
+
+
+                <div class="goal-info">
+
+                    <div class="goal-name">
+
+                        ${escapeHTML(
+                            goal.name
+                        )}
+
+                    </div>
+
+                    <div class="goal-state">
+
+                        ${
+                            goal.completed
+                            ? "Completed"
+                            : "Tap to complete"
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="goal-points">
+
+                ${Number(goal.maxPoints)}
+                pts
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   TOGGLE GOAL
+========================================================= */
+
+function toggleGoal(id){
+
+    const today =
+        getTodayKey();
+
+    const records =
+        loadRecords();
+
+    const record =
+        records[today];
+
+    if(!record) return;
+
+
+    const goal =
+        record.goals.find(
+            item => item.id === id
+        );
+
+    if(!goal) return;
+
+
+    goal.completed =
+        !goal.completed;
+
+
+    saveRecords(records);
+
+    renderAll();
+
+
+    if(goal.completed){
+
+        showToast(
+            "Goal completed ✓"
+        );
+
+    }else{
+
+        showToast(
+            "Goal marked incomplete"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER PROGRESS
+========================================================= */
+
+function renderProgress(){
+
+    const stats =
+        getTodayStats();
+
+
+    document.getElementById(
+        "percentage"
+    ).textContent =
+        stats.percentage + "%";
+
+
+    document.getElementById(
+        "pointsText"
+    ).textContent =
+        `${stats.earned} / ${stats.max} Points`;
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        Math.min(
+            stats.percentage,
+            100
+        ) + "%";
+
+
+    const message =
+        document.getElementById(
+            "progressMessage"
+        );
+
+
+    if(stats.max === 0){
+
+        message.textContent =
+            "Add your goals and start your day.";
+
+    }
+
+    else if(stats.percentage >= 100){
+
+        message.textContent =
+            "Perfect day. Every goal completed! 🏆";
+
+    }
+
+    else if(stats.percentage >= 80){
+
+        message.textContent =
+            "80% target reached. Keep the streak alive! 🔥";
+
+    }
+
+    else if(stats.percentage >= 50){
+
+        message.textContent =
+            "You're over halfway there. Keep going.";
+
+    }
+
+    else{
+
+        message.textContent =
+            "Every completed goal moves you closer to 80%.";
+
+    }
+
+}
+
+
+/* =========================================================
+   RECORD STATS
+========================================================= */
+
+function calculateRecordStats(record){
+
+    let earned = 0;
+
+    let max = 0;
+
+
+    record.goals.forEach(goal => {
+
+        max +=
+            Number(goal.maxPoints);
+
+        if(goal.completed){
+
+            earned +=
+                Number(goal.maxPoints);
+
+        }
+
+    });
+
+
+    const percentage =
+        max > 0
+        ? Math.round(
+            (earned / max) * 100
+        )
+        : 0;
+
+
+    return {
+
+        earned:earned,
+
+        max:max,
+
+        percentage:percentage
+
+    };
+
+}
+
+
+/* =========================================================
+   STREAK
+========================================================= */
+
+function calculateStreaks(){
+
+    const records =
+        loadRecords();
+
+    const dates =
+        Object.keys(records)
+        .sort();
+
+
+    let best = 0;
+
+    let running = 0;
+
+    let previousKey = null;
+
+
+    /*
+       BEST STREAK
+    */
+
+    dates.forEach(key => {
+
+        const stats =
+            calculateRecordStats(
+                records[key]
+            );
+
+
+        if(
+            stats.max > 0 &&
+            stats.percentage >= 80
+        ){
+
+            if(previousKey){
+
+                const previousDate =
+                    dateFromKey(
+                        previousKey
+                    );
+
+                const currentDate =
+                    dateFromKey(
+                        key
+                    );
+
+
+                const difference =
+                    Math.round(
+                        (
+                            currentDate -
+                            previousDate
+                        ) /
+                        86400000
+                    );
+
+
+                if(difference === 1){
+
+                    running++;
+
+                }else{
+
+                    running = 1;
+
+                }
+
+            }else{
+
+                running = 1;
+
+            }
+
+
+            best =
+                Math.max(
+                    best,
+                    running
+                );
+
+
+            previousKey =
+                key;
+
+        }else{
+
+            running = 0;
+
+            previousKey = null;
+
+        }
+
+    });
+
+
+    /*
+       CURRENT STREAK
+
+       Starts from today and goes
+       backwards through successful days.
+    */
+
+    let current = 0;
+
+    const today =
+        getTodayKey();
+
+
+    if(records[today]){
+
+        const todayStats =
+            calculateRecordStats(
+                records[today]
+            );
+
+
+        if(
+            todayStats.max > 0 &&
+            todayStats.percentage >= 80
+        ){
+
+            let date =
+                dateFromKey(today);
+
+
+            while(true){
+
+                const key =
+                    getDateKeyFromDate(date);
+
+
+                if(!records[key]){
+                    break;
+                }
+
+
+                const stats =
+                    calculateRecordStats(
+                        records[key]
+                    );
+
+
+                if(
+                    stats.max > 0 &&
+                    stats.percentage >= 80
+                ){
+
+                    current++;
+
+                    date.setDate(
+                        date.getDate() - 1
+                    );
+
+                }else{
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "currentStreak"
+    ).textContent =
+        current +
+        (current === 1
+            ? " Day"
+            : " Days");
+
+
+    document.getElementById(
+        "bestStreak"
+    ).textContent =
+        best +
+        (best === 1
+            ? " Day"
+            : " Days");
+
+}
+
+
+/* =========================================================
+   DATE FROM DATE OBJECT
+========================================================= */
+
+function getDateKeyFromDate(date){
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2,"0");
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2,"0");
+
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================================================
+   TOTAL POINTS
+========================================================= */
+
+function calculateTotalPoints(){
+
+    const records =
+        loadRecords();
+
+    let total = 0;
+
+
+    Object.values(records)
+    .forEach(record => {
+
+        const stats =
+            calculateRecordStats(
+                record
+            );
+
+        total +=
+            stats.earned;
+
+    });
+
+
+    document.getElementById(
+        "totalPoints"
+    ).textContent =
+        total.toLocaleString();
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function renderHistory(){
+
+    const records =
+        loadRecords();
+
+    const box =
+        document.getElementById(
+            "historyBox"
+        );
+
+
+    const dates =
+        Object.keys(records)
+        .sort()
+        .reverse();
+
+
+    if(dates.length === 0){
+
+        box.innerHTML = `
+
+            <div class="history-empty">
+
+                Your daily history
+                will appear here.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <div class="
+            history-row
+            history-head
+        ">
+
+            <div>Date</div>
+
+            <div>Earned</div>
+
+            <div>Max</div>
+
+            <div>Score</div>
+
+        </div>
+
+    `;
+
+
+    dates.forEach(key => {
+
+        const stats =
+            calculateRecordStats(
+                records[key]
+            );
+
+
+        const successful =
+            stats.max > 0 &&
+            stats.percentage >= 80;
+
+
+        html += `
+
+            <div class="history-row">
+
+                <div>
+                    ${formatDate(key)}
+                </div>
+
+                <div>
+                    ${stats.earned}
+                </div>
+
+                <div>
+                    ${stats.max}
+                </div>
+
+                <div class="${
+                    successful
+                    ? "history-success"
+                    : "history-failed"
+                }">
+
+                    ${stats.percentage}%
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    box.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   OPEN MANAGE
+========================================================= */
+
+function openManage(){
+
+    renderManageList();
+
+    document.getElementById(
+        "manageModal"
+    ).style.display =
+        "flex";
+
+}
+
+
+/* =========================================================
+   CLOSE MANAGE
+========================================================= */
+
+function closeManage(){
+
+    document.getElementById(
+        "manageModal"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   ADD GOAL
+========================================================= */
+
+function addGoal(){
+
+    const nameInput =
+        document.getElementById(
+            "goalName"
+        );
+
+    const pointsInput =
+        document.getElementById(
+            "goalPoints"
+        );
+
+
+    const name =
+        nameInput.value.trim();
+
+    const points =
+        Number(
+            pointsInput.value
+        );
+
+
+    if(!name){
+
+        showToast(
+            "Enter a goal name"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(points) ||
+        points < 1
+    ){
+
+        showToast(
+            "Enter valid points"
+        );
+
+        return;
+
+    }
+
+
+    const goals =
+        loadGoals();
+
+
+    const newGoal = {
+
+        id:
+            Date.now().toString()
+            +
+            Math.random()
+            .toString(36)
+            .slice(2),
+
+        name:name,
+
+        points:points,
+
+        active:true,
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    goals.push(newGoal);
+
+    saveGoals(goals);
+
+
+    /*
+       Add new goal to today's
+       snapshot immediately.
+    */
+
+    syncToday();
+
+
+    nameInput.value = "";
+
+    pointsInput.value = "";
+
+
+    renderManageList();
+
+    renderAll();
+
+
+    showToast(
+        "Goal added ✓"
+    );
+
+}
+
+
+/* =========================================================
+   EDIT GOAL
+========================================================= */
+
+function editGoal(id){
+
+    const goals =
+        loadGoals();
+
+
+    const goal =
+        goals.find(
+            item => item.id === id
+        );
+
+
+    if(!goal) return;
+
+
+    const newName =
+        prompt(
+            "Enter goal name:",
+            goal.name
+        );
+
+
+    if(newName === null){
+        return;
+    }
+
+
+    const cleanName =
+        newName.trim();
+
+
+    if(!cleanName){
+
+        showToast(
+            "Goal name cannot be empty"
+        );
+
+        return;
+
+    }
+
+
+    const newPoints =
+        prompt(
+            "Enter maximum points:",
+            goal.points
+        );
+
+
+    if(newPoints === null){
+        return;
+    }
+
+
+    const points =
+        Number(newPoints);
+
+
+    if(
+        !Number.isFinite(points) ||
+        points < 1
+    ){
+
+        showToast(
+            "Enter valid points"
+        );
+
+        return;
+
+    }
+
+
+    goal.name =
+        cleanName;
+
+    goal.points =
+        points;
+
+
+    saveGoals(goals);
+
+
+    /*
+       Only today's record gets
+       updated.
+
+       Previous days remain untouched.
+    */
+
+    syncToday();
+
+
+    renderManageList();
+
+    renderAll();
+
+
+    showToast(
+        "Goal updated ✓"
+    );
+
+}
+
+
+/* =========================================================
+   DEACTIVATE GOAL
+========================================================= */
+
+function deactivateGoal(id){
+
+    const goals =
+        loadGoals();
+
+
+    const goal =
+        goals.find(
+            item => item.id === id
+        );
+
+
+    if(!goal) return;
+
+
+    goal.active =
+        false;
+
+
+    saveGoals(goals);
+
+
+    syncToday();
+
+
+    renderManageList();
+
+    renderAll();
+
+
+    showToast(
+        "Goal deactivated"
+    );
+
+}
+
+
+/* =========================================================
+   REACTIVATE GOAL
+========================================================= */
+
+function reactivateGoal(id){
+
+    const goals =
+        loadGoals();
+
+
+    const goal =
+        goals.find(
+            item => item.id === id
+        );
+
+
+    if(!goal) return;
+
+
+    goal.active =
+        true;
+
+
+    saveGoals(goals);
+
+
+    syncToday();
+
+
+    renderManageList();
+
+    renderAll();
+
+
+    showToast(
+        "Goal reactivated ✓"
+    );
+
+}
+
+
+/* =========================================================
+   DELETE GOAL
+========================================================= */
+
+function deleteGoal(id){
+
+    const goals =
+        loadGoals();
+
+
+    const goal =
+        goals.find(
+            item => item.id === id
+        );
+
+
+    if(!goal) return;
+
+
+    const confirmed =
+        confirm(
+            "Delete this goal permanently from your goal list?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    /*
+       Delete only from the permanent
+       goal list.
+
+       Existing daily records remain
+       untouched, so old history stays safe.
+    */
+
+    const updated =
+        goals.filter(
+            item => item.id !== id
+        );
+
+
+    saveGoals(updated);
+
+
+    syncToday();
+
+
+    renderManageList();
+
+    renderAll();
+
+
+    showToast(
+        "Goal deleted"
+    );
+
+}
+
+
+/* =========================================================
+   MANAGE LIST
+========================================================= */
+
+function renderManageList(){
+
+    const goals =
+        loadGoals();
+
+
+    const list =
+        document.getElementById(
+            "manageList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if(goals.length === 0){
+
+        list.innerHTML = `
+
+            <div class="empty-state">
+
+                No goals created yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    goals.forEach(goal => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "manage-item";
+
+
+        item.innerHTML = `
+
+            <div class="manage-top">
+
+                <div class="manage-name">
+
+                    ${escapeHTML(
+                        goal.name
+                    )}
+
+                </div>
+
+                <div class="manage-points">
+
+                    ${Number(goal.points)}
+                    pts
+
+                </div>
+
+            </div>
+
+
+            <div class="manage-status">
+
+                ${
+                    goal.active
+                    ? "● Active"
+                    : "● Deactivated"
+                }
+
+            </div>
+
+
+            <div class="manage-actions">
+
+
+                <button
+                    class="
+                        small-button
+                        edit-button
+                    "
+                    onclick="editGoal('${goal.id}')">
+
+                    Edit
+
+                </button>
+
+
+                ${
+                    goal.active
+
+                    ?
+
+                    `
+
+                    <button
+                        class="
+                            small-button
+                            deactivate-button
+                        "
+                        onclick="deactivateGoal('${goal.id}')">
+
+                        Deactivate
+
+                    </button>
+
+                    `
+
+                    :
+
+                    `
+
+                    <button
+                        class="
+                            small-button
+                            activate-button
+                        "
+                        onclick="reactivateGoal('${goal.id}')">
+
+                        Reactivate
+
+                    </button>
+
+                    `
+                }
+
+
+                <button
+                    class="
+                        small-button
+                        delete-button
+                    "
+                    onclick="deleteGoal('${goal.id}')">
+
+                    Delete
+
+                </button>
+
+
+            </div>
+
+        `;
+
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text){
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+    element.textContent =
+        text;
+
+    return element.innerHTML;
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            1800
+        );
+
+}
+
+
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
+
+function renderAll(){
+
+    displayToday();
+
+    renderGoals();
+
+    renderProgress();
+
+    calculateStreaks();
+
+    calculateTotalPoints();
+
+    renderHistory();
+
+}
+
+
+/* =========================================================
+   MIDNIGHT CHECK
+========================================================= */
+
+let loadedDate =
+    getTodayKey();
+
+
+setInterval(
+    function(){
+
+        const currentDate =
+            getTodayKey();
+
+
+        if(currentDate !== loadedDate){
+
+            loadedDate =
+                currentDate;
+
+            createTodayRecord();
+
+            renderAll();
+
+        }
+
+    },
+    60000
+);
+
+
+
+
+
+    
+

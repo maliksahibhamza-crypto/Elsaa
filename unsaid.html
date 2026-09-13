@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Always Trust in Allah 🤍</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #fafafa;
+    color: #202020;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================
+   PAGE SYSTEM
+========================= */
+
+.page {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+    padding: 24px 18px 50px;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* =========================
+   PAGE 1
+========================= */
+
+#page1 {
+    justify-content: center;
+}
+
+.intro-card {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 28px;
+    padding: 42px 28px;
+    text-align: center;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.07);
+
+    opacity: 0;
+    transform: translateY(25px) scale(.97);
+    animation: introAppear 1.2s ease forwards;
+}
+
+.intro-title {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.intro-text {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.intro-text span {
+    display: block;
+    opacity: 0;
+    animation: lineAppear 1s ease forwards;
+}
+
+.intro-text span:nth-child(1) {
+    animation-delay: .6s;
+}
+
+.intro-text span:nth-child(2) {
+    animation-delay: 1.2s;
+}
+
+.intro-text span:nth-child(3) {
+    animation-delay: 1.8s;
+}
+
+.next-wrap {
+    margin-top: 30px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .6s ease;
+}
+
+.next-wrap.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.main-btn {
+    border: none;
+    background: #222;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: .25s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+.main-btn:hover {
+    transform: translateY(-2px);
+}
+
+.main-btn:active {
+    transform: scale(.97);
+}
+
+.secondary-btn {
+    background: white;
+    color: #222;
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
+
+/* =========================
+   PAGE 2
+========================= */
+
+.game-header {
+    width: 100%;
+    max-width: 620px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.game-title {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.game-subtitle {
+    color: #777;
+    font-size: 14px;
+}
+
+/* =========================
+   GUIDE
+========================= */
+
+.guide-area {
+    width: 100%;
+    max-width: 620px;
+    margin-top: 25px;
+}
+
+.guide-btn-wrap {
+    text-align: center;
+}
+
+.guide-bubble {
+    display: none;
+    margin-top: 15px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.08);
+    text-align: left;
+    line-height: 1.7;
+    color: #555;
+    animation: bubbleIn .35s ease;
+}
+
+.guide-bubble.show {
+    display: block;
+}
+
+.guide-bubble strong {
+    color: #222;
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+.game-area {
+    display: none;
+    width: 100%;
+    max-width: 620px;
+    margin-top: 25px;
+}
+
+.game-area.show {
+    display: block;
+    animation: fadeUp .5s ease;
+}
+
+.status-card {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 20px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.05);
+}
+
+.attempt {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.selection {
+    font-weight: 600;
+}
+
+.result {
+    margin-top: 10px;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+/* =========================
+   BOX GRID
+========================= */
+
+.box-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.money-box {
+    height: 85px;
+    background: white;
+    border: 1px solid #dedede;
+    border-radius: 18px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: .25s ease;
+    box-shadow: 0 7px 20px rgba(0,0,0,.045);
+}
+
+.money-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.09);
+}
+
+.money-box .front {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    color: #aaa;
+}
+
+.money-box .value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    opacity: 0;
+}
+
+.money-box.revealed .front {
+    opacity: 0;
+}
+
+.money-box.revealed .value {
+    opacity: 1;
+}
+
+.money-box.selected {
+    border-color: #222;
+    transform: translateY(-3px);
+}
+
+.money-box.disabled {
+    pointer-events: none;
+}
+
+.money-box.winner {
+    background: #f5f5f5;
+}
+
+.money-box.loser {
+    opacity: .65;
+}
+
+/* =========================
+   BOTTOM ACTION
+========================= */
+
+.action-area {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.next-game-btn {
+    display: none;
+}
+
+.next-game-btn.show {
+    display: inline-block;
+    animation: fadeUp .5s ease;
+}
+
+.retry-btn {
+    display: none;
+}
+
+.retry-btn.show {
+    display: inline-block;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes introAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes lineAppear {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bubbleIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 430px) {
+
+    .intro-card {
+        padding: 34px 22px;
+    }
+
+    .intro-title {
+        font-size: 27px;
+    }
+
+    .intro-text {
+        font-size: 15px;
+    }
+
+    .game-title {
+        font-size: 27px;
+    }
+
+    .money-box {
+        height: 75px;
+    }
+
+    .box-grid {
+        gap: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     PAGE 1
+===================================================== -->
+
+<section id="page1" class="page active">
+
+    <div class="intro-card">
+
+        <div class="intro-title">
+            Always Trust in Allah 🤍
+        </div>
+
+        <div class="intro-text">
+            <span>Some words are meant to be spoken.</span>
+            <span>Some are meant to be written.</span>
+            <span>And some are simply left in Allah’s hands.</span>
+        </div>
+
+    </div>
+
+    <div id="page1Next" class="next-wrap">
+
+        <button class="main-btn" onclick="openPage2()">
+            Next →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PAGE 2
+===================================================== -->
+
+<section id="page2" class="page">
+
+    <div class="game-header">
+
+        <div class="game-title">
+            The Little Test 🤍
+        </div>
+
+        <div class="game-subtitle">
+            A small game before you continue...
+        </div>
+
+    </div>
+
+
+    <!-- GUIDE -->
+
+    <div class="guide-area">
+
+        <div class="guide-btn-wrap">
+
+            <button
+                class="main-btn secondary-btn"
+                onclick="toggleGuide()">
+                How to Play?
+            </button>
+
+        </div>
+
+
+        <div id="guideBubble" class="guide-bubble">
+
+            <strong>How to play:</strong><br><br>
+
+            You will see <strong>15 hidden boxes</strong>.
+            Every box contains a different number of
+            <strong>virtual points</strong>.
+
+            <br><br>
+
+            You can choose only <strong>3 boxes</strong>
+            in each attempt.
+
+            <br><br>
+
+            After choosing your three boxes, their hidden
+            values will be revealed.
+
+            <br><br>
+
+            If the total of your three boxes is
+            <strong>more than 50 points</strong>,
+            you win the game.
+
+            <br><br>
+
+            If you lose, you can try again.
+
+            <br><br>
+
+            You have a maximum of
+            <strong>3 attempts</strong>.
+
+            <br><br>
+
+            The box values are randomly shuffled every
+            attempt, so their previous positions cannot
+            help you guess the next round.
+
+            <br><br>
+
+            <strong>Good luck. 🤍</strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- PLAY BUTTON -->
+
+    <div style="margin-top:20px;text-align:center;">
+
+        <button
+            id="playBtn"
+            class="main-btn"
+            onclick="startGame()">
+            Play
+        </button>
+
+    </div>
+
+
+    <!-- GAME -->
+
+    <div id="gameArea" class="game-area">
+
+        <div class="status-card">
+
+            <div id="attemptText" class="attempt">
+                Attempt 1 of 3
+            </div>
+
+            <div class="selection">
+                Selected:
+                <span id="selectedCount">0</span> / 3
+            </div>
+
+            <div id="resultText" class="result"></div>
+
+        </div>
+
+
+        <div id="boxGrid" class="box-grid"></div>
+
+
+        <div class="action-area">
+
+            <button
+                id="retryBtn"
+                class="main-btn retry-btn"
+                onclick="newAttempt()">
+                Try Again
+            </button>
+
+            <button
+                id="nextBtn"
+                class="main-btn next-game-btn"
+                onclick="goToNextPage()">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   PAGE 1 TIMER
+===================================================== */
+
+setTimeout(function() {
+
+    document
+        .getElementById("page1Next")
+        .classList.add("show");
+
+}, 7000);
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function openPage2() {
+
+    document
+        .getElementById("page1")
+        .classList.remove("active");
+
+    document
+        .getElementById("page2")
+        .classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =====================================================
+   GUIDE
+===================================================== */
+
+function toggleGuide() {
+
+    const bubble =
+        document.getElementById("guideBubble");
+
+    bubble.classList.toggle("show");
+}
+
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
+
+let attempts = 0;
+
+const maxAttempts = 3;
+
+let selectedBoxes = [];
+
+let currentValues = [];
+
+
+/* =====================================================
+   VALUE SET
+   2 × 30
+   5 × 5
+   3 × 10
+   5 × 15
+
+   TOTAL = 175
+===================================================== */
+
+const baseValues = [
+
+    30,
+    30,
+
+    5,
+    5,
+    5,
+    5,
+    5,
+
+    10,
+    10,
+    10,
+
+    15,
+    15,
+    15,
+    15,
+    15
+
+];
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array) {
+
+    const arr = [...array];
+
+    for (
+        let i = arr.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+        [
+            arr[i],
+            arr[j]
+        ] = [
+            arr[j],
+            arr[i]
+        ];
+
+    }
+
+    return arr;
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame() {
+
+    document
+        .getElementById("playBtn")
+        .style.display = "none";
+
+    document
+        .getElementById("gameArea")
+        .classList.add("show");
+
+    attempts = 1;
+
+    createAttempt();
+
+}
+
+
+/* =====================================================
+   CREATE ATTEMPT
+===================================================== */
+
+function createAttempt() {
+
+    selectedBoxes = [];
+
+    currentValues = shuffle(baseValues);
+
+    const grid =
+        document.getElementById("boxGrid");
+
+    grid.innerHTML = "";
+
+    document
+        .getElementById("selectedCount")
+        .textContent = "0";
+
+    document
+        .getElementById("attemptText")
+        .textContent =
+        "Attempt " +
+        attempts +
+        " of " +
+        maxAttempts;
+
+    document
+        .getElementById("resultText")
+        .textContent = "";
+
+    document
+        .getElementById("retryBtn")
+        .classList.remove("show");
+
+    document
+        .getElementById("nextBtn")
+        .classList.remove("show");
+
+
+    for (
+        let i = 0;
+        i < currentValues.length;
+        i++
+    ) {
+
+        const box =
+            document.createElement("button");
+
+        box.className = "money-box";
+
+        box.innerHTML = `
+            <span class="front">?</span>
+            <span class="value">
+                ${currentValues[i]} pts
+            </span>
+        `;
+
+        box.onclick = function() {
+
+            selectBox(i, box);
+
+        };
+
+        grid.appendChild(box);
+    }
+
+}
+
+
+/* =====================================================
+   SELECT BOX
+===================================================== */
+
+function selectBox(index, box) {
+
+    if (
+        selectedBoxes.length >= 3 &&
+        !selectedBoxes.includes(index)
+    ) {
+        return;
+    }
+
+
+    if (selectedBoxes.includes(index)) {
+
+        selectedBoxes =
+            selectedBoxes.filter(
+                item => item !== index
+            );
+
+        box.classList.remove("selected");
+
+    } else {
+
+        selectedBoxes.push(index);
+
+        box.classList.add("selected");
+
+    }
+
+
+    document
+        .getElementById("selectedCount")
+        .textContent =
+        selectedBoxes.length;
+
+
+    if (selectedBoxes.length === 3) {
+
+        revealSelection();
+
+    }
+
+}
+
+
+/* =====================================================
+   REVEAL + CHECK
+===================================================== */
+
+function revealSelection() {
+
+    const boxes =
+        document.querySelectorAll(".money-box");
+
+    let total = 0;
+
+
+    selectedBoxes.forEach(index => {
+
+        total += currentValues[index];
+
+        boxes[index]
+            .classList.add("revealed");
+
+    });
+
+
+    boxes.forEach(box => {
+
+        box.classList.add("disabled");
+
+    });
+
+
+    const result =
+        document.getElementById("resultText");
+
+
+    if (total > 50) {
+
+        result.innerHTML =
+            "🎉 You won! Total: <strong>" +
+            total +
+            " points</strong>";
+
+        selectedBoxes.forEach(index => {
+
+            boxes[index]
+                .classList.add("winner");
+
+        });
+
+
+        document
+            .getElementById("nextBtn")
+            .classList.add("show");
+
+    }
+
+    else {
+
+        result.innerHTML =
+            "Not enough points — you got " +
+            "<strong>" +
+            total +
+            " points</strong>.";
+
+        selectedBoxes.forEach(index => {
+
+            boxes[index]
+                .classList.add("loser");
+
+        });
+
+
+        if (attempts < maxAttempts) {
+
+            document
+                .getElementById("retryBtn")
+                .classList.add("show");
+
+        }
+
+        else {
+
+            setTimeout(function() {
+
+                alert(
+                    "Three attempts used. Returning to the main page."
+                );
+
+                window.location.href =
+                    "index.html#page11";
+
+            }, 900);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   NEXT ATTEMPT
+===================================================== */
+
+function newAttempt() {
+
+    if (attempts >= maxAttempts) {
+        return;
+    }
+
+    attempts++;
+
+    createAttempt();
+
+}
+
+
+/* =====================================================
+   NEXT PAGE
+===================================================== */
+
+function goToNextPage() {
+
+    window.location.href =
+        "unsaid2.html";
+
+}
+
+</script>
+
+</body>
+              </html>

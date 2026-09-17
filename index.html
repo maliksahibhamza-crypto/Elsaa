@@ -367,7 +367,7 @@ setInterval(updateRelationshipTimer, 1000);
             </div>`).join('');
     }
 
-    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hayatim')) goToPage('5b'); else alert('Denied'); }
+    function verifyReferrer() { if(document.getElementById('refInput').value.toLowerCase().includes('hazel')) goToPage('5b'); else alert('Denied'); }
     function startHeartGame() { const h = document.getElementById('movingHeart'); heartInt = setInterval(() => { h.style.left = Math.random()*85+'%'; h.style.top = Math.random()*85+'%'; }, 750); }
     function catchHeart() { clearInterval(heartInt); document.getElementById('nextWeekBtn').style.display = 'inline-block'; showModal('Caught!', 'You caught my heart. ❤️'); }
     function showModal(title, body) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerHTML = body; document.getElementById('customModal').style.display = 'flex'; }

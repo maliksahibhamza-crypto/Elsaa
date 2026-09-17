@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Private Space 🤍</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top, #ffffff 0%, #f7f7f7 45%, #eeeeee 100%);
+    color:#181818;
+    font-family:Georgia, "Times New Roman", serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:22px;
+}
+
+.container{
+    width:100%;
+    max-width:560px;
+}
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.card{
+    background:rgba(255,255,255,0.96);
+    border:1px solid #e5e5e5;
+    border-radius:24px;
+    padding:34px 24px;
+    text-align:center;
+    box-shadow:
+        0 18px 50px rgba(0,0,0,0.08);
+    animation:fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.title{
+    font-size:30px;
+    font-weight:500;
+    margin-bottom:10px;
+    letter-spacing:.2px;
+}
+
+.subtitle{
+    color:#777;
+    font-size:15px;
+    line-height:1.7;
+    font-style:italic;
+    margin-bottom:28px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:14px 18px;
+    margin-top:10px;
+    font-family:inherit;
+    font-size:15px;
+    cursor:pointer;
+    transition:.25s ease;
+}
+
+.guideBtn{
+    background:#f1f1f1;
+    color:#222;
+}
+
+.unlockBtn{
+    background:#171717;
+    color:white;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn:active{
+    transform:scale(.98);
+}
+
+/* =========================
+   GUIDE POPUP
+========================= */
+
+.guideOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.35);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:22px;
+    z-index:20;
+}
+
+.guideOverlay.show{
+    display:flex;
+}
+
+.guideBox{
+    width:100%;
+    max-width:430px;
+    background:white;
+    border-radius:22px;
+    padding:28px 23px;
+    box-shadow:0 20px 60px rgba(0,0,0,.2);
+    animation:pop .3s ease;
+}
+
+@keyframes pop{
+    from{
+        opacity:0;
+        transform:scale(.94);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.guideBox h2{
+    font-size:23px;
+    margin-bottom:14px;
+}
+
+.guideBox p{
+    font-family:Arial,sans-serif;
+    color:#666;
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+/* =========================
+   GAME
+========================= */
+
+.game{
+    display:none;
+    margin-top:28px;
+    animation:fadeUp .6s ease;
+}
+
+.game.show{
+    display:block;
+}
+
+.gameTitle{
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.gameInfo{
+    font-family:Arial,sans-serif;
+    color:#777;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+/* =========================
+   ATTEMPT
+========================= */
+
+.attempt{
+    font-family:Arial,sans-serif;
+    font-size:13px;
+    color:#555;
+    margin-bottom:16px;
+}
+
+.attempt strong{
+    color:#171717;
+}
+
+/* =========================
+   MEMORY DISPLAY
+========================= */
+
+.memoryArea{
+    min-height:130px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+.symbolTile{
+    width:58px;
+    height:58px;
+    border:1px solid #dedede;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fafafa;
+    font-size:28px;
+    box-shadow:0 5px 16px rgba(0,0,0,.05);
+    transition:.25s ease;
+}
+
+.symbolTile.selected{
+    background:#181818;
+    color:white;
+    transform:translateY(-3px);
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+.countdown{
+    font-family:Arial,sans-serif;
+    font-size:13px;
+    color:#777;
+    min-height:20px;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options{
+    display:none;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.options.show{
+    display:grid;
+}
+
+.option{
+    height:65px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:16px;
+    font-size:27px;
+    cursor:pointer;
+    transition:.2s ease;
+    font-family:inherit;
+}
+
+.option:hover{
+    background:#f4f4f4;
+    transform:translateY(-2px);
+}
+
+.option:active{
+    transform:scale(.95);
+}
+
+.option.disabled{
+    pointer-events:none;
+    opacity:.45;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    min-height:25px;
+    margin-top:18px;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.success{
+    color:#222;
+}
+
+.error{
+    color:#777;
+}
+
+/* =========================
+   SEQUENCE DISPLAY
+========================= */
+
+.selectedSequence{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+    min-height:28px;
+    margin-top:10px;
+    font-size:20px;
+    letter-spacing:4px;
+}
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:20px;
+    color:#aaa;
+    font-family:Arial,sans-serif;
+    font-size:11px;
+    letter-spacing:.5px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:420px){
+
+    body{
+        padding:14px;
+    }
+
+    .card{
+        padding:28px 18px;
+        border-radius:20px;
+    }
+
+    .title{
+        font-size:26px;
+    }
+
+    .symbolTile{
+        width:52px;
+        height:52px;
+        font-size:25px;
+    }
+
+    .option{
+        height:60px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="title">
+            Private Space 🤍
+        </div>
+
+        <div class="subtitle">
+            Some things are meant to remain between these pages.
+        </div>
+
+        <!-- BUTTONS -->
+
+        <button class="btn guideBtn" onclick="openGuide()">
+            Guide
+        </button>
+
+        <button class="btn unlockBtn" onclick="startGame()">
+            Unlock 🔐
+        </button>
+
+
+        <!-- =========================
+             MEMORY GAME
+        ========================= -->
+
+        <div class="game" id="game">
+
+            <div class="gameTitle">
+                Memory Lock
+            </div>
+
+            <div class="gameInfo">
+                Remember the symbols in the exact order.
+                Every attempt creates a completely new sequence.
+            </div>
+
+            <div class="attempt">
+                Attempt <strong id="attemptNumber">1</strong> / 3
+            </div>
+
+            <div class="countdown" id="countdown"></div>
+
+            <div class="memoryArea" id="memoryArea"></div>
+
+            <div
+                class="selectedSequence"
+                id="selectedSequence">
+            </div>
+
+            <div
+                class="options"
+                id="options">
+            </div>
+
+            <div
+                class="status"
+                id="status">
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            Private Space • Memory Lock
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     GUIDE POPUP
+========================= -->
+
+<div class="guideOverlay" id="guideOverlay">
+
+    <div class="guideBox">
+
+        <h2>How it works 🔐</h2>
+
+        <p>
+            A sequence of symbols will appear on the screen.
+            You will have a few seconds to remember their exact order.
+        </p>
+
+        <p>
+            Once they disappear, the symbols will be shuffled.
+            Select them in the same order in which you saw them.
+        </p>
+
+        <p>
+            Every attempt generates a completely new sequence.
+            You have a maximum of <strong>3 attempts</strong>.
+        </p>
+
+        <button
+            class="btn unlockBtn"
+            onclick="closeGuide()">
+            Got it
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const MAX_ATTEMPTS = 3;
+
+const SEQUENCE_LENGTH = 5;
+
+const MEMORY_TIME = 5;
+
+
+/* =========================================================
+   SYMBOL POOL
+========================================================= */
+
+const symbolPool = [
+
+    "♡",
+    "★",
+    "☾",
+    "✦",
+    "◇",
+    "❖",
+    "✧",
+    "◆",
+    "◈",
+    "☀",
+    "☽",
+    "♧",
+    "♢",
+    "✚",
+    "♠",
+    "○",
+    "△",
+    "□",
+    "☆",
+    "♢",
+    "✿",
+    "❀",
+    "✧",
+    "⊙",
+    "✩"
+
+];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let attempt = 1;
+
+let currentSequence = [];
+
+let selectedSequence = [];
+
+let gameRunning = false;
+
+
+/* =========================================================
+   GUIDE
+========================================================= */
+
+function openGuide(){
+
+    document
+        .getElementById("guideOverlay")
+        .classList
+        .add("show");
+
+}
+
+
+function closeGuide(){
+
+    document
+        .getElementById("guideOverlay")
+        .classList
+        .remove("show");
+
+}
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
+
+function shuffle(array){
+
+    const arr = [...array];
+
+    for(
+        let i = arr.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            arr[i],
+            arr[j]
+        ] =
+        [
+            arr[j],
+            arr[i]
+        ];
+
+    }
+
+    return arr;
+}
+
+
+/* =========================================================
+   CREATE NEW SEQUENCE
+========================================================= */
+
+function generateSequence(){
+
+    /*
+       First shuffle the entire symbol pool.
+       Then take the first 5.
+
+       This guarantees that every attempt
+       receives a freshly generated sequence.
+    */
+
+    const shuffledPool =
+        shuffle(symbolPool);
+
+    currentSequence =
+        shuffledPool.slice(
+            0,
+            SEQUENCE_LENGTH
+        );
+
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+    if(gameRunning){
+
+        return;
+
+    }
+
+    gameRunning = true;
+
+    attempt = 1;
+
+    document
+        .getElementById("game")
+        .classList
+        .add("show");
+
+    startAttempt();
+
+}
+
+
+/* =========================================================
+   START ATTEMPT
+========================================================= */
+
+function startAttempt(){
+
+    selectedSequence = [];
+
+    generateSequence();
+
+    document
+        .getElementById("attemptNumber")
+        .innerText = attempt;
+
+    document
+        .getElementById("status")
+        .innerHTML = "";
+
+    document
+        .getElementById("selectedSequence")
+        .innerHTML = "";
+
+    const options =
+        document.getElementById("options");
+
+    options.innerHTML = "";
+
+    options.classList.remove("show");
+
+
+    showMemorySequence();
+
+}
+
+
+/* =========================================================
+   SHOW MEMORY SEQUENCE
+========================================================= */
+
+function showMemorySequence(){
+
+    const memoryArea =
+        document.getElementById("memoryArea");
+
+    memoryArea.innerHTML = "";
+
+    currentSequence.forEach(
+        function(symbol){
+
+            const tile =
+                document.createElement("div");
+
+            tile.className =
+                "symbolTile";
+
+            tile.innerText =
+                symbol;
+
+            memoryArea.appendChild(tile);
+
+        }
+    );
+
+
+    let remaining =
+        MEMORY_TIME;
+
+    const countdown =
+        document.getElementById("countdown");
+
+    countdown.innerText =
+        "Remember the sequence • " +
+        remaining;
+
+
+    const timer =
+        setInterval(
+            function(){
+
+                remaining--;
+
+                if(remaining > 0){
+
+                    countdown.innerText =
+                        "Remember the sequence • " +
+                        remaining;
+
+                }
+                else{
+
+                    clearInterval(timer);
+
+                    hideMemorySequence();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   HIDE MEMORY SEQUENCE
+========================================================= */
+
+function hideMemorySequence(){
+
+    const memoryArea =
+        document.getElementById("memoryArea");
+
+    memoryArea.innerHTML = "";
+
+    document
+        .getElementById("countdown")
+        .innerText =
+        "Now reproduce the sequence.";
+
+    createOptions();
+
+}
+
+
+/* =========================================================
+   CREATE OPTIONS
+========================================================= */
+
+function createOptions(){
+
+    const options =
+        document.getElementById("options");
+
+    options.innerHTML = "";
+
+    /*
+       Include the actual 5 symbols
+       plus additional random symbols.
+    */
+
+    let optionSymbols = [
+        ...currentSequence
+    ];
+
+
+    const extraSymbols =
+        shuffle(
+            symbolPool.filter(
+                symbol =>
+                    !currentSequence.includes(symbol)
+            )
+        );
+
+
+    optionSymbols.push(
+        ...extraSymbols.slice(0,4)
+    );
+
+
+    /*
+       Shuffle their positions.
+       So positions are different every attempt.
+    */
+
+    optionSymbols =
+        shuffle(optionSymbols);
+
+
+    optionSymbols.forEach(
+        function(symbol){
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "option";
+
+            button.innerText =
+                symbol;
+
+            button.onclick =
+                function(){
+
+                    selectSymbol(
+                        symbol,
+                        button
+                    );
+
+                };
+
+            options.appendChild(button);
+
+        }
+    );
+
+
+    options.classList.add("show");
+
+}
+
+
+/* =========================================================
+   SELECT SYMBOL
+========================================================= */
+
+function selectSymbol(
+    symbol,
+    button
+){
+
+    if(
+        selectedSequence.length >=
+        SEQUENCE_LENGTH
+    ){
+
+        return;
+
+    }
+
+
+    selectedSequence.push(symbol);
+
+    button.classList.add("disabled");
+
+
+    updateSelectedDisplay();
+
+
+    /*
+       Automatically check once
+       5 symbols have been selected.
+    */
+
+    if(
+        selectedSequence.length ===
+        SEQUENCE_LENGTH
+    ){
+
+        setTimeout(
+            checkSequence,
+            350
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE SELECTED DISPLAY
+========================================================= */
+
+function updateSelectedDisplay(){
+
+    const display =
+        document.getElementById(
+            "selectedSequence"
+        );
+
+    display.innerHTML =
+        selectedSequence.join("  ");
+
+}
+
+
+/* =========================================================
+   CHECK SEQUENCE
+========================================================= */
+
+function checkSequence(){
+
+    let correct = true;
+
+
+    for(
+        let i = 0;
+        i < SEQUENCE_LENGTH;
+        i++
+    ){
+
+        if(
+            selectedSequence[i] !==
+            currentSequence[i]
+        ){
+
+            correct = false;
+
+            break;
+
+        }
+
+    }
+
+
+    if(correct){
+
+        unlockSuccess();
+
+    }
+    else{
+
+        failedAttempt();
+
+    }
+
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+function unlockSuccess(){
+
+    const status =
+        document.getElementById("status");
+
+    status.className =
+        "status success";
+
+    status.innerHTML =
+        "✓ Access granted.<br>" +
+        "Private space unlocked.";
+
+    document
+        .getElementById("options")
+        .classList
+        .remove("show");
+
+
+    document
+        .getElementById("countdown")
+        .innerText = "";
+
+
+    gameRunning = false;
+
+
+    /*
+       Small delay so the success
+       message can be seen.
+    */
+
+    setTimeout(
+        function(){
+
+            window.location.href =
+                "unsaid3.html";
+
+        },
+        1200
+    );
+
+}
+
+
+/* =========================================================
+   FAILED ATTEMPT
+========================================================= */
+
+function failedAttempt(){
+
+    const status =
+        document.getElementById("status");
+
+    if(
+        attempt < MAX_ATTEMPTS
+    ){
+
+        status.className =
+            "status error";
+
+        status.innerHTML =
+            "✕ Sequence doesn't match.<br>" +
+            "A new sequence will be generated.";
+
+
+        attempt++;
+
+
+        /*
+           Give a short pause before
+           generating the new sequence.
+        */
+
+        setTimeout(
+            function(){
+
+                startAttempt();
+
+            },
+            1200
+        );
+
+    }
+    else{
+
+        /*
+           Third failed attempt.
+        */
+
+        status.className =
+            "status error";
+
+        status.innerHTML =
+            "Access locked.<br>" +
+            "Three attempts have been used.";
+
+
+        document
+            .getElementById("options")
+            .classList
+            .remove("show");
+
+
+        document
+            .getElementById("countdown")
+            .innerText = "";
+
+
+        gameRunning = false;
+
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                    "index.html#page11";
+
+            },
+            1800
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE GUIDE WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+    .getElementById("guideOverlay")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                closeGuide();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+</body>
+  </html>

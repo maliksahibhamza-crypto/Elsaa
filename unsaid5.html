@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Private Access</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,220,160,.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(180,150,100,.07),
+            transparent 35%
+        ),
+        #080808;
+
+    color:#f4eee2;
+    font-family:Arial,sans-serif;
+
+    padding:20px;
+}
+
+
+/* ================================
+   MAIN CARD
+================================ */
+
+.login-card{
+
+    width:100%;
+    max-width:420px;
+
+    padding:38px 28px;
+
+    background:rgba(20,20,20,.88);
+
+    border:1px solid rgba(214,180,110,.30);
+
+    border-radius:26px;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.65),
+        inset 0 0 30px rgba(255,255,255,.015);
+
+    backdrop-filter:blur(15px);
+
+    animation:fadeUp .8s ease;
+}
+
+
+/* ================================
+   TOP
+================================ */
+
+.security{
+
+    text-align:center;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    color:#bca36d;
+
+    text-transform:uppercase;
+
+    margin-bottom:16px;
+}
+
+
+.lock{
+
+    width:62px;
+    height:62px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    border:1px solid rgba(220,190,120,.35);
+
+    background:rgba(255,255,255,.035);
+
+    font-size:27px;
+
+    box-shadow:
+        0 0 25px rgba(220,190,120,.06);
+}
+
+
+h1{
+
+    text-align:center;
+
+    font-family:Georgia,serif;
+
+    font-size:34px;
+
+    font-weight:normal;
+
+    color:#f1dfb0;
+
+    margin-bottom:10px;
+}
+
+
+.subtitle{
+
+    text-align:center;
+
+    color:#999;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    margin-bottom:30px;
+}
+
+
+/* ================================
+   INPUT
+================================ */
+
+.input-group{
+
+    margin-bottom:17px;
+}
+
+
+label{
+
+    display:block;
+
+    font-size:11px;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    color:#9f9a91;
+
+    margin-bottom:8px;
+}
+
+
+.input-wrap{
+
+    position:relative;
+}
+
+
+input{
+
+    width:100%;
+
+    padding:14px 15px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,.10);
+
+    background:#111;
+
+    color:#f5ead0;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.25s ease;
+}
+
+
+input:focus{
+
+    border-color:rgba(220,190,120,.65);
+
+    box-shadow:
+        0 0 0 3px rgba(220,190,120,.05);
+}
+
+
+.password-input{
+
+    padding-right:75px;
+}
+
+
+/* ================================
+   SHOW / HIDE
+================================ */
+
+.show-btn{
+
+    position:absolute;
+
+    right:10px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:none;
+
+    background:none;
+
+    color:#a9956d;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    padding:5px;
+}
+
+
+/* ================================
+   LOGIN BUTTON
+================================ */
+
+.login-btn{
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d8bb78,
+            #a88b50
+        );
+
+    color:#111;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+}
+
+
+.login-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(210,180,110,.15);
+}
+
+
+.login-btn:active{
+
+    transform:scale(.98);
+}
+
+
+/* ================================
+   MESSAGE
+================================ */
+
+.message{
+
+    min-height:22px;
+
+    text-align:center;
+
+    margin-top:17px;
+
+    font-size:13px;
+
+    color:#d79b9b;
+}
+
+
+.success{
+
+    color:#b9d8b5 !important;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.footer{
+
+    text-align:center;
+
+    color:#555;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+    margin-top:25px;
+}
+
+
+/* ================================
+   SHAKE ANIMATION
+================================ */
+
+.shake{
+
+    animation:shake .35s ease;
+}
+
+
+@keyframes shake{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    25%{
+        transform:translateX(-7px);
+    }
+
+    50%{
+        transform:translateX(7px);
+    }
+
+    75%{
+        transform:translateX(-4px);
+    }
+
+}
+
+
+/* ================================
+   FADE ANIMATION
+================================ */
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-card" id="loginCard">
+
+    <div class="security">
+        Private Access • 05
+    </div>
+
+
+    <div class="lock">
+        🔐
+    </div>
+
+
+    <h1>Private Space</h1>
+
+
+    <div class="subtitle">
+
+        One final key stands between you<br>
+        and the next layer.
+
+    </div>
+
+
+    <!-- =========================
+         LOGIN ID
+    ========================== -->
+
+    <div class="input-group">
+
+        <label for="loginID">
+            Login ID
+        </label>
+
+        <input
+            type="text"
+            id="loginID"
+            placeholder="Enter your ID"
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         PASSWORD
+    ========================== -->
+
+    <div class="input-group">
+
+        <label for="password">
+            Password
+        </label>
+
+        <div class="input-wrap">
+
+            <input
+                type="password"
+                id="password"
+                class="password-input"
+                placeholder="Enter your password"
+                autocomplete="off"
+            >
+
+            <button
+                class="show-btn"
+                onclick="togglePassword()"
+                type="button"
+                id="showBtn"
+            >
+                SHOW
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         LOGIN
+    ========================== -->
+
+    <button
+        class="login-btn"
+        onclick="login()"
+    >
+        Unlock →
+    </button>
+
+
+    <div
+        class="message"
+        id="message"
+    ></div>
+
+
+    <div class="footer">
+        PRIVATE • PERSONAL • UNLOCKED
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   LOGIN CREDENTIALS
+========================================= */
+
+const correctID = "imirrhamza";
+
+const correctPassword = "els@@ndh@mz@_18(hazel)";
+
+
+/* =========================================
+   LOGIN FUNCTION
+========================================= */
+
+function login(){
+
+    const id =
+        document
+        .getElementById("loginID")
+        .value
+        .trim();
+
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    const card =
+        document
+        .getElementById("loginCard");
+
+
+    const message =
+        document
+        .getElementById("message");
+
+
+    /* =========================
+       EMPTY FIELDS
+    ========================== */
+
+    if(id === "" || password === ""){
+
+        message.innerText =
+            "Please enter both fields.";
+
+        message.className =
+            "message";
+
+        card.classList.remove("shake");
+
+        void card.offsetWidth;
+
+        card.classList.add("shake");
+
+        return;
+
+    }
+
+
+    /* =========================
+       CORRECT LOGIN
+    ========================== */
+
+    if(
+        id === correctID &&
+        password === correctPassword
+    ){
+
+        message.innerText =
+            "Access granted ✓";
+
+        message.className =
+            "message success";
+
+
+        /*
+           Redirect to diary
+        */
+
+        setTimeout(function(){
+
+            window.location.href =
+                "diary.html";
+
+        },1000);
+
+        return;
+
+    }
+
+
+    /* =========================
+       WRONG LOGIN
+    ========================== */
+
+    message.innerText =
+        "Incorrect ID or password.";
+
+    message.className =
+        "message";
+
+
+    card.classList.remove("shake");
+
+    void card.offsetWidth;
+
+    card.classList.add("shake");
+
+
+    document
+        .getElementById("password")
+        .value = "";
+
+}
+
+
+/* =========================================
+   SHOW / HIDE PASSWORD
+========================================= */
+
+function togglePassword(){
+
+    const password =
+        document
+        .getElementById("password");
+
+
+    const showBtn =
+        document
+        .getElementById("showBtn");
+
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        showBtn.innerText =
+            "HIDE";
+
+    }
+
+    else{
+
+        password.type = "password";
+
+        showBtn.innerText =
+            "SHOW";
+
+    }
+
+}
+
+
+/* =========================================
+   ENTER KEY SUPPORT
+========================================= */
+
+document
+.getElementById("password")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            login();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+  </html>

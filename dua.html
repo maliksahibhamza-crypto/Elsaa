@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Private Dua 🤍</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(220,220,220,.55),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(235,235,235,.8),
+            transparent 30%
+        ),
+        #ffffff;
+
+    color:#171717;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    padding:20px 14px 45px;
+
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page{
+
+    width:100%;
+    max-width:850px;
+
+    margin:0 auto;
+
+}
+
+
+/* =========================================
+   TOP DECORATION
+========================================= */
+
+.top-decoration{
+
+    text-align:center;
+
+    color:#999;
+
+    font-size:18px;
+
+    letter-spacing:8px;
+
+    margin:12px 0 22px;
+
+    animation:fadeDown 1s ease;
+
+}
+
+
+.top-decoration span{
+
+    display:inline-block;
+
+    margin:0 5px;
+
+}
+
+
+.top-decoration .main{
+
+    color:#222;
+
+    font-size:22px;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header{
+
+    text-align:center;
+
+    padding:35px 18px 30px;
+
+    background:rgba(255,255,255,.85);
+
+    border:1px solid #e7e7e7;
+
+    border-radius:26px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.07);
+
+    animation:fadeUp 1s ease;
+
+}
+
+
+.small-title{
+
+    font-family:Arial,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#8a8a8a;
+
+    margin-bottom:14px;
+
+}
+
+
+h1{
+
+    font-size:38px;
+
+    line-height:1.2;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    color:#111;
+
+}
+
+
+.subtitle{
+
+    margin-top:12px;
+
+    font-size:14px;
+
+    color:#888;
+
+    font-style:italic;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin:30px 8px;
+
+    color:#999;
+
+}
+
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    height:1px;
+
+    flex:1;
+
+    background:#e2e2e2;
+
+}
+
+
+.divider-symbol{
+
+    font-size:17px;
+
+    color:#777;
+
+}
+
+
+/* =========================================
+   DUA CARD
+========================================= */
+
+.dua-card{
+
+    background:#fff;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:26px;
+
+    padding:32px 25px;
+
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.065);
+
+    animation:fadeUp 1.2s ease;
+
+}
+
+
+/* =========================================
+   DUA TEXT
+========================================= */
+
+.dua{
+
+    font-size:18px;
+
+    line-height:2.05;
+
+    font-weight:600;
+
+    color:#171717;
+
+    text-align:left;
+
+}
+
+
+.dua p{
+
+    margin-bottom:25px;
+
+}
+
+
+.dua p:last-child{
+
+    margin-bottom:0;
+
+}
+
+
+/* Highlight */
+
+.highlight{
+
+    font-weight:800;
+
+    color:#050505;
+
+}
+
+
+/* =========================================
+   CLOSING
+========================================= */
+
+.closing{
+
+    text-align:center;
+
+    padding:35px 15px 10px;
+
+}
+
+
+.closing-line{
+
+    font-size:26px;
+
+    font-weight:800;
+
+    color:#111;
+
+}
+
+
+.ameen{
+
+    margin-top:12px;
+
+    font-size:16px;
+
+    color:#777;
+
+    font-style:italic;
+
+}
+
+
+/* =========================================
+   PIN SECTION
+========================================= */
+
+.pin-section{
+
+    margin-top:45px;
+
+    text-align:center;
+
+    animation:fadeUp 1.5s ease;
+
+}
+
+
+.pin-label{
+
+    font-family:Arial,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#888;
+
+    margin-bottom:10px;
+
+}
+
+
+.pin-title{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+
+    color:#111;
+
+}
+
+
+.pin-subtitle{
+
+    color:#999;
+
+    font-size:13px;
+
+    margin-bottom:20px;
+
+    font-family:Arial,sans-serif;
+
+}
+
+
+.pin-input{
+
+    width:170px;
+
+    height:54px;
+
+    display:block;
+
+    margin:0 auto 13px;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    color:#111;
+
+    text-align:center;
+
+    font-size:23px;
+
+    font-weight:700;
+
+    letter-spacing:8px;
+
+    outline:none;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.05);
+
+    transition:.25s ease;
+
+}
+
+
+.pin-input:focus{
+
+    border-color:#888;
+
+    box-shadow:
+        0 0 0 4px rgba(0,0,0,.04);
+
+}
+
+
+.pin-input::placeholder{
+
+    color:#c5c5c5;
+
+    letter-spacing:4px;
+
+}
+
+
+.enter-btn{
+
+    border:none;
+
+    border-radius:13px;
+
+    padding:13px 28px;
+
+    background:#111;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+}
+
+
+.enter-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.15);
+
+}
+
+
+.enter-btn:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* =========================================
+   POPUP
+========================================= */
+
+.popup{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:28px;
+
+    transform:
+        translate(-50%,25px);
+
+    background:#111;
+
+    color:#fff;
+
+    padding:13px 20px;
+
+    border-radius:14px;
+
+    font-family:Arial,sans-serif;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.22);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s ease;
+
+    z-index:100;
+
+    white-space:nowrap;
+
+}
+
+
+.popup.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:
+        translate(-50%,0);
+
+}
+
+
+.popup.error{
+
+    background:#171717;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:38px;
+
+    color:#aaa;
+
+    font-family:Arial,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(22px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+@keyframes fadeDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px){
+
+    body{
+
+        padding:14px 10px 35px;
+
+    }
+
+
+    .header{
+
+        padding:30px 16px 25px;
+
+    }
+
+
+    h1{
+
+        font-size:31px;
+
+    }
+
+
+    .dua-card{
+
+        padding:27px 19px;
+
+    }
+
+
+    .dua{
+
+        font-size:17px;
+
+        line-height:2;
+
+    }
+
+
+    .dua p{
+
+        margin-bottom:23px;
+
+    }
+
+
+    .closing-line{
+
+        font-size:22px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- TOP DECORATION -->
+
+    <div class="top-decoration">
+
+        <span>✦</span>
+        <span>•</span>
+        <span class="main">🤍</span>
+        <span>•</span>
+        <span>✦</span>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="small-title">
+            A Private Dua
+        </div>
+
+        <h1>
+            Ya Allah 🤍
+        </h1>
+
+        <div class="subtitle">
+            Some things are better left in the hands of Allah.
+        </div>
+
+    </div>
+
+
+    <div class="divider">
+        <div class="divider-symbol">✧</div>
+    </div>
+
+
+    <!-- DUA -->
+
+    <div class="dua-card">
+
+        <div class="dua">
+
+
+            <p>
+                Ya Allah, aap sab situation jaante ho aur mera dil bhi jaante ho
+                aur mujhse behtar jaante ho ke main kya chahta hoon.
+                Ya Allah, tu 70 maaon se zyada pyaar karne wala hai.
+                Na koi maa apne bachay ko ghamgeen, rota hua nahi dekh sakti,
+                chahe woh kitna hi na-farman ho.
+            </p>
+
+
+            <p>
+                Main bhi tera na-farman aur gunahgaar banda hi sahi,
+                par tera banda hoon, tera ghulam hoon, tera khadim hoon.
+                Tu mera Badshah hai, mera Malik hai, mera Khaliq hai,
+                mera sab kuch tu hi hai.
+                Yeh duniya toh bas fani hai, tu hamesha hai.
+            </p>
+
+
+            <p>
+                Ya Allah, tera na-farman banda teri bargah mein
+                aik chhoti si arz lekar aaya hai.
+                Ae do jahano ke Badshah, tere khazane bohat bare hain,
+                bohat wasee hain.
+                Tu meri arz sun le mere Allah.
+                Tere khazanon mein koi kami nahi aayegi.
+            </p>
+
+
+            <p class="highlight">
+                Meri Gudiya ko salamat rakhna,
+                theek rakhna,
+                apni hifz-o-amaan mein rakhna
+                aur mere liye rakhna, Ya Allah.
+            </p>
+
+
+            <p>
+                Mujhe wohi chahiye.
+                Please uske ilawa meri zindagi mein kisi ko mat lana.
+                Ya Allah, tu toh har cheez par Qadir hai na?
+                Har cheez teri hi hai.
+                Tu kehta hai <em>“Kun”</em>, toh ho jaati hai.
+            </p>
+
+
+            <p class="highlight">
+                Ya Allah, tu Elsa ko mere naseeb mein likh de.
+                Ya Allah, use mere naseeb mein likh de.
+                Woh mere liye behtar hai,
+                tu bhi use mera mehram bana de.
+                Aur agar woh behtar nahi hai,
+                toh use behtar bana kar mera mehram bana de.
+            </p>
+
+
+            <p>
+                Mere pyaare Allah, tu toh sab jaanta hai
+                ke main Elsa se kitni muhabbat karta hoon.
+                Meri niyyat saaf hai.
+                Usse shaadi karna chahta hoon
+                aur koi buri niyyat nahi thi kabhi meri.
+            </p>
+
+
+            <p>
+                Aur tu yeh bhi jaanta hai na
+                ke main bas aik dafa Elsa se baat karna chahta hoon.
+                Abhi, Ya Allah, meri baat karwa de.
+                Aur agar yeh hamare liye behtar nahi,
+                toh kisi bhi tarah tu us tak yeh pohcha de
+                ya uske dil mein khayal daal de
+                ke main usse kitni muhabbat karta hoon
+                aur uska intezar kar raha hoon
+                aur karunga hamesha.
+            </p>
+
+
+            <p>
+                Aur mere Allah, mujhe itni taqat de
+                ke main uska intezar kar paun.
+                Tu sab halaat jaanta hai na.
+                Tu mera saath de,
+                Elsa ka saath de,
+                ke hum dono apne khwab poore kar payen.
+                Aur jab woh aaye,
+                toh main use khush rakh sakun.
+            </p>
+
+
+            <p>
+                Ya Allah, iske ilawa main sab aapke hawale karta hoon
+                aur yeh sara mamla aapke hawale karta hoon.
+                Aap hi koi rasta banayenge.
+                Main sirf aap par hi bharosa karta hoon.
+            </p>
+
+
+            <p>
+                Kyun ke tu hi har cheez par Qadir hai.
+                Tu sabse bara hai.
+                Tu hi sabka nigahbaan hai.
+                Tu hi sabse behtar jaanne wala hai.
+                Tu hi sabke dilon ka haal jaanta hai.
+                Tu hi behtar tadbeer karne wala hai.
+            </p>
+
+
+            <p>
+                Yeh hi hai tere na-farman bande ki chhoti si arz.
+                Ya Allah, qabool farma le.
+            </p>
+
+
+        </div>
+
+
+        <!-- CLOSING -->
+
+        <div class="closing">
+
+            <div class="closing-line">
+                Ameen Sum Ameen 🤲🏻
+            </div>
+
+            <div class="ameen">
+                Ya Rabb-ul-Alameen
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DIVIDER -->
+
+    <div class="divider">
+        <div class="divider-symbol">♡</div>
+    </div>
+
+
+    <!-- PIN -->
+
+    <div class="pin-section">
+
+        <div class="pin-label">
+            Private Entry
+        </div>
+
+        <div class="pin-title">
+            Continue
+        </div>
+
+        <div class="pin-subtitle">
+            Enter the 4-digit PIN to open the next page.
+        </div>
+
+
+        <input
+            type="password"
+            id="pinInput"
+            class="pin-input"
+            maxlength="4"
+            inputmode="numeric"
+            placeholder="••••"
+            autocomplete="off"
+        >
+
+
+        <button
+            class="enter-btn"
+            onclick="checkPIN()"
+        >
+            Enter →
+        </button>
+
+
+    </div>
+
+
+    <div class="footer">
+        LEFT IN ALLAH'S HANDS 🤍
+    </div>
+
+
+</div>
+
+
+<!-- POPUP -->
+
+<div
+    class="popup error"
+    id="popup"
+>
+    Not matched ✕
+</div>
+
+
+<script>
+
+
+/* =========================================
+   PIN
+========================================= */
+
+const correctPIN = "2406";
+
+
+/* =========================================
+   CHECK PIN
+========================================= */
+
+function checkPIN(){
+
+    const input =
+        document
+        .getElementById("pinInput");
+
+    const pin =
+        input.value.trim();
+
+
+    if(pin === correctPIN){
+
+        window.location.href =
+            "diary.html";
+
+        return;
+
+    }
+
+
+    showPopup();
+
+    input.value = "";
+
+    input.focus();
+
+}
+
+
+/* =========================================
+   POPUP
+========================================= */
+
+function showPopup(){
+
+    const popup =
+        document.getElementById("popup");
+
+    popup.classList.add("show");
+
+
+    setTimeout(function(){
+
+        popup.classList.remove("show");
+
+    },1800);
+
+}
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+document
+.getElementById("pinInput")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            checkPIN();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ONLY NUMBERS
+========================================= */
+
+document
+.getElementById("pinInput")
+.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(/\D/g,"");
+
+    }
+);
+
+</script>
+
+
+</body>
+  </html>

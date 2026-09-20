@@ -1,1 +1,10 @@
-[]
+[{
+  "date": "2026-09-20",
+  "day": "Sunday",
+  "sections": [
+    {
+      "heading": "I created this diary",
+      "text": "20th September"
+    }
+  ]
+}]

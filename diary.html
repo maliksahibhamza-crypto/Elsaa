@@ -1291,6 +1291,7 @@ function nextEntry(){
 }
 
 
+
 /* =========================
    LOAD DIARY.JSON
 ========================= */
@@ -1305,30 +1306,43 @@ async function loadDiary() {
             throw new Error("Diary file not found");
         }
 
-        diaryEntries = await response.json();
+        // IMPORTANT:
+        // Main diary system uses "entries"
+        entries = await response.json();
 
-        if (!Array.isArray(diaryEntries)) {
-            diaryEntries = [];
+        if (!Array.isArray(entries)) {
+            entries = [];
         }
 
         // Newest entries first
-        diaryEntries.sort(function(a, b) {
+        entries.sort(function(a, b) {
             return new Date(b.date) - new Date(a.date);
         });
 
-        if (diaryEntries.length > 0) {
-            showEntry(0);
+        if (entries.length > 0) {
+
+            currentIndex = 0;
+
+            setDate(entries[0].date);
+
+            loadIntoEditor(entries[0].date);
+
+            showEntry(entries[0]);
+
         } else {
-            showEmpty();
+
+            showEmpty(getToday());
+
         }
 
     } catch (error) {
 
         console.log("Could not load diary.json:", error);
 
-        diaryEntries = [];
+        entries = [];
 
-        showEmpty();
+        showEmpty(getToday());
+
     }
 }
 
@@ -1356,17 +1370,16 @@ function safe(value) {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // Automatically select today's date
+    // Automatically show today's date
     setDate(getToday());
 
     // Start with one empty section
     addSection();
 
-    // Load public diary entries
+    // Load saved public diary
     loadDiary();
 
 });
-
 
 </script>
 

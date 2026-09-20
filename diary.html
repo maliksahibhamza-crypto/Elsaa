@@ -1291,593 +1291,6 @@ function nextEntry(){
 }
 
 
-<!-- JSON ENTRY -->
-<section class="json-section">
-
-    <div class="section-title">
-        <span>JSON Entry</span>
-        <small>Save this entry to your public diary</small>
-    </div>
-
-    <textarea
-        id="jsonOutput"
-        class="json-output"
-        readonly
-        placeholder="Your generated JSON entry will appear here..."
-    ></textarea>
-
-    <div class="json-actions">
-        <button class="action-btn primary" onclick="generateEntry()">
-            Generate Entry
-        </button>
-
-        <button class="action-btn" onclick="copyEntry()">
-            Copy JSON
-        </button>
-
-        <button class="action-btn danger" onclick="clearEditor()">
-            Clear
-        </button>
-    </div>
-
-</section>
-
-
-<!-- PUBLIC DIARY -->
-<section class="viewer-section">
-
-    <div class="section-title">
-        <span>Public Diary</span>
-        <small>Entries saved in diary.json</small>
-    </div>
-
-    <div id="viewer" class="viewer">
-
-        <div id="emptyDiary" class="empty-state">
-            <div class="empty-icon">✦</div>
-            <h3>No diary entries yet</h3>
-            <p>Your saved diary entries will appear here.</p>
-        </div>
-
-        <div id="entryView" class="entry-view" style="display:none;">
-
-            <div class="entry-top">
-                <button class="nav-btn" onclick="previousEntry()">
-                    ← Previous
-                </button>
-
-                <div class="view-date">
-                    <div id="viewDate"></div>
-                    <span id="viewDay"></span>
-                </div>
-
-                <button class="nav-btn" onclick="nextEntry()">
-                    Next →
-                </button>
-            </div>
-
-            <div id="viewSections"></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<footer class="footer">
-    <div>My Daily Diary</div>
-    <span>Every day becomes a page of your story.</span>
-</footer>
-
-
-<script>
-
-let diaryEntries = [];
-let currentEntryIndex = -1;
-let editorDate = new Date();
-
-
-/* =========================
-   DATE FUNCTIONS
-========================= */
-
-function getToday() {
-
-    const now = new Date();
-
-    return now.getFullYear() + "-" +
-        String(now.getMonth() + 1).padStart(2, "0") + "-" +
-        String(now.getDate()).padStart(2, "0");
-}
-
-
-function formatDate(dateString) {
-
-    const date = new Date(dateString + "T00:00:00");
-
-    return date.toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    });
-}
-
-
-function getDay(dateString) {
-
-    const date = new Date(dateString + "T00:00:00");
-
-    return date.toLocaleDateString("en-US", {
-        weekday: "long"
-    });
-}
-
-
-/* =========================
-   SET EDITOR DATE
-========================= */
-
-function setDate(dateString) {
-
-    editorDate = new Date(dateString + "T00:00:00");
-
-    document.getElementById("entryDate").value = dateString;
-
-    document.getElementById("displayDate").innerText =
-        formatDate(dateString);
-
-    document.getElementById("displayDay").innerText =
-        getDay(dateString);
-}
-
-
-/* =========================
-   ADD SECTION
-========================= */
-
-function addSection(heading = "", text = "") {
-
-    const container =
-        document.getElementById("sections");
-
-    const section =
-        document.createElement("div");
-
-    section.className = "diary-section";
-
-    section.innerHTML = `
-
-        <div class="section-number"></div>
-
-        <div class="section-fields">
-
-            <input
-                type="text"
-                class="section-heading"
-                placeholder="Section heading..."
-                value="${safe(heading)}"
-            >
-
-            <textarea
-                class="section-text"
-                placeholder="Write whatever you want..."
-            >${safe(text)}</textarea>
-
-        </div>
-
-        <button
-            class="remove-section"
-            onclick="removeSection(this)"
-            title="Remove section"
-        >
-            ×
-        </button>
-
-    `;
-
-    container.appendChild(section);
-
-    updateNumbers();
-}
-
-
-/* =========================
-   REMOVE SECTION
-========================= */
-
-function removeSection(button) {
-
-    const section =
-        button.closest(".diary-section");
-
-    section.remove();
-
-    updateNumbers();
-}
-
-
-/* =========================
-   UPDATE SECTION NUMBERS
-========================= */
-
-function updateNumbers() {
-
-    const sections =
-        document.querySelectorAll(".diary-section");
-
-    sections.forEach((section, index) => {
-
-        section.querySelector(".section-number")
-            .innerText =
-            String(index + 1).padStart(2, "0");
-
-    });
-}
-
-
-/* =========================
-   GET SECTIONS
-========================= */
-
-function getSections() {
-
-    const sections = [];
-
-    document.querySelectorAll(".diary-section")
-        .forEach(section => {
-
-            const heading =
-                section.querySelector(".section-heading")
-                    .value.trim();
-
-            const text =
-                section.querySelector(".section-text")
-                    .value.trim();
-
-            if (heading || text) {
-
-                sections.push({
-                    heading: heading,
-                    text: text
-                });
-
-            }
-
-        });
-
-    return sections;
-}
-
-
-/* =========================
-   GENERATE JSON ENTRY
-========================= */
-
-function generateEntry() {
-
-    const date =
-        document.getElementById("entryDate").value;
-
-    const sections =
-        getSections();
-
-    if (!date) {
-
-        alert("Please select a date.");
-
-        return;
-    }
-
-
-    if (sections.length === 0) {
-
-        alert("Please write something in your diary first.");
-
-        return;
-    }
-
-
-    const entry = {
-
-        date: date,
-
-        day: getDay(date),
-
-        sections: sections
-
-    };
-
-
-    const json =
-        JSON.stringify(entry, null, 2);
-
-
-    document.getElementById("jsonOutput")
-        .value = json;
-
-
-    document.getElementById("jsonOutput")
-        .scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-}
-
-
-/* =========================
-   COPY JSON
-========================= */
-
-function copyEntry() {
-
-    const output =
-        document.getElementById("jsonOutput");
-
-    if (!output.value) {
-
-        alert("Generate the entry first.");
-
-        return;
-    }
-
-
-    navigator.clipboard.writeText(output.value)
-        .then(() => {
-
-            alert("JSON copied ✓");
-
-        })
-        .catch(() => {
-
-            output.select();
-
-            document.execCommand("copy");
-
-            alert("JSON copied ✓");
-
-        });
-
-}
-
-
-/* =========================
-   CLEAR EDITOR
-========================= */
-
-function clearEditor() {
-
-    if (!confirm("Clear this diary entry?")) {
-        return;
-    }
-
-
-    document.getElementById("sections")
-        .innerHTML = "";
-
-    document.getElementById("jsonOutput")
-        .value = "";
-
-    addSection();
-
-}
-
-
-/* =========================
-   TODAY BUTTON
-========================= */
-
-function today() {
-
-    setDate(getToday());
-
-}
-
-
-/* =========================
-   SEARCH DATE
-========================= */
-
-function searchDate() {
-
-    const date =
-        document.getElementById("searchDate").value;
-
-    if (!date) {
-
-        alert("Select a date to search.");
-
-        return;
-    }
-
-
-    const index =
-        diaryEntries.findIndex(
-            entry => entry.date === date
-        );
-
-
-    if (index === -1) {
-
-        alert(
-            "No diary entry found for " +
-            formatDate(date)
-        );
-
-        return;
-    }
-
-
-    showEntry(index);
-
-}
-
-
-/* =========================
-   LOAD ENTRY INTO EDITOR
-========================= */
-
-function loadIntoEditor(index) {
-
-    const entry =
-        diaryEntries[index];
-
-    if (!entry) return;
-
-
-    setDate(entry.date);
-
-
-    document.getElementById("sections")
-        .innerHTML = "";
-
-
-    entry.sections.forEach(section => {
-
-        addSection(
-            section.heading,
-            section.text
-        );
-
-    });
-
-}
-
-
-/* =========================
-   SHOW ENTRY
-========================= */
-
-function showEntry(index) {
-
-    if (
-        index < 0 ||
-        index >= diaryEntries.length
-    ) {
-        return;
-    }
-
-
-    currentEntryIndex = index;
-
-    const entry =
-        diaryEntries[index];
-
-
-    document.getElementById("emptyDiary")
-        .style.display = "none";
-
-
-    document.getElementById("entryView")
-        .style.display = "block";
-
-
-    document.getElementById("viewDate")
-        .innerText =
-        formatDate(entry.date);
-
-
-    document.getElementById("viewDay")
-        .innerText =
-        entry.day;
-
-
-    const container =
-        document.getElementById("viewSections");
-
-    container.innerHTML = "";
-
-
-    entry.sections.forEach((section, index) => {
-
-        const block =
-            document.createElement("article");
-
-        block.className = "view-section";
-
-        block.innerHTML = `
-
-            <div class="view-number">
-                ${String(index + 1).padStart(2, "0")}
-            </div>
-
-            <div class="view-content">
-
-                ${
-                    section.heading
-                    ? `<h3>${safe(section.heading)}</h3>`
-                    : ""
-                }
-
-                <p>${safe(section.text)}</p>
-
-            </div>
-
-        `;
-
-        container.appendChild(block);
-
-    });
-
-
-    window.scrollTo({
-        top: document.querySelector(".viewer-section")
-            .offsetTop - 40,
-        behavior: "smooth"
-    });
-
-}
-
-
-/* =========================
-   EMPTY DIARY
-========================= */
-
-function showEmpty() {
-
-    document.getElementById("emptyDiary")
-        .style.display = "block";
-
-    document.getElementById("entryView")
-        .style.display = "none";
-
-}
-
-
-/* =========================
-   PREVIOUS ENTRY
-========================= */
-
-function previousEntry() {
-
-    if (currentEntryIndex <= 0) {
-        return;
-    }
-
-    showEntry(currentEntryIndex - 1);
-
-}
-
-
-/* =========================
-   NEXT ENTRY
-========================= */
-
-function nextEntry() {
-
-    if (
-        currentEntryIndex >=
-        diaryEntries.length - 1
-    ) {
-        return;
-    }
-
-    showEntry(currentEntryIndex + 1);
-
-}
-
-
 /* =========================
    LOAD DIARY.JSON
 ========================= */
@@ -1886,54 +1299,37 @@ async function loadDiary() {
 
     try {
 
-        const response =
-            await fetch("diary.json");
-
+        const response = await fetch("diary.json");
 
         if (!response.ok) {
             throw new Error("Diary file not found");
         }
 
-
-        diaryEntries =
-            await response.json();
-
+        diaryEntries = await response.json();
 
         if (!Array.isArray(diaryEntries)) {
-
             diaryEntries = [];
-
         }
 
-
-        diaryEntries.sort(
-            (a, b) =>
-                new Date(b.date) -
-                new Date(a.date)
-        );
-
+        // Newest entries first
+        diaryEntries.sort(function(a, b) {
+            return new Date(b.date) - new Date(a.date);
+        });
 
         if (diaryEntries.length > 0) {
-
             showEntry(0);
-
         } else {
-
             showEmpty();
-
         }
-
 
     } catch (error) {
 
-        console.log(error);
+        console.log("Could not load diary.json:", error);
 
         diaryEntries = [];
 
         showEmpty();
-
     }
-
 }
 
 
@@ -1955,18 +1351,22 @@ function safe(value) {
 
 
 /* =========================
-   INITIALIZE
+   INITIALIZE DIARY
 ========================= */
 
 document.addEventListener("DOMContentLoaded", function() {
 
+    // Automatically select today's date
     setDate(getToday());
 
+    // Start with one empty section
     addSection();
 
+    // Load public diary entries
     loadDiary();
 
 });
+
 
 </script>
 

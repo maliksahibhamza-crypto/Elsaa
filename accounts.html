@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Accounts</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Poppins", sans-serif;
+
+            background:
+                radial-gradient(circle at 15% 20%, rgba(212,175,55,0.12), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(160,90,120,0.12), transparent 30%),
+                linear-gradient(135deg, #111011, #191416, #0d0b0c);
+
+            color: #f7f3ed;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 70px;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            padding: 0 22px;
+
+            background: rgba(12,10,11,0.65);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+
+            z-index: 1000;
+        }
+
+
+        /* =========================
+           THREE DOT BUTTON
+        ========================= */
+
+        .menu-button {
+
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(212,175,55,0.25);
+
+            background: rgba(255,255,255,0.035);
+
+            color: #e5ca86;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.3s ease;
+        }
+
+        .menu-button:hover {
+
+            background: rgba(212,175,55,0.12);
+
+            border-color: rgba(212,175,55,0.5);
+
+            transform: rotate(90deg);
+        }
+
+
+        /* =========================
+           DROPDOWN MENU
+        ========================= */
+
+        .menu {
+
+            position: fixed;
+
+            top: 80px;
+            right: 20px;
+
+            width: 260px;
+
+            padding: 10px;
+
+            background: rgba(25,21,23,0.97);
+
+            border: 1px solid rgba(212,175,55,0.18);
+
+            border-radius: 18px;
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.5);
+
+            opacity: 0;
+
+            transform:
+                translateY(-10px)
+                scale(0.96);
+
+            pointer-events: none;
+
+            transition: 0.25s ease;
+
+            z-index: 999;
+        }
+
+        .menu.active {
+
+            opacity: 1;
+
+            transform:
+                translateY(0)
+                scale(1);
+
+            pointer-events: auto;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 11px 13px;
+
+            margin-bottom: 8px;
+
+            background: rgba(255,255,255,0.045);
+
+            border: 1px solid rgba(255,255,255,0.07);
+
+            border-radius: 12px;
+        }
+
+        .search-box i {
+
+            color: #d4af37;
+
+            font-size: 13px;
+        }
+
+        .search-box input {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            color: white;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 12px;
+        }
+
+        .search-box input::placeholder {
+
+            color: rgba(255,255,255,0.4);
+        }
+
+
+        /* =========================
+           MENU OPTIONS
+        ========================= */
+
+        .menu-option {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 12px;
+
+            margin: 3px 0;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: transparent;
+
+            color: #eee;
+
+            text-align: left;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .menu-option:hover {
+
+            background: rgba(212,175,55,0.09);
+
+            color: #f0d58e;
+
+            transform: translateX(3px);
+        }
+
+        .menu-option i {
+
+            width: 20px;
+
+            text-align: center;
+
+            color: #d4af37;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+
+            min-height: 100vh;
+
+            padding:
+                110px
+                25px
+                60px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+
+        /* =========================
+           OPTIONS GRID
+        ========================= */
+
+        .options {
+
+            width: min(850px, 100%);
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+
+        /* =========================
+           OPTION CARD
+        ========================= */
+
+        .option-card {
+
+            position: relative;
+
+            min-height: 170px;
+
+            padding: 25px;
+
+            border-radius: 22px;
+
+            border:
+                1px solid
+                rgba(212,175,55,0.14);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+
+            backdrop-filter: blur(14px);
+
+            text-decoration: none;
+
+            color: white;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+
+            opacity: 1;
+        }
+
+        .option-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            right: -50px;
+            top: -50px;
+
+            background: rgba(212,175,55,0.08);
+
+            border-radius: 50%;
+        }
+
+        .option-card:hover {
+
+            transform: translateY(-6px);
+
+            border-color:
+                rgba(212,175,55,0.4);
+
+            box-shadow:
+                0 18px 45px rgba(0,0,0,0.35);
+        }
+
+
+        /* ICON */
+
+        .card-icon {
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                rgba(212,175,55,0.09);
+
+            color: #e3c56f;
+
+            font-size: 19px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .option-card h2 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 21px;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+        .option-card p {
+
+            color:
+                rgba(255,255,255,0.45);
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+
+            position: absolute;
+
+            right: 22px;
+            bottom: 22px;
+
+            color: #d4af37;
+
+            font-size: 13px;
+
+            transition: 0.3s ease;
+        }
+
+        .option-card:hover .arrow {
+
+            transform: translateX(5px);
+        }
+
+
+        /* =========================
+           SEARCH HIDDEN CARD
+        ========================= */
+
+        .option-card.hidden {
+
+            display: none;
+        }
+
+
+        /* =========================
+           NO RESULTS
+        ========================= */
+
+        .no-results {
+
+            display: none;
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 40px 20px;
+
+            color:
+                rgba(255,255,255,0.4);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .options {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .option-card {
+
+                min-height: 145px;
+
+            }
+
+            .menu {
+
+                right: 15px;
+
+                width:
+                    calc(100% - 30px);
+
+                max-width: 320px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="header">
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Open menu">
+
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         THREE DOT MENU
+    ========================= -->
+
+    <div class="menu" id="menu">
+
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="menuSearch"
+                placeholder="Search options..."
+                autocomplete="off">
+
+        </div>
+
+
+        <!-- Birthday -->
+
+        <button
+            class="menu-option"
+            data-target="birthday">
+
+            <i class="fa-solid fa-cake-candles"></i>
+
+            <span>Gudiya Birthday 2026</span>
+
+        </button>
+
+
+        <!-- Anniversary -->
+
+        <button
+            class="menu-option"
+            data-target="anniversary">
+
+            <i class="fa-solid fa-heart"></i>
+
+            <span>Happy One Year of Us</span>
+
+        </button>
+
+
+        <!-- Unsaid -->
+
+        <button
+            class="menu-option"
+            data-target="unsaid">
+
+            <i class="fa-solid fa-hands-praying"></i>
+
+            <span>Always Trust In Allah 🤍</span>
+
+        </button>
+
+
+        <!-- Memories -->
+
+        <button
+            class="menu-option"
+            data-target="memories">
+
+            <i class="fa-solid fa-dove"></i>
+
+            <span>Memories 🕊️</span>
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN OPTIONS
+    ========================= -->
+
+    <main class="main">
+
+        <section class="options" id="options">
+
+
+            <!-- =========================
+                 GUDIYA BIRTHDAY
+            ========================= -->
+
+            <a
+                href="gudiya-birthday-2026.html"
+                class="option-card"
+                data-name="gudiya birthday 2026 birthday gudiya">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-cake-candles"></i>
+
+                </div>
+
+                <h2>
+                    Gudiya Birthday 2026
+                </h2>
+
+                <p>
+                    A collection of memories,
+                    moments and wishes.
+                </p>
+
+                <span class="arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </a>
+
+
+            <!-- =========================
+                 ONE YEAR
+            ========================= -->
+
+            <a
+                href="happy-one-year.html"
+                class="option-card"
+                data-name="happy one year of us anniversary one year">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+                <h2>
+                    Happy One Year of Us
+                </h2>
+
+                <p>
+                    One year, countless moments,
+                    one unforgettable story.
+                </p>
+
+                <span class="arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </a>
+
+
+            <!-- =========================
+                 UNSAID
+            ========================= -->
+
+            <a
+                href="unsaid.html"
+                class="option-card"
+                data-name="always trust in allah unsaid trust allah">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-hands-praying"></i>
+
+                </div>
+
+                <h2>
+                    Always Trust In Allah 🤍
+                </h2>
+
+                <p>
+                    Some words are simply
+                    left in Allah's hands.
+                </p>
+
+                <span class="arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </a>
+
+
+            <!-- =========================
+                 MEMORIES
+            ========================= -->
+
+            <a
+                href="memorieslogin.html"
+                class="option-card"
+                data-name="memories memory private memories">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-dove"></i>
+
+                </div>
+
+                <h2>
+                    Memories 🕊️
+                </h2>
+
+                <p>
+                    A protected place for
+                    memories worth keeping.
+                </p>
+
+                <span class="arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </a>
+
+
+            <!-- NO RESULTS -->
+
+            <div
+                class="no-results"
+                id="noResults">
+
+                No matching option found.
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =========================
+           MENU TOGGLE
+        ========================= */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+        const menu =
+            document.getElementById("menu");
+
+        menuButton.addEventListener("click", function () {
+
+            menu.classList.toggle("active");
+
+        });
+
+
+        /* =========================
+           CLOSE MENU OUTSIDE
+        ========================= */
+
+        document.addEventListener("click", function (event) {
+
+            if (
+                !menu.contains(event.target) &&
+                !menuButton.contains(event.target)
+            ) {
+
+                menu.classList.remove("active");
+
+            }
+
+        });
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        const search =
+            document.getElementById("menuSearch");
+
+        const cards =
+            document.querySelectorAll(".option-card");
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        search.addEventListener("input", function () {
+
+            const query =
+                search.value
+                    .toLowerCase()
+                    .trim();
+
+            let found = false;
+
+
+            cards.forEach(function (card) {
+
+                const name =
+                    card.dataset.name
+                        .toLowerCase();
+
+                if (name.includes(query)) {
+
+                    card.classList.remove("hidden");
+
+                    found = true;
+
+                } else {
+
+                    card.classList.add("hidden");
+
+                }
+
+            });
+
+
+            if (!found && query !== "") {
+
+                noResults.style.display =
+                    "block";
+
+            } else {
+
+                noResults.style.display =
+                    "none";
+
+            }
+
+        });
+
+
+        /* =========================
+           MENU OPTION LINKS
+        ========================= */
+
+        const menuOptions =
+            document.querySelectorAll(".menu-option");
+
+
+        menuOptions.forEach(function (option) {
+
+            option.addEventListener("click", function () {
+
+                const target =
+                    option.dataset.target;
+
+
+                if (target === "birthday") {
+
+                    window.location.href =
+                        "birthday.html";
+
+                }
+
+
+                if (target === "anniversary") {
+
+                    window.location.href =
+                        "anniversary.html";
+
+                }
+
+
+                if (target === "unsaid") {
+
+                    window.location.href =
+                        "unsaid.html";
+
+                }
+
+
+                if (target === "memories") {
+
+                    window.location.href =
+                        "memorieslogin.html";
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+  </html>

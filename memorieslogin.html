@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure Memories Access</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 20% 20%, #293241, transparent 35%),
+        radial-gradient(circle at 80% 80%, #1d2b2a, transparent 35%),
+        #080b10;
+    color:#eee;
+    font-family:'Inter',sans-serif;
+    overflow:hidden;
+}
+
+.container{
+    width:min(420px,90%);
+    text-align:center;
+}
+
+/* LOADING */
+
+.loading-screen{
+    transition:opacity .7s ease;
+}
+
+.loading-screen.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+.lock{
+    width:75px;
+    height:75px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto 25px;
+    font-size:30px;
+    animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{
+        box-shadow:0 0 0 rgba(255,255,255,0);
+    }
+    50%{
+        box-shadow:0 0 35px rgba(255,255,255,.12);
+    }
+}
+
+.loading-title{
+    font-size:19px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+
+.loading-subtitle{
+    color:#7f8995;
+    font-size:12px;
+}
+
+/* SECURITY BUBBLES */
+
+.messages{
+    height:100px;
+    margin-top:30px;
+    position:relative;
+}
+
+.security-message{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    width:max-content;
+    max-width:90%;
+    padding:10px 16px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    color:#aeb7c2;
+    font-size:11px;
+    opacity:0;
+    animation:messageShow 2.5s forwards;
+}
+
+.security-message:nth-child(1){
+    animation-delay:.5s;
+}
+
+.security-message:nth-child(2){
+    animation-delay:2.8s;
+}
+
+.security-message:nth-child(3){
+    animation-delay:5.1s;
+}
+
+.security-message:nth-child(4){
+    animation-delay:7.4s;
+}
+
+@keyframes messageShow{
+    0%{
+        opacity:0;
+        transform:translate(-50%,10px);
+    }
+    15%,75%{
+        opacity:1;
+        transform:translate(-50%,0);
+    }
+    100%{
+        opacity:0;
+        transform:translate(-50%,-10px);
+    }
+}
+
+
+/* LOGIN */
+
+.login-screen{
+    display:none;
+    opacity:0;
+    transform:translateY(15px);
+    transition:.7s ease;
+}
+
+.login-screen.show{
+    display:block;
+    opacity:1;
+    transform:translateY(0);
+}
+
+.login-icon{
+    font-size:42px;
+    margin-bottom:18px;
+}
+
+.login-screen h1{
+    font-size:26px;
+    margin-bottom:8px;
+}
+
+.login-screen p{
+    color:#7f8995;
+    font-size:12px;
+    line-height:1.7;
+    margin-bottom:28px;
+}
+
+.pin-box{
+    width:100%;
+    padding:17px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    outline:none;
+    background:rgba(255,255,255,.06);
+    color:white;
+    text-align:center;
+    font-size:22px;
+    letter-spacing:10px;
+}
+
+.pin-box:focus{
+    border-color:rgba(255,255,255,.35);
+}
+
+.unlock-btn{
+    width:100%;
+    margin-top:13px;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    background:#e8e8e8;
+    color:#101318;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.message{
+    min-height:20px;
+    margin-top:16px;
+    font-size:11px;
+}
+
+.error{
+    color:#d99b9b;
+}
+
+.success{
+    color:#a7c8ad;
+}
+
+.warning{
+    color:#c9b78c;
+}
+
+.footer{
+    margin-top:35px;
+    color:#4f5863;
+    font-size:9px;
+    letter-spacing:1px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOADING SCREEN -->
+
+    <div class="loading-screen" id="loadingScreen">
+
+        <div class="lock">🔐</div>
+
+        <div class="loading-title">
+            SECURE ACCESS
+        </div>
+
+        <div class="loading-subtitle">
+            Initializing private memory vault...
+        </div>
+
+        <div class="messages">
+
+            <div class="security-message">
+                Verifying access environment...
+            </div>
+
+            <div class="security-message">
+                Checking authorization status...
+            </div>
+
+            <div class="security-message">
+                Establishing secure session...
+            </div>
+
+            <div class="security-message">
+                Preparing protected memories...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PIN SCREEN -->
+
+    <div class="login-screen" id="loginScreen">
+
+        <div class="login-icon">
+            🕊️
+        </div>
+
+        <h1>Memories</h1>
+
+        <p>
+            This space is protected.<br>
+            Enter the authorized PIN to continue.
+        </p>
+
+        <input
+            type="password"
+            id="pin"
+            class="pin-box"
+            maxlength="4"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="••••"
+        >
+
+        <button
+            class="unlock-btn"
+            onclick="verifyPIN()"
+        >
+            Unlock Memories
+        </button>
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+        <div class="footer">
+            AUTHORIZED ACCESS ONLY
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const correctPIN = "2406";
+
+
+/* =========================
+   LOADING → LOGIN
+========================= */
+
+setTimeout(function(){
+
+    const loading =
+        document.getElementById("loadingScreen");
+
+    const login =
+        document.getElementById("loginScreen");
+
+    loading.classList.add("hide");
+
+    setTimeout(function(){
+
+        loading.style.display = "none";
+
+        login.classList.add("show");
+
+        document.getElementById("pin").focus();
+
+    },700);
+
+},9500);
+
+
+/* =========================
+   VERIFY PIN
+========================= */
+
+function verifyPIN(){
+
+    const pin =
+        document.getElementById("pin").value;
+
+    const message =
+        document.getElementById("message");
+
+
+    if(pin === correctPIN){
+
+        message.innerText =
+            "Access authorized ✓";
+
+        message.className =
+            "message success";
+
+
+        setTimeout(function(){
+
+            window.location.href =
+                "memologin2.html";
+
+        },900);
+
+        return;
+    }
+
+
+    message.innerText =
+        "Access denied. Incorrect authorization code.";
+
+    message.className =
+        "message error";
+
+
+    document.getElementById("pin").value = "";
+
+}
+
+
+/* ENTER KEY */
+
+document.getElementById("pin")
+    .addEventListener("keydown", function(event){
+
+        if(event.key === "Enter"){
+            verifyPIN();
+        }
+
+    });
+
+</script>
+
+</body>
+  </html>

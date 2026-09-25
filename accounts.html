@@ -6,401 +6,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Accounts</title>
+    <title>HAZEL</title>
+
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
 
+
     <!-- Font Awesome -->
-    <link rel="stylesheet"
+
+    <link
+        rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
-        body {
-
-            min-height: 100vh;
-
-            font-family: "Poppins", sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at 15% 20%,
-                    rgba(212,175,55,0.12),
-                    transparent 30%
-                ),
-
-                radial-gradient(
-                    circle at 85% 80%,
-                    rgba(150,80,120,0.12),
-                    transparent 30%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #111011,
-                    #1b1518,
-                    #0c0a0b
-                );
-
-            color: #f7f3ed;
-
-            overflow: hidden;
-        }
-
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        .header {
-
-            position: fixed;
-
-            top: 0;
-            right: 0;
-
-            width: 100%;
-
-            height: 72px;
-
-            display: flex;
-
-            justify-content: flex-end;
-
-            align-items: center;
-
-            padding: 0 22px;
-
-            background:
-                rgba(12,10,11,0.55);
-
-            backdrop-filter: blur(15px);
-
-            border-bottom:
-                1px solid
-                rgba(255,255,255,0.06);
-
-            z-index: 1000;
-        }
-
-
-        /* =========================
-           THREE DOT BUTTON
-        ========================= */
-
-        .menu-button {
-
-            width: 44px;
-            height: 44px;
-
-            border-radius: 50%;
-
-            border:
-                1px solid
-                rgba(212,175,55,0.28);
-
-            background:
-                rgba(255,255,255,0.035);
-
-            color: #e3c46f;
-
-            font-size: 18px;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            transition: 0.3s ease;
-        }
-
-
-        .menu-button:hover {
-
-            background:
-                rgba(212,175,55,0.12);
-
-            border-color:
-                rgba(212,175,55,0.55);
-
-            transform: rotate(90deg);
-        }
-
-
-        /* =========================
-           DROPDOWN MENU
-        ========================= */
-
-        .menu {
-
-            position: fixed;
-
-            top: 82px;
-            right: 20px;
-
-            width: 285px;
-
-            padding: 10px;
-
-            background:
-                rgba(25,21,23,0.97);
-
-            border:
-                1px solid
-                rgba(212,175,55,0.20);
-
-            border-radius: 20px;
-
-            backdrop-filter: blur(20px);
-
-            box-shadow:
-                0 25px 70px
-                rgba(0,0,0,0.55);
-
-            opacity: 0;
-
-            visibility: hidden;
-
-            transform:
-                translateY(-12px)
-                scale(0.96);
-
-            pointer-events: none;
-
-            transition: 0.25s ease;
-
-            z-index: 999;
-        }
-
-
-        .menu.active {
-
-            opacity: 1;
-
-            visibility: visible;
-
-            transform:
-                translateY(0)
-                scale(1);
-
-            pointer-events: auto;
-        }
-
-
-        /* =========================
-           SEARCH
-        ========================= */
-
-        .search-box {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 12px 14px;
-
-            margin-bottom: 8px;
-
-            background:
-                rgba(255,255,255,0.045);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.07);
-
-            border-radius: 13px;
-        }
-
-
-        .search-box i {
-
-            color: #d4af37;
-
-            font-size: 13px;
-        }
-
-
-        .search-box input {
-
-            width: 100%;
-
-            border: none;
-
-            outline: none;
-
-            background: transparent;
-
-            color: white;
-
-            font-family: "Poppins", sans-serif;
-
-            font-size: 12px;
-        }
-
-
-        .search-box input::placeholder {
-
-            color:
-                rgba(255,255,255,0.38);
-        }
-
-
-        /* =========================
-           MENU OPTIONS
-        ========================= */
-
-        .menu-option {
-
-            width: 100%;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 13px;
-
-            padding: 13px 12px;
-
-            margin: 3px 0;
-
-            border: none;
-
-            border-radius: 12px;
-
-            background: transparent;
-
-            color: #eeeeee;
-
-            text-align: left;
-
-            font-family: "Poppins", sans-serif;
-
-            font-size: 12px;
-
-            cursor: pointer;
-
-            transition: 0.2s ease;
-        }
-
-
-        .menu-option:hover {
-
-            background:
-                rgba(212,175,55,0.09);
-
-            color: #f0d58e;
-
-            transform:
-                translateX(3px);
-        }
-
-
-        .menu-option i {
-
-            width: 20px;
-
-            text-align: center;
-
-            color: #d4af37;
-        }
-
-
-        /* =========================
-           NO SEARCH RESULT
-        ========================= */
-
-        .no-result {
-
-            display: none;
-
-            padding: 15px 10px;
-
-            text-align: center;
-
-            color:
-                rgba(255,255,255,0.4);
-
-            font-size: 11px;
-        }
-
-
-        /* =========================
-           EMPTY MAIN AREA
-        ========================= */
-
-        .main {
-
-            min-height: 100vh;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 100px 20px;
-        }
-
-
-        .center-decoration {
-
-            width: 1px;
-
-            height: 110px;
-
-            background:
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    rgba(212,175,55,0.35),
-                    transparent
-                );
-
-            opacity: 0.45;
-        }
-
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 600px) {
-
-            .header {
-
-                height: 68px;
-
-                padding-right: 17px;
-            }
-
-
-            .menu {
-
-                right: 15px;
-
-                width:
-                    calc(100% - 30px);
-
-                max-width: 320px;
-            }
-
-        }
-
-    </style>
+    <!-- Custom CSS -->
+
+    <link
+        rel="stylesheet"
+        href="style.css">
 
 </head>
 
@@ -409,10 +36,52 @@
 
 
     <!-- =========================
-         HEADER
+         TOP HEADER
     ========================= -->
 
     <header class="header">
+
+
+        <!-- PROFILE -->
+
+        <div class="profile">
+
+
+            <!-- GOLDEN SHIELD -->
+
+            <div class="shield">
+
+                <div class="pfp-wrapper">
+
+                    <img
+                        src="photos/InShot_20260504_225145550.jpg"
+                        alt="HAZEL"
+                        class="pfp">
+
+                </div>
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <div class="profile-info">
+
+                <div class="name">
+                    HAZEL
+                </div>
+
+                <div class="since">
+                    Since 18 June 2025
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- THREE DOTS -->
 
         <button
             class="menu-button"
@@ -423,15 +92,18 @@
 
         </button>
 
+
     </header>
 
 
 
     <!-- =========================
-         THREE DOT MENU
+         DROPDOWN MENU
     ========================= -->
 
-    <div class="menu" id="menu">
+    <div
+        class="menu"
+        id="menu">
 
 
         <!-- SEARCH -->
@@ -450,7 +122,9 @@
 
 
 
-        <!-- BIRTHDAY -->
+        <!-- =========================
+             BIRTHDAY
+        ========================= -->
 
         <button
             class="menu-option"
@@ -467,7 +141,9 @@
 
 
 
-        <!-- ANNIVERSARY -->
+        <!-- =========================
+             ANNIVERSARY
+        ========================= -->
 
         <button
             class="menu-option"
@@ -484,7 +160,9 @@
 
 
 
-        <!-- ALWAYS TRUST IN ALLAH -->
+        <!-- =========================
+             ALWAYS TRUST IN ALLAH
+        ========================= -->
 
         <button
             class="menu-option"
@@ -499,7 +177,11 @@
 
         </button>
 
-                <!-- DAILY TRACKING -->
+
+
+        <!-- =========================
+             DAILY TRACKING
+        ========================= -->
 
         <button
             class="menu-option"
@@ -515,7 +197,10 @@
         </button>
 
 
-        <!-- MEMORIES -->
+
+        <!-- =========================
+             MEMORIES
+        ========================= -->
 
         <button
             class="menu-option"
@@ -530,39 +215,11 @@
 
         </button>
 
-                <!-- TEST PHOTO -->
-
-        <button
-            class="menu-option"
-            data-search="test photo image"
-            data-link="photos.html">
-
-            <i class="fa-solid fa-image"></i>
-
-            <span>
-                Test Photo
-            </span>
-
-        </button>
-
-                <!-- VIDEOS -->
-
-        <button
-            class="menu-option"
-            data-search="videos video collection memories"
-            data-link="videos.html">
-
-            <i class="fa-solid fa-video"></i>
-
-            <span>
-                Videos Collection 🎥
-            </span>
-
-        </button>
 
 
-
-        <!-- NO RESULT -->
+        <!-- =========================
+             NO RESULT
+        ========================= -->
 
         <div
             class="no-result"
@@ -572,177 +229,180 @@
 
         </div>
 
+
     </div>
 
 
 
     <!-- =========================
-         EMPTY PAGE
+         MAIN
     ========================= -->
 
     <main class="main">
 
-        <div class="center-decoration"></div>
+
+        <!-- LIVE COUNTER -->
+
+        <div class="counter">
+
+
+            <div class="counter-title">
+                TIME SINCE
+            </div>
+
+
+            <div class="counter-line"></div>
+
+
+            <div class="counter-values">
+
+
+                <!-- YEARS -->
+
+                <div class="time-unit">
+
+                    <span
+                        id="years"
+                        class="number">
+                        0
+                    </span>
+
+                    <span class="label">
+                        YEARS
+                    </span>
+
+                </div>
+
+
+                <div class="separator">
+                    :
+                </div>
+
+
+                <!-- MONTHS -->
+
+                <div class="time-unit">
+
+                    <span
+                        id="months"
+                        class="number">
+                        0
+                    </span>
+
+                    <span class="label">
+                        MONTHS
+                    </span>
+
+                </div>
+
+
+                <div class="separator">
+                    :
+                </div>
+
+
+                <!-- DAYS -->
+
+                <div class="time-unit">
+
+                    <span
+                        id="days"
+                        class="number">
+                        0
+                    </span>
+
+                    <span class="label">
+                        DAYS
+                    </span>
+
+                </div>
+
+
+                <div class="separator">
+                    :
+                </div>
+
+
+                <!-- HOURS -->
+
+                <div class="time-unit">
+
+                    <span
+                        id="hours"
+                        class="number">
+                        0
+                    </span>
+
+                    <span class="label">
+                        HOURS
+                    </span>
+
+                </div>
+
+
+                <div class="separator">
+                    :
+                </div>
+
+
+                <!-- MINUTES -->
+
+                <div class="time-unit">
+
+                    <span
+                        id="minutes"
+                        class="number">
+                        0
+                    </span>
+
+                    <span class="label">
+                        MINUTES
+                    </span>
+
+                </div>
+
+
+                <div class="separator">
+                    :
+                </div>
+
+
+                <!-- SECONDS -->
+
+                <div class="time-unit">
+
+                    <span
+                        id="seconds"
+                        class="number">
+                        0
+                    </span>
+
+                    <span class="label">
+                        SECONDS
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
 
     </main>
 
 
 
-    <script>
+    <!-- =========================
+         CUSTOM JAVASCRIPT
+    ========================= -->
 
-
-        /* =========================
-           MENU
-        ========================= */
-
-        const menuButton =
-            document.getElementById("menuButton");
-
-        const menu =
-            document.getElementById("menu");
-
-
-        menuButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.stopPropagation();
-
-                menu.classList.toggle("active");
-
-            }
-        );
-
-
-
-        /* =========================
-           CLOSE MENU
-        ========================= */
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                if (
-                    !menu.contains(event.target) &&
-                    !menuButton.contains(event.target)
-                ) {
-
-                    menu.classList.remove("active");
-
-                }
-
-            }
-        );
-
-
-
-        /* =========================
-           OPTIONS
-        ========================= */
-
-        const options =
-            document.querySelectorAll(
-                ".menu-option"
-            );
-
-
-        options.forEach(function (option) {
-
-            option.addEventListener(
-                "click",
-                function () {
-
-                    const link =
-                        option.dataset.link;
-
-                    window.location.href = link;
-
-                }
-            );
-
-        });
-
-
-
-        /* =========================
-           SEARCH
-        ========================= */
-
-        const searchInput =
-            document.getElementById(
-                "searchInput"
-            );
-
-        const noResult =
-            document.getElementById(
-                "noResult"
-            );
-
-
-        searchInput.addEventListener(
-            "input",
-            function () {
-
-                const query =
-                    searchInput.value
-                        .toLowerCase()
-                        .trim();
-
-                let visibleCount = 0;
-
-
-                options.forEach(
-                    function (option) {
-
-                        const searchableText =
-                            option.dataset.search
-                                .toLowerCase();
-
-
-                        if (
-                            searchableText
-                                .includes(query)
-                        ) {
-
-                            option.style.display =
-                                "flex";
-
-                            visibleCount++;
-
-                        } else {
-
-                            option.style.display =
-                                "none";
-
-                        }
-
-                    }
-                );
-
-
-                if (
-                    query !== "" &&
-                    visibleCount === 0
-                ) {
-
-                    noResult.style.display =
-                        "block";
-
-                } else {
-
-                    noResult.style.display =
-                        "none";
-
-                }
-
-            }
-        );
-
-
+    <script
+        src="script.js">
     </script>
 
 
 </body>
 
-</html>
+    </html>

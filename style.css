@@ -1,0 +1,710 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+
+    min-height: 100vh;
+
+    font-family: "Poppins", sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(212, 175, 55, 0.08),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(115, 65, 90, 0.08),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            135deg,
+            #0b0a0c,
+            #151115,
+            #090809
+        );
+
+    color: #f7f3ed;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    height: 82px;
+
+    padding: 0 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background:
+        rgba(10, 9, 11, 0.60);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.045);
+
+    z-index: 1000;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+/* =========================
+   GOLDEN SHIELD
+========================= */
+
+.shield {
+
+    position: relative;
+
+    width: 52px;
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f1d77f,
+            #b88d20 45%,
+            #e4c45f
+        );
+
+    clip-path:
+        polygon(
+            50% 0%,
+            92% 15%,
+            92% 57%,
+            82% 76%,
+            66% 90%,
+            50% 100%,
+            34% 90%,
+            18% 76%,
+            8% 57%,
+            8% 15%
+        );
+
+    filter:
+        drop-shadow(
+            0 5px 14px
+            rgba(212, 175, 55, 0.20)
+        );
+}
+
+
+/* =========================
+   PFP
+========================= */
+
+.pfp-wrapper {
+
+    width: 39px;
+    height: 39px;
+
+    padding: 2px;
+
+    background: #0d0b0e;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.pfp {
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* =========================
+   PROFILE INFO
+========================= */
+
+.profile-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.name {
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    color: #f4eee2;
+
+    line-height: 1.1;
+}
+
+
+.since {
+
+    margin-top: 4px;
+
+    font-size: 8px;
+
+    font-weight: 400;
+
+    letter-spacing: 1px;
+
+    color:
+        rgba(212, 175, 55, 0.65);
+}
+
+
+/* =========================
+   THREE DOT BUTTON
+========================= */
+
+.menu-button {
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.25);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #e3c46f;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.3s ease;
+}
+
+
+.menu-button:hover {
+
+    background:
+        rgba(212, 175, 55, 0.10);
+
+    border-color:
+        rgba(212, 175, 55, 0.50);
+
+    transform: rotate(90deg);
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+
+    min-height: 100vh;
+
+    padding-top: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =========================
+   COUNTER
+========================= */
+
+.counter {
+
+    width: calc(100% - 30px);
+
+    max-width: 500px;
+
+    text-align: center;
+
+    padding: 22px 12px;
+}
+
+
+.counter-title {
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(212, 175, 55, 0.55);
+
+    font-weight: 500;
+}
+
+
+.counter-line {
+
+    width: 45px;
+
+    height: 1px;
+
+    margin: 10px auto 17px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(212, 175, 55, 0.45),
+            transparent
+        );
+}
+
+
+/* =========================
+   TIME VALUES
+========================= */
+
+.counter-values {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    gap: 5px;
+}
+
+
+.time-unit {
+
+    min-width: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.number {
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 18px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    color: #e7c96e;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+.label {
+
+    margin-top: 6px;
+
+    font-size: 5.5px;
+
+    letter-spacing: 0.8px;
+
+    color:
+        rgba(255, 255, 255, 0.34);
+
+    white-space: nowrap;
+}
+
+
+.separator {
+
+    color:
+        rgba(212, 175, 55, 0.28);
+
+    font-size: 14px;
+
+    line-height: 18px;
+}
+
+
+/* =========================
+   DROPDOWN MENU
+========================= */
+
+.menu {
+
+    position: fixed;
+
+    top: 92px;
+    right: 20px;
+
+    width: 285px;
+
+    padding: 10px;
+
+    background:
+        rgba(25, 21, 23, 0.97);
+
+    border:
+        1px solid
+        rgba(212, 175, 55, 0.20);
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.55);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(-12px)
+        scale(0.96);
+
+    pointer-events: none;
+
+    transition: 0.25s ease;
+
+    z-index: 999;
+}
+
+
+.menu.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 14px;
+
+    margin-bottom: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 13px;
+}
+
+
+.search-box i {
+
+    color: #d4af37;
+
+    font-size: 13px;
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 12px;
+}
+
+
+.search-box input::placeholder {
+
+    color:
+        rgba(255, 255, 255, 0.38);
+}
+
+
+/* =========================
+   MENU OPTIONS
+========================= */
+
+.menu-option {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 13px 12px;
+
+    margin: 3px 0;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #eeeeee;
+
+    text-align: left;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.menu-option:hover {
+
+    background:
+        rgba(212, 175, 55, 0.09);
+
+    color: #f0d58e;
+
+    transform:
+        translateX(3px);
+}
+
+
+.menu-option i {
+
+    width: 20px;
+
+    text-align: center;
+
+    color: #d4af37;
+}
+
+
+/* =========================
+   NO RESULT
+========================= */
+
+.no-result {
+
+    display: none;
+
+    padding: 15px 10px;
+
+    text-align: center;
+
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .header {
+
+        height: 74px;
+
+        padding: 0 16px;
+    }
+
+
+    .shield {
+
+        width: 48px;
+        height: 55px;
+    }
+
+
+    .pfp-wrapper {
+
+        width: 36px;
+        height: 36px;
+    }
+
+
+    .pfp {
+
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .name {
+
+        font-size: 16px;
+
+        letter-spacing: 1.8px;
+    }
+
+
+    .since {
+
+        font-size: 7px;
+    }
+
+
+    .menu {
+
+        top: 84px;
+
+        right: 15px;
+
+        width:
+            calc(100% - 30px);
+
+        max-width: 320px;
+    }
+
+
+    .counter {
+
+        width: 100%;
+
+        padding-left: 5px;
+
+        padding-right: 5px;
+    }
+
+
+    .counter-values {
+
+        gap: 2px;
+    }
+
+
+    .time-unit {
+
+        min-width: 38px;
+    }
+
+
+    .number {
+
+        font-size: 16px;
+    }
+
+
+    .separator {
+
+        font-size: 12px;
+    }
+
+}

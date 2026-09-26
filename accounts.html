@@ -1,408 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>HAZEL</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-
-    <!-- Font Awesome -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-
-    <!-- Custom CSS -->
-
-    <link
-        rel="stylesheet"
-        href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
-    <!-- =========================
-         TOP HEADER
-    ========================= -->
-
-    <header class="header">
-
-
-        <!-- PROFILE -->
-
-        <div class="profile">
-
-
-            <!-- GOLDEN SHIELD -->
-
-            <div class="shield">
-
-                <div class="pfp-wrapper">
-
-                    <img
-                        src="photos/InShot_20260504_225145550.jpg"
-                        alt="HAZEL"
-                        class="pfp">
-
-                </div>
-
-            </div>
-
-
-            <!-- NAME -->
-
-            <div class="profile-info">
-
-                <div class="name">
-                    HAZEL
-                </div>
-
-                <div class="since">
-                    Since 18 June 2025
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- THREE DOTS -->
-
-        <button
-            class="menu-button"
-            id="menuButton"
-            aria-label="Open menu">
-
+    <!-- TOP RIGHT MENU BUTTON -->
+    <header class="top-header">
+        <button class="menu-button"
+                id="menuButton"
+                aria-label="Open menu"
+                aria-expanded="false">
             <i class="fa-solid fa-ellipsis-vertical"></i>
-
         </button>
-
-
     </header>
 
+    <!-- PROFILE SECTION -->
+    <main class="main-content">
 
+        <section class="profile-section">
 
-    <!-- =========================
-         DROPDOWN MENU
-    ========================= -->
-
-    <div
-        class="menu"
-        id="menu">
-
-
-        <!-- SEARCH -->
-
-        <div class="search-box">
-
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search options..."
-                autocomplete="off">
-
-        </div>
-
-
-
-        <!-- =========================
-             BIRTHDAY
-        ========================= -->
-
-        <button
-            class="menu-option"
-            data-search="gudiya birthday 2026 birthday gudiya"
-            data-link="birthday.html">
-
-            <i class="fa-solid fa-cake-candles"></i>
-
-            <span>
-                Gudiya Birthday 2026
-            </span>
-
-        </button>
-
-
-
-        <!-- =========================
-             ANNIVERSARY
-        ========================= -->
-
-        <button
-            class="menu-option"
-            data-search="happy one year of us anniversary one year"
-            data-link="anniversary.html">
-
-            <i class="fa-solid fa-heart"></i>
-
-            <span>
-                Happy One Year of Us
-            </span>
-
-        </button>
-
-
-
-        <!-- =========================
-             ALWAYS TRUST IN ALLAH
-        ========================= -->
-
-        <button
-            class="menu-option"
-            data-search="always trust in allah trust allah unsaid"
-            data-link="unsaid.html">
-
-            <i class="fa-solid fa-hands-praying"></i>
-
-            <span>
-                Always Trust In Allah 🤍
-            </span>
-
-        </button>
-
-
-
-        <!-- =========================
-             DAILY TRACKING
-        ========================= -->
-
-        <button
-            class="menu-option"
-            data-search="daily tracking tracking daily goals tracker"
-            data-link="tracking.html">
-
-            <i class="fa-solid fa-chart-line"></i>
-
-            <span>
-                Daily Tracking
-            </span>
-
-        </button>
-
-
-
-        <!-- =========================
-             MEMORIES
-        ========================= -->
-
-        <button
-            class="menu-option"
-            data-search="memories memory private memories"
-            data-link="memorieslogin.html">
-
-            <i class="fa-solid fa-dove"></i>
-
-            <span>
-                Memories 🕊️
-            </span>
-
-        </button>
-
-
-
-        <!-- =========================
-             NO RESULT
-        ========================= -->
-
-        <div
-            class="no-result"
-            id="noResult">
-
-            No matching option found.
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- =========================
-         MAIN
-    ========================= -->
-
-    <main class="main">
-
-
-        <!-- LIVE COUNTER -->
-
-        <div class="counter">
-
-
-            <div class="counter-title">
-                TIME SINCE
+            <!-- PFP WITH GOLDEN CIRCLE -->
+            <div class="pfp-ring">
+                <img
+                    src="photos/InShot_20260504_225145550.jpg"
+                    alt="HAZEL profile picture"
+                    class="pfp">
             </div>
 
+            <!-- NAME AND LIVE COUNTER -->
+            <div class="profile-details">
 
-            <div class="counter-line"></div>
+                <h1 class="profile-name">HAZEL</h1>
 
-
-            <div class="counter-values">
-
-
-                <!-- YEARS -->
-
-                <div class="time-unit">
-
-                    <span
-                        id="years"
-                        class="number">
-                        0
+                <div class="live-counter" aria-label="Time since 18 June 2025 at 13:35">
+                    <span class="counter-part">
+                        <span id="years">0</span><small>y</small>
                     </span>
 
-                    <span class="label">
-                        YEARS
+                    <span class="counter-part">
+                        <span id="months">0</span><small>m</small>
                     </span>
 
+                    <span class="counter-part">
+                        <span id="days">0</span><small>d</small>
+                    </span>
+
+                    <span class="counter-part">
+                        <span id="hours">0</span><small>h</small>
+                    </span>
+
+                    <span class="counter-part">
+                        <span id="minutes">0</span><small>m</small>
+                    </span>
+
+                    <span class="counter-part">
+                        <span id="seconds">0</span><small>s</small>
+                    </span>
                 </div>
-
-
-                <div class="separator">
-                    :
-                </div>
-
-
-                <!-- MONTHS -->
-
-                <div class="time-unit">
-
-                    <span
-                        id="months"
-                        class="number">
-                        0
-                    </span>
-
-                    <span class="label">
-                        MONTHS
-                    </span>
-
-                </div>
-
-
-                <div class="separator">
-                    :
-                </div>
-
-
-                <!-- DAYS -->
-
-                <div class="time-unit">
-
-                    <span
-                        id="days"
-                        class="number">
-                        0
-                    </span>
-
-                    <span class="label">
-                        DAYS
-                    </span>
-
-                </div>
-
-
-                <div class="separator">
-                    :
-                </div>
-
-
-                <!-- HOURS -->
-
-                <div class="time-unit">
-
-                    <span
-                        id="hours"
-                        class="number">
-                        0
-                    </span>
-
-                    <span class="label">
-                        HOURS
-                    </span>
-
-                </div>
-
-
-                <div class="separator">
-                    :
-                </div>
-
-
-                <!-- MINUTES -->
-
-                <div class="time-unit">
-
-                    <span
-                        id="minutes"
-                        class="number">
-                        0
-                    </span>
-
-                    <span class="label">
-                        MINUTES
-                    </span>
-
-                </div>
-
-
-                <div class="separator">
-                    :
-                </div>
-
-
-                <!-- SECONDS -->
-
-                <div class="time-unit">
-
-                    <span
-                        id="seconds"
-                        class="number">
-                        0
-                    </span>
-
-                    <span class="label">
-                        SECONDS
-                    </span>
-
-                </div>
-
 
             </div>
-
-
-        </div>
-
+        </section>
 
     </main>
 
+    <!-- DROPDOWN MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
 
+    <nav class="dropdown-menu" id="dropdownMenu" aria-label="Main menu">
 
-    <!-- =========================
-         CUSTOM JAVASCRIPT
-    ========================= -->
+        <div class="menu-heading">MENU</div>
 
-    <script
-        src="script.js">
-    </script>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search options..."
+                autocomplete="off">
+        </div>
 
+        <button class="menu-option"
+                data-search="gudiya birthday 2026 birthday"
+                data-link="birthday.html">
+            <i class="fa-solid fa-cake-candles"></i>
+            <span>Gudiya Birthday 2026</span>
+            <i class="fa-solid fa-chevron-right option-arrow"></i>
+        </button>
 
+        <button class="menu-option"
+                data-search="happy one year of us anniversary"
+                data-link="anniversary.html">
+            <i class="fa-solid fa-heart"></i>
+            <span>Happy One Year of Us</span>
+            <i class="fa-solid fa-chevron-right option-arrow"></i>
+        </button>
+
+        <button class="menu-option"
+                data-search="always trust in allah unsaid"
+                data-link="unsaid.html">
+            <i class="fa-solid fa-hands-praying"></i>
+            <span>Always Trust In Allah 🤍</span>
+            <i class="fa-solid fa-chevron-right option-arrow"></i>
+        </button>
+
+        <button class="menu-option"
+                data-search="daily tracking goals tracker"
+                data-link="tracking.html">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Daily Tracking</span>
+            <i class="fa-solid fa-chevron-right option-arrow"></i>
+        </button>
+
+        <button class="menu-option"
+                data-search="memories memory"
+                data-link="memorieslogin.html">
+            <i class="fa-solid fa-dove"></i>
+            <span>Memories 🕊️</span>
+            <i class="fa-solid fa-chevron-right option-arrow"></i>
+        </button>
+
+        <div class="no-result" id="noResult">
+            No matching option found.
+        </div>
+
+    </nav>
+
+    <script src="script.js"></script>
 </body>
-
-    </html>
+</html>

@@ -440,3 +440,94 @@ body {
         font-size: 12px;
     }
 }
+
+/* =========================
+   ABOUT / BIO
+========================= */
+
+.about-section {
+    width: 100%;
+    max-width: 720px;
+
+    margin: 8px auto 0;
+    padding: 0 22px;
+
+    color: #d8d2d2;
+    font-family: "Poppins", sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.8;
+
+    text-align: left;
+}
+
+/* ABOUT TITLE */
+
+.about-title {
+    margin: 0 0 5px;
+
+    color: #e8cc7a;
+    font-family: "Playfair Display", serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+}
+
+/* BIO TEXT */
+
+.about-text {
+    margin: 0;
+
+    color: #d8d2d2;
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* SIGNATURE */
+
+.about-signature {
+    margin: 7px 0 0;
+
+    color: #e8cc7a;
+    font-family: "Playfair Display", serif;
+    font-size: 11px;
+    font-style: italic;
+}
+
+/* GOLD HEART SYMBOL */
+
+.gold-heart {
+    color: #d4af37;
+    font-family: "Playfair Display", serif;
+    font-style: normal;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .about-section {
+        max-width: 100%;
+        margin-top: 8px;
+        padding: 0 18px;
+
+        font-size: 10px;
+        line-height: 1.75;
+    }
+
+    .about-title {
+        margin-bottom: 4px;
+        font-size: 12px;
+    }
+
+    .about-text {
+        font-size: 10px;
+        line-height: 1.75;
+    }
+
+    .about-signature {
+        margin-top: 6px;
+        font-size: 10px;
+    }
+}

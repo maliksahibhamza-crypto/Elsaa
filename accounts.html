@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,164 +7,193 @@
 
     <title>HAZEL</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- TOP RIGHT MENU BUTTON -->
-    <header class="top-header">
-        <button class="menu-button"
-                id="menuButton"
-                aria-label="Open menu"
-                aria-expanded="false">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
-        </button>
-    </header>
+    <!-- MAIN PROFILE SECTION -->
 
-    <!-- PROFILE SECTION -->
     <main class="main-content">
+
+        <!-- PROFILE -->
 
         <section class="profile-section">
 
-            <!-- PFP WITH GOLDEN CIRCLE -->
+            <!-- PROFILE PICTURE -->
+
             <div class="pfp-ring">
+
                 <img
                     src="photos/InShot_20260926_135534669.jpg"
                     alt="HAZEL profile picture"
                     class="pfp">
+
             </div>
 
             <!-- NAME AND LIVE COUNTER -->
+
             <div class="profile-details">
 
                 <h1 class="profile-name">HAZEL</h1>
 
-                <div class="live-counter" aria-label="Time since 18 June 2025 at 13:35">
+                <div
+                    class="live-counter"
+                    aria-label="Time since 18 June 2025 at 13:35">
+
                     <span class="counter-part">
-                        <span id="years">0</span><small>y</small>
+                        <span id="years">0</span>
+                        <small>y</small>
                     </span>
 
                     <span class="counter-part">
-                        <span id="months">0</span><small>m</small>
+                        <span id="months">0</span>
+                        <small>m</small>
                     </span>
 
                     <span class="counter-part">
-                        <span id="days">0</span><small>d</small>
+                        <span id="days">0</span>
+                        <small>d</small>
                     </span>
 
                     <span class="counter-part">
-                        <span id="hours">0</span><small>h</small>
+                        <span id="hours">0</span>
+                        <small>h</small>
                     </span>
 
                     <span class="counter-part">
-                        <span id="minutes">0</span><small>m</small>
+                        <span id="minutes">0</span>
+                        <small>m</small>
                     </span>
 
                     <span class="counter-part">
-                        <span id="seconds">0</span><small>s</small>
+                        <span id="seconds">0</span>
+                        <small>s</small>
                     </span>
+
                 </div>
 
             </div>
+
         </section>
 
         <!-- ABOUT / BIO -->
-<section class="about-section">
 
-    <h2 class="about-title">
-        <span class="gold-heart">♡</span>
-        A Story Left to Allah
-        <span class="gold-heart">♡</span>
-    </h2>
+        <section class="about-section">
 
-    <p class="about-text">
-        “I placed our story in Allah’s hands — our love, our silence,
-        our distance, and every unanswered prayer. If we are written
-        for each other, no distance can rewrite what He has destined.
-        Until then, I leave everything to Him, for He knows what my
-        heart cannot explain.”
-    </p>
+            <h2 class="about-title">
 
-    <p class="about-signature">
-        Forever yours E<span class="gold-heart">♡</span>
-    </p>
+                <span class="gold-heart">♡</span>
+                A Story Left to Allah
+                <span class="gold-heart">♡</span>
 
-</section>
+            </h2>
+
+            <p class="about-text">
+
+                “I placed our story in Allah’s hands — our love, our silence,
+                our distance, and every unanswered prayer. If we are written
+                for each other, no distance can rewrite what He has destined.
+                Until then, I leave everything to Him, for He knows what my
+                heart cannot explain.”
+
+            </p>
+
+            <p class="about-signature">
+
+                Forever yours E<span class="gold-heart">♡</span>
+
+            </p>
+
+        </section>
 
     </main>
 
-    <!-- DROPDOWN MENU -->
-    <div class="menu-overlay" id="menuOverlay"></div>
 
-    <nav class="dropdown-menu" id="dropdownMenu" aria-label="Main menu">
+    <!-- BOTTOM NAVIGATION -->
 
-        <div class="menu-heading">MENU</div>
+    <nav class="navigation" aria-label="Main navigation">
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="Search options..."
-                autocomplete="off">
-        </div>
+        <!-- HOME -->
 
-        <button class="menu-option"
-                data-search="gudiya birthday 2026 birthday"
-                data-link="birthday.html">
-            <i class="fa-solid fa-cake-candles"></i>
-            <span>Gudiya Birthday 2026</span>
-            <i class="fa-solid fa-chevron-right option-arrow"></i>
-        </button>
+        <a
+            href="accounts.html"
+            class="nav-item active"
+            aria-current="page">
 
-        <button class="menu-option"
-                data-search="happy one year of us anniversary"
-                data-link="anniversary.html">
-            <i class="fa-solid fa-heart"></i>
-            <span>Happy One Year of Us</span>
-            <i class="fa-solid fa-chevron-right option-arrow"></i>
-        </button>
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
 
-        <button class="menu-option"
-                data-search="always trust in allah unsaid"
-                data-link="unsaid.html">
-            <i class="fa-solid fa-hands-praying"></i>
-            <span>Always Trust In Allah 🤍</span>
-            <i class="fa-solid fa-chevron-right option-arrow"></i>
-        </button>
+        </a>
 
-        <button class="menu-option"
-                data-search="daily tracking goals tracker"
-                data-link="tracking.html">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Daily Tracking</span>
-            <i class="fa-solid fa-chevron-right option-arrow"></i>
-        </button>
 
-        <button class="menu-option"
-                data-search="memories memory"
-                data-link="memorieslogin.html">
-            <i class="fa-solid fa-dove"></i>
-            <span>Memories 🕊️</span>
-            <i class="fa-solid fa-chevron-right option-arrow"></i>
-        </button>
+        <!-- FILES -->
 
-        <div class="no-result" id="noResult">
-            No matching option found.
-        </div>
+        <a
+            href="section.html"
+            class="nav-item">
+
+            <i class="fa-solid fa-folder"></i>
+            <span>Files</span>
+
+        </a>
+
+
+        <!-- MESSAGE -->
+
+        <a
+            href="messages.html"
+            class="nav-item">
+
+            <i class="fa-solid fa-envelope"></i>
+            <span>Message</span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="settings.html"
+            class="nav-item">
+
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="login.html"
+            class="nav-item">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+
+        </a>
 
     </nav>
 
+
+    <!-- MAIN JAVASCRIPT -->
+
     <script src="script.js"></script>
+
 </body>
-            </html>
+</html>

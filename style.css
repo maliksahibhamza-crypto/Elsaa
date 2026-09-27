@@ -494,3 +494,43 @@ body {
         transition: none;
     }
        }
+
+
+/* =========================
+   EXPANDED NAVIGATION
+========================= */
+
+.navigation.expanded {
+    gap: 5px;
+}
+
+.navigation.expanded .nav-item {
+    min-width: 90px;
+    justify-content: center;
+    gap: 8px;
+}
+
+.navigation.expanded .nav-item span {
+    display: inline-block;
+    opacity: 1;
+    visibility: visible;
+    animation: showNavText 0.25s ease;
+}
+
+/* Mobile expanded navigation */
+@media (max-width: 600px) {
+    .navigation.expanded {
+        gap: 2px;
+    }
+
+    .navigation.expanded .nav-item {
+        min-width: 0;
+        padding: 0 9px;
+        gap: 6px;
+    }
+
+    .navigation.expanded .nav-item span {
+        font-size: 11px;
+    }
+}
+

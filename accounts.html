@@ -124,9 +124,76 @@
     </main>
 
 
-    <!-- BOTTOM NAVIGATION -->
+    
+<!-- BOTTOM NAVIGATION -->
 
-    <nav class="navigation" aria-label="Main navigation">
+<nav class="navigation" id="mainNavigation" aria-label="Main navigation">
+
+    <a href="accounts.html" class="nav-item active" aria-current="page">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="section.html" class="nav-item">
+        <i class="fa-solid fa-folder"></i>
+        <span>Files</span>
+    </a>
+
+    <a href="messages.html" class="nav-item">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Message</span>
+    </a>
+
+    <a href="settings.html" class="nav-item">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+    </a>
+
+    <a href="login.html" class="nav-item">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+
+</nav>
+
+<script>
+    const navigation = document.getElementById("mainNavigation");
+    const navItems = navigation.querySelectorAll(".nav-item");
+
+    let selectedItem = null;
+    let navigationTimer = null;
+
+    navItems.forEach((item) => {
+        item.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Agar isi item par dobara click ho, foran open karo
+            if (selectedItem === item) {
+                clearTimeout(navigationTimer);
+                window.location.href = item.href;
+                return;
+            }
+
+            // Pehli click par navigation expand karo
+            clearTimeout(navigationTimer);
+            selectedItem = item;
+
+            navigation.classList.add("expanded");
+
+            navItems.forEach((navItem) => {
+                navItem.classList.remove("active");
+            });
+
+            item.classList.add("active");
+
+            // 3 seconds baad selected link open karo
+            navigationTimer = setTimeout(() => {
+                window.location.href = item.href;
+            }, 3000);
+        });
+    });
+</script>
+    
 
         <!-- HOME -->
 

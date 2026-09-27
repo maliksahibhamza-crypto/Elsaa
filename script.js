@@ -1,250 +1,299 @@
-/* =========================
-   LIVE COUNTER
-   Start: 18 June 2025, 13:35
-   Pakistan Standard Time
-========================= */
+document.addEventListener("DOMContentLoaded", function () {
 
-const startDate = new Date("2025-06-18T13:35:00+05:00");
+    /* =========================
+       LIVE TIMELINE
+       Start:
+       18 June 2025 — 13:35
+       Pakistan Standard Time
+    ========================= */
 
-const counterElements = {
-    years: document.getElementById("years"),
-    months: document.getElementById("months"),
-    days: document.getElementById("days"),
-    hours: document.getElementById("hours"),
-    minutes: document.getElementById("minutes"),
-    seconds: document.getElementById("seconds")
-};
+    const yearsElement = document.getElementById("years");
+    const monthsElement = document.getElementById("months");
+    const daysElement = document.getElementById("days");
+    const hoursElement = document.getElementById("hours");
+    const minutesElement = document.getElementById("minutes");
+    const secondsElement = document.getElementById("seconds");
 
 
-/* Get current time in Pakistan Standard Time */
-function getPakistanTime() {
-    const parts = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Asia/Karachi",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hourCycle: "h23"
-    }).formatToParts(new Date());
+    /* Start date */
+    const startDate = new Date("2025-06-18T13:35:00+05:00");
 
-    const values = {};
 
-    parts.forEach(part => {
-        if (part.type !== "literal") {
-            values[part.type] = Number(part.value);
+    /* =========================
+       ADD YEARS
+    ========================= */
+
+    function addYears(date, amount) {
+
+        const result = new Date(date);
+
+        const originalMonth = result.getMonth();
+        const originalDay = result.getDate();
+
+        result.setDate(1);
+        result.setFullYear(
+            result.getFullYear() + amount
+        );
+        result.setMonth(originalMonth);
+
+        const lastDay = new Date(
+            result.getFullYear(),
+            result.getMonth() + 1,
+            0
+        ).getDate();
+
+        result.setDate(
+            Math.min(originalDay, lastDay)
+        );
+
+        return result;
+    }
+
+
+    /* =========================
+       ADD MONTHS
+    ========================= */
+
+    function addMonths(date, amount) {
+
+        const result = new Date(date);
+
+        const originalDay = result.getDate();
+
+        result.setDate(1);
+
+        result.setMonth(
+            result.getMonth() + amount
+        );
+
+        const lastDay = new Date(
+            result.getFullYear(),
+            result.getMonth() + 1,
+            0
+        ).getDate();
+
+        result.setDate(
+            Math.min(originalDay, lastDay)
+        );
+
+        return result;
+    }
+
+
+    /* =========================
+       UPDATE TIMELINE
+    ========================= */
+
+    function updateTimeline() {
+
+        const now = new Date();
+
+
+        /* If date hasn't arrived */
+        if (now < startDate) {
+
+            yearsElement.textContent = "0";
+            monthsElement.textContent = "0";
+            daysElement.textContent = "0";
+            hoursElement.textContent = "0";
+            minutesElement.textContent = "0";
+            secondsElement.textContent = "0";
+
+            return;
         }
-    });
-
-    return new Date(Date.UTC(
-        values.year,
-        values.month - 1,
-        values.day,
-        values.hour,
-        values.minute,
-        values.second
-    ));
-}
 
 
-/* Add months while keeping the date valid */
-function addMonths(date, amount) {
-    const result = new Date(date);
-    const originalDay = result.getUTCDate();
+        /* YEARS */
 
-    result.setUTCDate(1);
-    result.setUTCMonth(result.getUTCMonth() + amount);
+        let years =
+            now.getFullYear() -
+            startDate.getFullYear();
 
-    const lastDay = new Date(Date.UTC(
-        result.getUTCFullYear(),
-        result.getUTCMonth() + 1,
-        0
-    )).getUTCDate();
-
-    result.setUTCDate(Math.min(originalDay, lastDay));
-
-    return result;
-}
+        let yearAnchor =
+            addYears(startDate, years);
 
 
-/* Add years while keeping the date valid */
-function addYears(date, amount) {
-    const result = new Date(date);
-    const originalMonth = result.getUTCMonth();
-    const originalDay = result.getUTCDate();
+        if (yearAnchor > now) {
 
-    result.setUTCDate(1);
-    result.setUTCFullYear(result.getUTCFullYear() + amount);
-    result.setUTCMonth(originalMonth);
+            years--;
 
-    const lastDay = new Date(Date.UTC(
-        result.getUTCFullYear(),
-        result.getUTCMonth() + 1,
-        0
-    )).getUTCDate();
-
-    result.setUTCDate(Math.min(originalDay, lastDay));
-
-    return result;
-}
+            yearAnchor =
+                addYears(startDate, years);
+        }
 
 
-function updateCounter() {
-    const now = getPakistanTime();
+        /* MONTHS */
 
-    if (now < startDate) {
-        Object.values(counterElements).forEach(element => {
-            if (element) {
-                element.textContent = "0";
-            }
-        });
-        return;
+        let months =
+            (now.getFullYear() -
+                yearAnchor.getFullYear()) * 12
+            +
+            (now.getMonth() -
+                yearAnchor.getMonth());
+
+
+        let monthAnchor =
+            addMonths(yearAnchor, months);
+
+
+        if (monthAnchor > now) {
+
+            months--;
+
+            monthAnchor =
+                addMonths(yearAnchor, months);
+        }
+
+
+        /* REMAINING TIME */
+
+        let remaining =
+            now.getTime() -
+            monthAnchor.getTime();
+
+
+        const dayMS =
+            24 * 60 * 60 * 1000;
+
+        const hourMS =
+            60 * 60 * 1000;
+
+        const minuteMS =
+            60 * 1000;
+
+        const secondMS =
+            1000;
+
+
+        const days =
+            Math.floor(remaining / dayMS);
+
+        remaining -=
+            days * dayMS;
+
+
+        const hours =
+            Math.floor(remaining / hourMS);
+
+        remaining -=
+            hours * hourMS;
+
+
+        const minutes =
+            Math.floor(remaining / minuteMS);
+
+        remaining -=
+            minutes * minuteMS;
+
+
+        const seconds =
+            Math.floor(remaining / secondMS);
+
+
+        /* DISPLAY */
+
+        yearsElement.textContent = years;
+        monthsElement.textContent = months;
+        daysElement.textContent = days;
+        hoursElement.textContent = hours;
+        minutesElement.textContent = minutes;
+        secondsElement.textContent = seconds;
     }
 
-    let years = now.getUTCFullYear() - startDate.getUTCFullYear();
-    let anchor = addYears(startDate, years);
 
-    if (anchor > now) {
-        years--;
-        anchor = addYears(startDate, years);
-    }
-
-    let months =
-        (now.getUTCFullYear() - anchor.getUTCFullYear()) * 12 +
-        (now.getUTCMonth() - anchor.getUTCMonth());
-
-    let monthAnchor = addMonths(anchor, months);
-
-    if (monthAnchor > now) {
-        months--;
-        monthAnchor = addMonths(anchor, months);
-    }
-
-    let remainingMilliseconds =
-        now.getTime() - monthAnchor.getTime();
-
-    const dayMilliseconds = 24 * 60 * 60 * 1000;
-    const hourMilliseconds = 60 * 60 * 1000;
-    const minuteMilliseconds = 60 * 1000;
-
-    const days = Math.floor(
-        remainingMilliseconds / dayMilliseconds
-    );
-
-    remainingMilliseconds -= days * dayMilliseconds;
-
-    const hours = Math.floor(
-        remainingMilliseconds / hourMilliseconds
-    );
-
-    remainingMilliseconds -= hours * hourMilliseconds;
-
-    const minutes = Math.floor(
-        remainingMilliseconds / minuteMilliseconds
-    );
-
-    remainingMilliseconds -= minutes * minuteMilliseconds;
-
-    const seconds = Math.floor(
-        remainingMilliseconds / 1000
-    );
+    /* Start timeline immediately */
+    updateTimeline();
 
 
-    /* Update timeline */
-    if (counterElements.years) {
-        counterElements.years.textContent = years;
-    }
-
-    if (counterElements.months) {
-        counterElements.months.textContent = months;
-    }
-
-    if (counterElements.days) {
-        counterElements.days.textContent = days;
-    }
-
-    if (counterElements.hours) {
-        counterElements.hours.textContent = hours;
-    }
-
-    if (counterElements.minutes) {
-        counterElements.minutes.textContent = minutes;
-    }
-
-    if (counterElements.seconds) {
-        counterElements.seconds.textContent = seconds;
-    }
-}
+    /* Update every second */
+    setInterval(updateTimeline, 1000);
 
 
-/* Start timeline */
-updateCounter();
-setInterval(updateCounter, 1000);
+
+    /* =========================
+       BOTTOM NAVIGATION
+    ========================= */
+
+    const navigation =
+        document.getElementById("mainNavigation");
 
 
-/* =========================
-   BOTTOM NAVIGATION
-========================= */
+    if (navigation) {
 
-const navigation = document.getElementById("mainNavigation");
+        const navItems =
+            navigation.querySelectorAll(".nav-item");
 
-if (navigation) {
-
-    const navItems =
-        navigation.querySelectorAll(".nav-item");
-
-    let selectedItem = null;
-    let navigationTimer = null;
+        let selectedItem = null;
+        let navigationTimer = null;
 
 
-    navItems.forEach(function(item) {
+        navItems.forEach(function (item) {
 
-        item.addEventListener("click", function(event) {
-
-            /*
-             First click:
-             Expand the selected item
-             */
-            if (selectedItem !== item) {
-
-                event.preventDefault();
-
-                navItems.forEach(function(navItem) {
-                    navItem.classList.remove("selected");
-                });
-
-                selectedItem = item;
-
-                item.classList.add("selected");
-
-                clearTimeout(navigationTimer);
+            item.addEventListener("click", function (event) {
 
                 /*
-                 Automatically open page
-                 after 3 seconds
-                 */
-                navigationTimer = setTimeout(function() {
+                   First click:
+                   Expand item
+                */
 
-                    window.location.href = item.href;
+                if (selectedItem !== item) {
 
-                }, 3000);
-
-                return;
-            }
+                    event.preventDefault();
 
 
-            /*
-             Second click on the already
-             expanded item:
-             Open immediately
-             */
-            clearTimeout(navigationTimer);
+                    navItems.forEach(function (navItem) {
 
-            window.location.href = item.href;
+                        navItem.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                    selectedItem = item;
+
+                    item.classList.add("selected");
+
+
+                    clearTimeout(
+                        navigationTimer
+                    );
+
+
+                    /*
+                       Open after 3 seconds
+                    */
+
+                    navigationTimer =
+                        setTimeout(function () {
+
+                            window.location.href =
+                                item.href;
+
+                        }, 3000);
+
+
+                    return;
+                }
+
+
+                /*
+                   Second click:
+                   Open immediately
+                */
+
+                clearTimeout(
+                    navigationTimer
+                );
+
+
+                window.location.href =
+                    item.href;
+
+            });
 
         });
 
-    });
+    }
 
-}
+});

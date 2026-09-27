@@ -17,9 +17,7 @@ const counterElements = {
 
 
 /* Get current time in Pakistan Standard Time */
-
 function getPakistanTime() {
-
     const parts = new Intl.DateTimeFormat("en-GB", {
         timeZone: "Asia/Karachi",
         year: "numeric",
@@ -34,11 +32,9 @@ function getPakistanTime() {
     const values = {};
 
     parts.forEach(part => {
-
         if (part.type !== "literal") {
             values[part.type] = Number(part.value);
         }
-
     });
 
     return new Date(Date.UTC(
@@ -53,9 +49,7 @@ function getPakistanTime() {
 
 
 /* Add months while keeping the date valid */
-
 function addMonths(date, amount) {
-
     const result = new Date(date);
     const originalDay = result.getUTCDate();
 
@@ -75,9 +69,7 @@ function addMonths(date, amount) {
 
 
 /* Add years while keeping the date valid */
-
 function addYears(date, amount) {
-
     const result = new Date(date);
     const originalMonth = result.getUTCMonth();
     const originalDay = result.getUTCDate();
@@ -99,28 +91,22 @@ function addYears(date, amount) {
 
 
 function updateCounter() {
-
     const now = getPakistanTime();
 
     if (now < startDate) {
-
         Object.values(counterElements).forEach(element => {
-            element.textContent = "0";
+            if (element) {
+                element.textContent = "0";
+            }
         });
-
         return;
     }
 
-    let years =
-        now.getUTCFullYear() -
-        startDate.getUTCFullYear();
-
+    let years = now.getUTCFullYear() - startDate.getUTCFullYear();
     let anchor = addYears(startDate, years);
 
     if (anchor > now) {
-
         years--;
-
         anchor = addYears(startDate, years);
     }
 
@@ -131,143 +117,134 @@ function updateCounter() {
     let monthAnchor = addMonths(anchor, months);
 
     if (monthAnchor > now) {
-
         months--;
-
         monthAnchor = addMonths(anchor, months);
     }
 
     let remainingMilliseconds =
         now.getTime() - monthAnchor.getTime();
 
-    const dayMilliseconds =
-        24 * 60 * 60 * 1000;
+    const dayMilliseconds = 24 * 60 * 60 * 1000;
+    const hourMilliseconds = 60 * 60 * 1000;
+    const minuteMilliseconds = 60 * 1000;
 
-    const hourMilliseconds =
-        60 * 60 * 1000;
+    const days = Math.floor(
+        remainingMilliseconds / dayMilliseconds
+    );
 
-    const minuteMilliseconds =
-        60 * 1000;
+    remainingMilliseconds -= days * dayMilliseconds;
 
-    const days =
-        Math.floor(
-            remainingMilliseconds / dayMilliseconds
-        );
+    const hours = Math.floor(
+        remainingMilliseconds / hourMilliseconds
+    );
 
-    remainingMilliseconds -=
-        days * dayMilliseconds;
+    remainingMilliseconds -= hours * hourMilliseconds;
 
-    const hours =
-        Math.floor(
-            remainingMilliseconds / hourMilliseconds
-        );
+    const minutes = Math.floor(
+        remainingMilliseconds / minuteMilliseconds
+    );
 
-    remainingMilliseconds -=
-        hours * hourMilliseconds;
+    remainingMilliseconds -= minutes * minuteMilliseconds;
 
-    const minutes =
-        Math.floor(
-            remainingMilliseconds / minuteMilliseconds
-        );
-
-    remainingMilliseconds -=
-        minutes * minuteMilliseconds;
-
-    const seconds =
-        Math.floor(
-            remainingMilliseconds / 1000
-        );
+    const seconds = Math.floor(
+        remainingMilliseconds / 1000
+    );
 
 
-    counterElements.years.textContent = years;
-    counterElements.months.textContent = months;
-    counterElements.days.textContent = days;
-    counterElements.hours.textContent = hours;
-    counterElements.minutes.textContent = minutes;
-    counterElements.seconds.textContent = seconds;
+    /* Update timeline */
+    if (counterElements.years) {
+        counterElements.years.textContent = years;
+    }
+
+    if (counterElements.months) {
+        counterElements.months.textContent = months;
+    }
+
+    if (counterElements.days) {
+        counterElements.days.textContent = days;
+    }
+
+    if (counterElements.hours) {
+        counterElements.hours.textContent = hours;
+    }
+
+    if (counterElements.minutes) {
+        counterElements.minutes.textContent = minutes;
+    }
+
+    if (counterElements.seconds) {
+        counterElements.seconds.textContent = seconds;
+    }
 }
 
 
+/* Start timeline */
 updateCounter();
-
 setInterval(updateCounter, 1000);
-
 
 
 /* =========================
    BOTTOM NAVIGATION
 ========================= */
 
-const navigation =
-    document.getElementById("mainNavigation");
+const navigation = document.getElementById("mainNavigation");
 
-const navItems =
-    navigation.querySelectorAll(".nav-item");
+if (navigation) {
 
-let selectedItem = null;
-let navigationTimer = null;
+    const navItems =
+        navigation.querySelectorAll(".nav-item");
 
-
-navItems.forEach(function(item) {
-
-    item.addEventListener("click", function(event) {
-
-        /*
-           Default link ko temporarily stop karo.
-           Pehli click par sirf item expand hoga.
-        */
-
-        event.preventDefault();
+    let selectedItem = null;
+    let navigationTimer = null;
 
 
-        /*
-           Same item dobara click kiya:
-           foran page open hoga.
-        */
+    navItems.forEach(function(item) {
 
-        if (selectedItem === item) {
+        item.addEventListener("click", function(event) {
 
+            /*
+             First click:
+             Expand the selected item
+             */
+            if (selectedItem !== item) {
+
+                event.preventDefault();
+
+                navItems.forEach(function(navItem) {
+                    navItem.classList.remove("selected");
+                });
+
+                selectedItem = item;
+
+                item.classList.add("selected");
+
+                clearTimeout(navigationTimer);
+
+                /*
+                 Automatically open page
+                 after 3 seconds
+                 */
+                navigationTimer = setTimeout(function() {
+
+                    window.location.href = item.href;
+
+                }, 3000);
+
+                return;
+            }
+
+
+            /*
+             Second click on the already
+             expanded item:
+             Open immediately
+             */
             clearTimeout(navigationTimer);
 
             window.location.href = item.href;
 
-            return;
-        }
-
-
-        /*
-           Pehle kisi aur item ka selected state remove karo.
-        */
-
-        navItems.forEach(function(navItem) {
-
-            navItem.classList.remove("selected");
-
         });
-
-
-        /*
-           Ab sirf clicked item expand hoga.
-        */
-
-        selectedItem = item;
-
-        item.classList.add("selected");
-
-
-        /*
-           Agar 3 seconds tak dobara click nahi kiya,
-           selected page automatically open hoga.
-        */
-
-        clearTimeout(navigationTimer);
-
-        navigationTimer = setTimeout(function() {
-
-            window.location.href = item.href;
-
-        }, 3000);
 
     });
 
-});
+}

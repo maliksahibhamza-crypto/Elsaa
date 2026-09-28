@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Secure Login | Private Vault</title>
+    <title>HAZEL | Secure Login</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -25,15 +26,57 @@
 
 <body>
 
-    <!-- Loading Screen -->
+    <!-- Loading / Animation Screen -->
 
     <div id="loading-screen">
 
-        <div class="loader"></div>
+        <div class="intro-animation">
 
-        <h2>Private Vault</h2>
+            <!-- Golden Heart -->
+            <div class="heart-reveal">
 
-        <p>Loading Secure Login...</p>
+                <i class="fa-solid fa-heart"></i>
+
+            </div>
+
+            <!-- Golden Rose -->
+            <div class="rose-reveal">
+
+                <i class="fa-solid fa-spa"></i>
+
+            </div>
+
+            <!-- Floating Petals -->
+            <div class="rose-petals">
+
+                <span class="petal petal-one"></span>
+                <span class="petal petal-two"></span>
+                <span class="petal petal-three"></span>
+                <span class="petal petal-four"></span>
+                <span class="petal petal-five"></span>
+                <span class="petal petal-six"></span>
+
+            </div>
+
+        </div>
+
+        <!-- Intro Title -->
+        <div class="intro-title">
+
+            <h1>HAZEL</h1>
+
+            <p>A Story Left to Allah</p>
+
+        </div>
+
+        <!-- Loading Text -->
+        <div class="loading-message">
+
+            <div class="loader"></div>
+
+            <p>Preparing Your Private Space...</p>
+
+        </div>
 
     </div>
 
@@ -41,7 +84,7 @@
 
     <div id="particles-js"></div>
 
-    <!-- Login Card -->
+    <!-- Login Container -->
 
     <div class="login-container">
 
@@ -53,12 +96,12 @@
 
         </div>
 
+        <!-- Heading -->
+
         <h1>Welcome Back</h1>
 
         <p class="subtitle">
-
             Access your private account securely.
-
         </p>
 
         <!-- Login Form -->
@@ -79,20 +122,21 @@
                     required>
 
             </div>
+
             <!-- Email -->
 
-<div class="input-box">
+            <div class="input-box">
 
-    <i class="fa-solid fa-envelope"></i>
+                <i class="fa-solid fa-envelope"></i>
 
-    <input
-        type="email"
-        id="email"
-        placeholder="Email Address"
-        autocomplete="off"
-        required>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email Address"
+                    autocomplete="off"
+                    required>
 
-</div>
+            </div>
 
             <!-- Password -->
 
@@ -113,24 +157,21 @@
                 </span>
 
             </div>
+
             <!-- Forgot Password -->
 
-<p class="forgot-password">
+            <p class="forgot-password">
 
-    <a href="#" id="forgotPassword">
+                <a href="#" id="forgotPassword">
+                    Forgot Password?
+                </a>
 
-        Forgot Password?
-
-    </a>
-
-</p>
+            </p>
 
             <!-- Login Button -->
 
             <button type="submit" id="loginBtn">
-
                 Login
-
             </button>
 
         </form>
@@ -142,18 +183,17 @@
             Don't have an account?
 
             <a href="signup.html">
-
                 Sign Up
-
             </a>
 
         </p>
-              <!-- Footer -->
+
+        <!-- Footer -->
 
         <div class="login-footer">
 
             <p>
-                Protected by Private Vault Security
+                Protected by HAZEL Private Security
             </p>
 
         </div>

@@ -1,1 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Settings | HAZEL</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Settings CSS -->
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="background-glow"></div>
+
+    <!-- Main Settings Page -->
+    <main class="settings-page">
+
+        <!-- Header -->
+        <header class="settings-header">
+
+            <button class="back-button" id="backButton" aria-label="Go Back">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <div class="header-title">
+                <span class="small-title">HAZEL</span>
+                <h1>Settings</h1>
+            </div>
+
+        </header>
+
+
+        <!-- Settings Container -->
+        <section class="settings-container">
+
+
+            <!-- =========================
+                 THEME
+            ========================== -->
+
+            <div class="setting-section">
+
+                <button class="setting-item expandable" id="themeButton">
+
+                    <div class="setting-left">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+
+                        <div class="setting-text">
+                            <span class="setting-title">Theme</span>
+                            <span class="setting-subtitle" id="currentTheme">
+                                Black & Gold
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down setting-arrow"></i>
+
+                </button>
+
+
+                <!-- Theme Options -->
+                <div class="expandable-content theme-options" id="themeOptions">
+
+                    <button class="theme-option active" data-theme="black-gold">
+
+                        <div class="theme-preview black-gold-preview"></div>
+
+                        <div class="theme-option-text">
+                            <span>Black & Gold</span>
+                            <small>Classic HAZEL</small>
+                        </div>
+
+                        <i class="fa-solid fa-check theme-check"></i>
+
+                    </button>
+
+
+                    <button class="theme-option" data-theme="pink">
+
+                        <div class="theme-preview pink-preview"></div>
+
+                        <div class="theme-option-text">
+                            <span>Pink</span>
+                            <small>Soft & Elegant</small>
+                        </div>
+
+                        <i class="fa-solid fa-check theme-check"></i>
+
+                    </button>
+
+
+                    <button class="theme-option" data-theme="white-grey">
+
+                        <div class="theme-preview white-grey-preview"></div>
+
+                        <div class="theme-option-text">
+                            <span>White / Grey</span>
+                            <small>Clean & Minimal</small>
+                        </div>
+
+                        <i class="fa-solid fa-check theme-check"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 ADD TO HOME SCREEN
+            ========================== -->
+
+            <div class="setting-section">
+
+                <button class="setting-item" id="homeScreenButton">
+
+                    <div class="setting-left">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+
+                        <div class="setting-text">
+                            <span class="setting-title">Add to Home Screen</span>
+                            <span class="setting-subtitle">
+                                Add HAZEL to your device
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right setting-arrow"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 RESET SETTINGS
+            ========================== -->
+
+            <div class="setting-section">
+
+                <button class="setting-item danger-item" id="resetButton">
+
+                    <div class="setting-left">
+
+                        <div class="setting-icon danger-icon">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </div>
+
+                        <div class="setting-text">
+                            <span class="setting-title">Reset Settings</span>
+                            <span class="setting-subtitle">
+                                Restore default settings
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right setting-arrow"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 ABOUT HAZEL
+            ========================== -->
+
+            <div class="setting-section">
+
+                <button class="setting-item expandable" id="aboutButton">
+
+                    <div class="setting-left">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+
+                        <div class="setting-text">
+                            <span class="setting-title">About HAZEL</span>
+                            <span class="setting-subtitle">
+                                Version, privacy & credits
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down setting-arrow"></i>
+
+                </button>
+
+
+                <!-- About Content -->
+                <div class="expandable-content about-content" id="aboutContent">
+
+
+                    <!-- Version -->
+                    <div class="about-block">
+
+                        <div class="about-heading">
+                            <i class="fa-solid fa-code-branch"></i>
+                            <span>Version</span>
+                        </div>
+
+                        <p>HAZEL v1.0</p>
+
+                    </div>
+
+
+
+                    <!-- Privacy -->
+                    <div class="about-block">
+
+                        <div class="about-heading">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>Privacy</span>
+                        </div>
+
+                        <p>
+                            Your privacy matters.
+                            HAZEL is designed to keep your personal experience private.
+                            Information provided through the website is used only for the
+                            features and services available on the site.
+                        </p>
+
+                        <p>
+                            We do not intentionally sell, share, or publish your personal
+                            information. Some settings may use browser-based storage to
+                            remember your preferences, such as your selected theme.
+                        </p>
+
+                        <p>
+                            External websites and social platforms are governed by their
+                            own privacy policies.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Credits -->
+                    <div class="about-block credits-block">
+
+                        <div class="about-heading">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Credits</span>
+                        </div>
+
+                        <div class="credits-content">
+
+                            <h3>HAZEL</h3>
+
+                            <span>Designed, developed & maintained by</span>
+
+                            <strong>HM Developers</strong>
+
+                            <p>
+                                A private digital space built with simplicity,
+                                creativity and care.
+                            </p>
+
+                            <small>
+                                © 2026 HM Developers. All rights reserved.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Social Media -->
+                    <div class="about-block social-block">
+
+                        <div class="about-heading">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <span>HM Developers — Social Media Handles</span>
+                        </div>
+
+
+                        <div class="social-icons">
+
+                            <a
+                                href="https://www.instagram.com/imirrhamza?stkn=Mnl5emRsNzdjdzE1"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                            >
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+
+
+                            <a
+                                href="https://www.facebook.com/share/19nstndsky/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Facebook"
+                            >
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+
+
+                            <a
+                                href="https://www.tiktok.com/@imirrhamza?_r=1&_t=ZS-9A6kbbhGDjh"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="TikTok"
+                            >
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
+
+
+                            <a
+                                href="https://wa.me/923054938953"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="WhatsApp"
+                            >
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="settings-footer">
+            <span>HAZEL</span>
+            <p>Made with simplicity & care</p>
+        </footer>
+
+    </main>
+
+
+    <!-- Message Toast -->
+    <div class="toast" id="toast"></div>
+
+
+    <!-- Settings JS -->
+    <script src="settings.js"></script>
+
+</body>
+                      </html>

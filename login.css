@@ -1,4 +1,3 @@
-
 /* ===============================
    HAZEL - BLACK & GOLD THEME
 ================================ */
@@ -355,12 +354,18 @@ body {
 
 #togglePassword {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 18px;
+    top: 0;
+    width: 42px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
     cursor: pointer;
     color: #999084;
     transition: color 0.3s ease;
+    z-index: 2;
 }
 
 #togglePassword:hover {
@@ -372,8 +377,8 @@ body {
 ================================ */
 
 .forgot-password {
-    text-align: right;
-    margin: 8px 2px 20px;
+    text-align: center;
+    margin: 8px 0 20px;
 }
 
 .forgot-password a {
@@ -673,5 +678,4 @@ body {
         scroll-behavior: auto !important;
     }
 
-                        }
-    
+       }

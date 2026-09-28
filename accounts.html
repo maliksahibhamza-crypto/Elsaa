@@ -28,6 +28,20 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Apply saved HAZEL theme before page is displayed -->
+<script>
+    (() => {
+        const savedTheme = localStorage.getItem("hazelTheme");
+        const allowedThemes = ["black-gold", "pink", "white-grey"];
+
+        const theme = allowedThemes.includes(savedTheme)
+            ? savedTheme
+            : "black-gold";
+
+        document.documentElement.setAttribute("data-theme", theme);
+    })();
+            </script>
 </head>
 
 <body>

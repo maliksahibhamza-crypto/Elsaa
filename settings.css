@@ -1,0 +1,899 @@
+/* =========================================
+   HAZEL SETTINGS
+   BLACK & GOLD / PINK / WHITE-GREY
+========================================= */
+
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    background: #050505;
+    color: #f5f5f5;
+    overflow-x: hidden;
+
+    --accent: #d4af37;
+    --accent-light: #f0d77a;
+    --accent-dark: #a98720;
+
+    --background: #050505;
+    --surface: #0d0d0d;
+    --surface-light: #151515;
+    --border: rgba(212, 175, 55, 0.18);
+
+    --text: #f5f5f5;
+    --muted: #999999;
+
+    --danger: #d96c6c;
+
+    background-color: var(--background);
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================
+   THEME VARIABLES
+========================================= */
+
+body[data-theme="pink"] {
+    --accent: #e88ca8;
+    --accent-light: #f5b5c8;
+    --accent-dark: #b85d7b;
+
+    --background: #080506;
+    --surface: #110a0d;
+    --surface-light: #1b1014;
+    --border: rgba(232, 140, 168, 0.2);
+
+    --text: #fff5f8;
+    --muted: #b49da4;
+}
+
+
+body[data-theme="white-grey"] {
+    --accent: #777777;
+    --accent-light: #555555;
+    --accent-dark: #999999;
+
+    --background: #eeeeee;
+    --surface: #ffffff;
+    --surface-light: #f5f5f5;
+    --border: rgba(0, 0, 0, 0.09);
+
+    --text: #202020;
+    --muted: #777777;
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background-glow {
+    position: fixed;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+    opacity: 0.07;
+
+    filter: blur(100px);
+
+    pointer-events: none;
+    z-index: -1;
+
+    transition: background 0.35s ease;
+}
+
+
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+.settings-page {
+    width: 100%;
+    max-width: 700px;
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+    padding: 25px 18px 35px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.settings-header {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+
+.back-button {
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    color: var(--accent);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.back-button:hover {
+    transform: translateX(-3px);
+    background: var(--surface-light);
+    border-color: var(--accent);
+}
+
+.back-button:active {
+    transform: scale(0.92);
+}
+
+
+.header-title {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.small-title {
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 3px;
+    font-weight: 600;
+}
+
+
+.header-title h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+
+/* =========================================
+   SETTINGS CONTAINER
+========================================= */
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* =========================================
+   SETTING SECTION
+========================================= */
+
+.setting-section {
+    width: 100%;
+}
+
+
+/* =========================================
+   MAIN SETTING ITEM
+========================================= */
+
+.setting-item {
+    width: 100%;
+
+    min-height: 76px;
+
+    padding: 15px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    background: rgba(13, 13, 13, 0.88);
+
+    color: var(--text);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.2s ease;
+}
+
+body[data-theme="white-grey"] .setting-item {
+    background: rgba(255, 255, 255, 0.92);
+}
+
+
+.setting-item:hover {
+    background: var(--surface-light);
+    border-color: var(--accent);
+}
+
+
+.setting-item:active {
+    transform: scale(0.985);
+}
+
+
+/* =========================================
+   LEFT SIDE
+========================================= */
+
+.setting-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.setting-icon {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--accent);
+
+    background: rgba(212, 175, 55, 0.08);
+
+    border: 1px solid var(--border);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+
+body[data-theme="pink"] .setting-icon {
+    background: rgba(232, 140, 168, 0.09);
+}
+
+
+body[data-theme="white-grey"] .setting-icon {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+.setting-icon i {
+    font-size: 17px;
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.setting-text {
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+
+    min-width: 0;
+}
+
+
+.setting-title {
+    font-size: 14px;
+    font-weight: 500;
+
+    color: var(--text);
+}
+
+
+.setting-subtitle {
+    margin-top: 3px;
+
+    font-size: 11px;
+    color: var(--muted);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   ARROW
+========================================= */
+
+.setting-arrow {
+    color: var(--muted);
+    font-size: 12px;
+
+    margin-left: 12px;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+
+.expandable.active .setting-arrow {
+    transform: rotate(180deg);
+    color: var(--accent);
+}
+
+
+/* =========================================
+   EXPANDABLE CONTENT
+========================================= */
+
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+
+    opacity: 0;
+
+    transform: translateY(-5px);
+
+    transition:
+        max-height 0.45s ease,
+        opacity 0.3s ease,
+        transform 0.35s ease;
+}
+
+
+.expandable-content.open {
+    max-height: 1000px;
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+    margin-top: 8px;
+}
+
+
+/* =========================================
+   THEME OPTIONS
+========================================= */
+
+.theme-options {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    padding: 0 5px;
+}
+
+
+.theme-options.open {
+    padding-bottom: 3px;
+}
+
+
+.theme-option {
+    width: 100%;
+
+    min-height: 65px;
+
+    padding: 11px 13px;
+
+    border: 1px solid transparent;
+    border-radius: 15px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.2s ease;
+}
+
+
+.theme-option:hover {
+    background: var(--surface-light);
+}
+
+
+.theme-option:active {
+    transform: scale(0.985);
+}
+
+
+.theme-option.active {
+    border-color: var(--accent);
+    background: var(--surface-light);
+}
+
+
+/* =========================================
+   THEME PREVIEW
+========================================= */
+
+.theme-preview {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 12px;
+
+    flex-shrink: 0;
+
+    margin-right: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+.black-gold-preview {
+    background:
+        radial-gradient(circle at 70% 30%, #d4af37 0 12%, transparent 13%),
+        linear-gradient(135deg, #050505 50%, #d4af37 50%);
+}
+
+
+.pink-preview {
+    background:
+        radial-gradient(circle at 70% 30%, #f5b5c8 0 12%, transparent 13%),
+        linear-gradient(135deg, #080506 50%, #e88ca8 50%);
+}
+
+
+.white-grey-preview {
+    background:
+        linear-gradient(135deg, #ffffff 50%, #777777 50%);
+}
+
+
+/* =========================================
+   THEME TEXT
+========================================= */
+
+.theme-option-text {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+
+
+.theme-option-text span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+.theme-option-text small {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================
+   THEME CHECK
+========================================= */
+
+.theme-check {
+    color: var(--accent);
+
+    font-size: 14px;
+
+    opacity: 0;
+    transform: scale(0.6);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.theme-option.active .theme-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+/* =========================================
+   DANGER / RESET
+========================================= */
+
+.danger-icon {
+    color: var(--danger);
+
+    background: rgba(217, 108, 108, 0.08);
+
+    border-color: rgba(217, 108, 108, 0.15);
+}
+
+
+/* =========================================
+   ABOUT
+========================================= */
+
+.about-content {
+    padding: 0 6px;
+}
+
+
+.about-block {
+    padding: 17px 15px;
+
+    margin-bottom: 7px;
+
+    border-radius: 15px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+}
+
+
+.about-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--accent);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    margin-bottom: 10px;
+}
+
+
+.about-heading i {
+    width: 18px;
+    text-align: center;
+}
+
+
+.about-block p {
+    color: var(--muted);
+
+    font-size: 10.5px;
+    line-height: 1.7;
+
+    margin-bottom: 8px;
+}
+
+
+.about-block p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   CREDITS
+========================================= */
+
+.credits-content {
+    text-align: center;
+
+    padding: 8px 5px 2px;
+}
+
+
+.credits-content h3 {
+    font-family: "Playfair Display", serif;
+
+    color: var(--accent);
+
+    font-size: 24px;
+
+    margin-bottom: 5px;
+}
+
+
+.credits-content span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+.credits-content strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    margin-top: 4px;
+}
+
+
+.credits-content p {
+    margin: 10px 0 6px;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+.credits-content small {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================
+   SOCIAL MEDIA
+========================================= */
+
+.social-block {
+    margin-bottom: 0;
+}
+
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 13px;
+
+    padding-top: 5px;
+}
+
+
+.social-icons a {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--accent);
+
+    background: var(--surface-light);
+
+    border: 1px solid var(--border);
+
+    text-decoration: none;
+
+    font-size: 17px;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+
+    background: var(--accent);
+    border-color: var(--accent);
+
+    color: #050505;
+}
+
+
+.social-icons a:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.settings-footer {
+    text-align: center;
+
+    margin-top: 38px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+}
+
+
+.settings-footer span {
+    font-family: "Playfair Display", serif;
+
+    color: var(--accent);
+
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+
+.settings-footer p {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 4px;
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform: translate(-50%, 20px);
+
+    min-width: 230px;
+    max-width: calc(100% - 40px);
+
+    padding: 12px 17px;
+
+    border-radius: 13px;
+
+    background: #171717;
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
+
+    text-align: center;
+
+    font-size: 11px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        visibility 0.3s ease;
+
+    z-index: 9999;
+}
+
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translate(-50%, 0);
+}
+
+
+/* =========================================
+   WHITE / GREY ADJUSTMENTS
+========================================= */
+
+body[data-theme="white-grey"] .background-glow {
+    opacity: 0.03;
+}
+
+
+body[data-theme="white-grey"] .toast {
+    background: #ffffff;
+    color: #202020;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (min-width: 600px) {
+
+    .settings-page {
+        padding: 35px 25px 45px;
+    }
+
+    .settings-header {
+        margin-bottom: 35px;
+    }
+
+    .header-title h1 {
+        font-size: 32px;
+    }
+
+    .setting-item {
+        min-height: 82px;
+        padding: 16px 18px;
+    }
+
+    .setting-icon {
+        width: 47px;
+        height: 47px;
+    }
+
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+  }

@@ -1,3 +1,4 @@
+
 // ===============================
 // Firebase Imports
 // ===============================
@@ -11,22 +12,36 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 // ===============================
-// Loading Screen
+// Loading / Intro Animation
 // ===============================
+
+const loadingScreen = document.getElementById("loading-screen");
+
+function hideLoadingScreen() {
+
+    if (!loadingScreen) return;
+
+    loadingScreen.classList.add("hide");
+
+    // Remove from layout after fade-out
+    setTimeout(() => {
+
+        loadingScreen.style.display = "none";
+
+    }, 800);
+
+}
 
 window.addEventListener("load", () => {
 
+    // Animation sequence duration
+    // Heart -> Rose -> HAZEL title -> Login screen
+
     setTimeout(() => {
 
-        document.getElementById("loading-screen").style.opacity = "0";
+        hideLoadingScreen();
 
-        setTimeout(() => {
-
-            document.getElementById("loading-screen").style.display = "none";
-
-        }, 800);
-
-    }, 1500);
+    }, 6200);
 
 });
 
@@ -59,11 +74,13 @@ togglePassword.addEventListener("click", () => {
 });
 
 // ===============================
-// Form
+// Form Elements
 // ===============================
 
 const form = document.getElementById("loginForm");
+
 const button = document.getElementById("loginBtn");
+
 // ===============================
 // Login
 // ===============================
@@ -73,8 +90,11 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
-const email = document.getElementById("email").value.trim();
-const pass = password.value.trim();
+
+    const email = document.getElementById("email").value.trim();
+
+    const pass = password.value;
+
     if (username === "" || email === "" || pass === "") {
 
         alert("Please fill all fields.");
@@ -83,7 +103,9 @@ const pass = password.value.trim();
     }
 
     button.disabled = true;
-    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
+
+    button.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
 
     try {
 
@@ -119,6 +141,7 @@ const pass = password.value.trim();
         }
 
         button.disabled = false;
+
         button.innerHTML = "Login";
 
     }
@@ -133,11 +156,11 @@ document.getElementById("forgotPassword").addEventListener("click", async (e) =>
 
     e.preventDefault();
 
-    const email = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
 
     if (email === "") {
 
-        alert("Please enter your email first.");
+        alert("Please enter your email address first.");
         return;
 
     }
@@ -174,35 +197,39 @@ document.addEventListener("keydown", (e) => {
 // Background Particles
 // ===============================
 
-particlesJS("particles-js", {
+if (typeof particlesJS !== "undefined") {
 
-    particles: {
+    particlesJS("particles-js", {
 
-        number: {
-            value: 45
-        },
+        particles: {
 
-        color: {
-            value: "#d4af37"
-        },
+            number: {
+                value: 45
+            },
 
-        shape: {
-            type: "circle"
-        },
+            color: {
+                value: "#d4af37"
+            },
 
-        opacity: {
-            value: 0.35
-        },
+            shape: {
+                type: "circle"
+            },
 
-        size: {
-            value: 4
-        },
+            opacity: {
+                value: 0.35
+            },
 
-        move: {
-            enable: true,
-            speed: 1
+            size: {
+                value: 4
+            },
+
+            move: {
+                enable: true,
+                speed: 1
+            }
+
         }
 
-    }
+    });
 
-});
+}

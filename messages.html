@@ -1,1 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Messages | HAZEL</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- Messages CSS -->
+    <link rel="stylesheet" href="messages.css">
+</head>
+
+<body>
+
+    <main class="messages-page">
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="messages-header">
+
+            <button
+                class="back-button"
+                id="backButton"
+                aria-label="Go back"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <div class="header-title">
+
+                <span>HAZEL</span>
+
+                <h1>Messages</h1>
+
+            </div>
+
+            <button
+                class="new-message-button"
+                id="newMessageButton"
+                aria-label="New message"
+            >
+                <i class="fa-solid fa-pen"></i>
+            </button>
+
+        </header>
+
+
+        <!-- =========================
+             MY HAZEL ID
+        ========================== -->
+
+        <section class="my-id-card">
+
+            <div class="id-icon">
+                <i class="fa-solid fa-fingerprint"></i>
+            </div>
+
+            <div class="id-details">
+
+                <span class="id-label">MY HAZEL ID</span>
+
+                <strong id="myHazelId">
+                    Loading...
+                </strong>
+
+            </div>
+
+            <button
+                class="copy-id-button"
+                id="copyIdButton"
+                aria-label="Copy HAZEL ID"
+            >
+                <i class="fa-regular fa-copy"></i>
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             SEARCH / NEW MESSAGE
+        ========================== -->
+
+        <section
+            class="new-message-panel"
+            id="newMessagePanel"
+        >
+
+            <div class="panel-title">
+
+                <div>
+                    <span>NEW CONVERSATION</span>
+                    <h2>Find a user</h2>
+                </div>
+
+                <button
+                    id="closeSearchButton"
+                    aria-label="Close"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="hazelIdSearch"
+                    placeholder="Enter HAZEL ID"
+                    autocomplete="off"
+                    maxlength="10"
+                >
+
+                <button id="searchUserButton">
+                    Search
+                </button>
+
+            </div>
+
+
+            <div
+                class="search-result"
+                id="searchResult"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             CHAT LIST
+        ========================== -->
+
+        <section class="chat-section">
+
+            <div class="section-heading">
+
+                <span>YOUR CONVERSATIONS</span>
+
+            </div>
+
+            <div
+                class="chat-list"
+                id="chatList"
+            >
+
+                <div class="empty-state" id="emptyState">
+
+                    <div class="empty-icon">
+                        <i class="fa-regular fa-comments"></i>
+                    </div>
+
+                    <h2>No conversations yet</h2>
+
+                    <p>
+                        Start a new conversation using a HAZEL ID.
+                    </p>
+
+                    <button id="emptyNewMessage">
+                        <i class="fa-solid fa-plus"></i>
+                        New Message
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         CHAT MODAL
+    ========================== -->
+
+    <div
+        class="chat-overlay"
+        id="chatOverlay"
+    >
+
+        <div class="chat-window">
+
+            <header class="chat-header">
+
+                <button
+                    id="closeChatButton"
+                    aria-label="Close chat"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+
+                <div class="chat-user-info">
+
+                    <div class="chat-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div>
+
+                        <strong id="chatUserName">
+                            User
+                        </strong>
+
+                        <span id="chatUserHazelId">
+                            HZL-XXXXXX
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div
+                class="messages-container"
+                id="messagesContainer"
+            ></div>
+
+
+            <form
+                class="message-input-area"
+                id="messageForm"
+            >
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Write a message..."
+                    autocomplete="off"
+                    maxlength="2000"
+                >
+
+                <button
+                    type="submit"
+                    id="sendMessageButton"
+                    aria-label="Send message"
+                >
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- Messages JS -->
+    <script type="module" src="messages.js"></script>
+
+</body>
+  </html>

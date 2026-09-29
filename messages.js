@@ -1111,4 +1111,103 @@ messageForm.addEventListener(
                         text,
 
                     updatedAt:
-          
+  serverTimestamp()
+
+                },
+                {
+                    merge: true
+                }
+            );
+
+
+            messageInput.value = "";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                "Message could not be sent."
+            );
+
+        } finally {
+
+            messageInput.disabled = false;
+
+            messageInput.focus();
+        }
+    }
+);
+
+
+// =========================================
+// Close Chat
+// =========================================
+
+closeChatButton.addEventListener(
+    "click",
+    closeChat
+);
+
+
+function closeChat() {
+
+    chatOverlay.classList.remove("show");
+
+    currentChatId = null;
+
+
+    if (unsubscribeMessages) {
+
+        unsubscribeMessages();
+
+        unsubscribeMessages = null;
+    }
+
+
+    messagesContainer.innerHTML = "";
+}
+
+
+// =========================================
+// Format Time
+// =========================================
+
+function formatTime(timestamp) {
+
+    if (!timestamp) {
+        return "";
+    }
+
+
+    const date =
+        timestamp.toDate
+            ? timestamp.toDate()
+            : new Date(timestamp);
+
+
+    return date.toLocaleTimeString(
+        [],
+        {
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+// =========================================
+// Escape HTML
+// =========================================
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value);
+
+    return div.innerHTML;
+    }        

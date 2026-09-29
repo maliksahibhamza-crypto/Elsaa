@@ -1,0 +1,627 @@
+/* =========================================================
+   HAZEL — SECTIONS / THE LIBRARY
+   ========================================================= */
+
+
+/* -------------------------
+   RESET
+   ------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: "Poppins", sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* -------------------------
+   DEFAULT THEME
+   BLACK & GOLD
+   ------------------------- */
+
+body,
+body[data-theme="black-gold"] {
+
+    --bg: #050505;
+    --surface: #0d0d0d;
+    --surface-2: #111111;
+
+    --text: #f5f1e8;
+    --muted: #a9a39a;
+
+    --accent: #d4af37;
+    --accent-light: #f3df9b;
+    --accent-dark: #9c7924;
+
+    --border: rgba(212, 175, 55, 0.28);
+    --border-soft: rgba(255, 255, 255, 0.08);
+
+    --shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45);
+
+    --cover-bg: #090909;
+}
+
+
+/* -------------------------
+   PINK THEME
+   ------------------------- */
+
+body[data-theme="pink"] {
+
+    --bg: #fff7fa;
+    --surface: #ffffff;
+    --surface-2: #fff0f5;
+
+    --text: #30252a;
+    --muted: #806d74;
+
+    --accent: #c75c7b;
+    --accent-light: #e99aae;
+    --accent-dark: #9d3f5d;
+
+    --border: rgba(199, 92, 123, 0.28);
+    --border-soft: rgba(80, 40, 55, 0.10);
+
+    --shadow:
+        0 18px 45px rgba(120, 55, 75, 0.12);
+
+    --cover-bg: #fff;
+}
+
+
+/* -------------------------
+   WHITE / GREY THEME
+   ------------------------- */
+
+body[data-theme="white-grey"] {
+
+    --bg: #f4f4f4;
+    --surface: #ffffff;
+    --surface-2: #eeeeee;
+
+    --text: #222222;
+    --muted: #777777;
+
+    --accent: #555555;
+    --accent-light: #777777;
+    --accent-dark: #333333;
+
+    --border: rgba(50, 50, 50, 0.20);
+    --border-soft: rgba(0, 0, 0, 0.09);
+
+    --shadow:
+        0 18px 45px rgba(0, 0, 0, 0.10);
+
+    --cover-bg: #ffffff;
+}
+
+
+/* -------------------------
+   PAGE
+   ------------------------- */
+
+.sections-page {
+    width: 100%;
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    padding:
+        24px
+        22px
+        40px;
+}
+
+
+/* -------------------------
+   HEADER
+   ------------------------- */
+
+.page-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 54px;
+}
+
+
+/* Back button */
+
+.back-button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    color: var(--accent);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.back-button span {
+    display: block;
+
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+
+    line-height: 1;
+
+    margin-top: -3px;
+}
+
+.back-button:hover {
+    transform: translateY(-50%) translateX(-3px);
+
+    border-color: var(--accent);
+}
+
+.back-button:active {
+    transform: translateY(-50%) scale(0.94);
+}
+
+
+/* Brand */
+
+.brand {
+    text-align: center;
+}
+
+.brand-name {
+    font-family: "Playfair Display", serif;
+
+    font-size: 21px;
+    font-weight: 600;
+
+    letter-spacing: 0.24em;
+
+    color: var(--accent);
+}
+
+.brand-line {
+    width: 28px;
+    height: 1px;
+
+    margin: 7px auto 0;
+
+    background: var(--accent);
+
+    opacity: 0.65;
+}
+
+
+/* -------------------------
+   INTRO
+   ------------------------- */
+
+.intro {
+    text-align: center;
+
+    padding:
+        48px
+        0
+        34px;
+}
+
+.eyebrow {
+    margin-bottom: 9px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.25em;
+
+    color: var(--accent);
+
+    text-transform: uppercase;
+}
+
+.intro h1 {
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(34px, 6vw, 52px);
+    font-weight: 600;
+
+    line-height: 1.1;
+
+    color: var(--text);
+}
+
+.subtitle {
+    margin-top: 9px;
+
+    font-size: 12px;
+    font-weight: 300;
+
+    letter-spacing: 0.05em;
+
+    color: var(--muted);
+}
+
+
+/* -------------------------
+   COLLECTION
+   ------------------------- */
+
+.collection {
+    width: 100%;
+}
+
+
+/* IMPORTANT:
+   Always 3 columns,
+   including mobile.
+*/
+
+.book-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px 18px;
+}
+
+
+/* -------------------------
+   BOOK CARD
+   ------------------------- */
+
+.book-card {
+    min-width: 0;
+
+    display: block;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    border-radius: 13px;
+
+    transition:
+        transform 0.28s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+.book-card:active {
+    transform: scale(0.97);
+}
+
+
+/* -------------------------
+   COVER
+   ------------------------- */
+
+.cover-wrap {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 3 / 4.35;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: var(--cover-bg);
+
+    box-shadow: var(--shadow);
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Full cover stays visible */
+
+.cover-wrap img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    background: var(--cover-bg);
+
+    transition:
+        transform 0.45s ease;
+}
+
+
+/* Subtle zoom */
+
+.book-card:hover .cover-wrap img {
+    transform: scale(1.025);
+}
+
+
+/* -------------------------
+   COVER SHINE
+   ------------------------- */
+
+.cover-shine {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            transparent 42%,
+            rgba(255, 255, 255, 0.07) 50%,
+            transparent 58%,
+            transparent 100%
+        );
+
+    opacity: 0;
+
+    transition: opacity 0.35s ease;
+}
+
+.book-card:hover .cover-shine {
+    opacity: 1;
+}
+
+
+/* -------------------------
+   BOOK INFO
+   ------------------------- */
+
+.book-info {
+    position: relative;
+
+    min-height: 51px;
+
+    padding:
+        9px
+        4px
+        0
+        4px;
+}
+
+.book-number {
+    display: block;
+
+    margin-bottom: 2px;
+
+    font-size: 8px;
+    font-weight: 500;
+
+    letter-spacing: 0.15em;
+
+    color: var(--accent);
+
+    opacity: 0.8;
+}
+
+.book-info h2 {
+    width: calc(100% - 17px);
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    line-height: 1.35;
+
+    color: var(--text);
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+}
+
+.open-icon {
+    position: absolute;
+
+    right: 3px;
+    bottom: 3px;
+
+    font-size: 13px;
+
+    color: var(--accent);
+
+    opacity: 0.75;
+
+    transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.book-card:hover .open-icon {
+    transform: translate(2px, -2px);
+
+    opacity: 1;
+}
+
+
+/* -------------------------
+   FOOTER
+   ------------------------- */
+
+.page-footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 48px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 0.04em;
+}
+
+.page-footer span {
+    color: var(--accent);
+
+    font-size: 11px;
+}
+
+
+/* -------------------------
+   TABLET / DESKTOP
+   ------------------------- */
+
+@media (min-width: 700px) {
+
+    .sections-page {
+        padding:
+            30px
+            30px
+            50px;
+    }
+
+    .book-grid {
+        gap: 30px 22px;
+    }
+
+    .book-info {
+        padding-top: 11px;
+    }
+
+    .book-info h2 {
+        font-size: 12px;
+    }
+
+    .book-number {
+        font-size: 9px;
+    }
+}
+
+
+/* -------------------------
+   SMALL MOBILE
+   Still 3 columns.
+   ------------------------- */
+
+@media (max-width: 380px) {
+
+    .sections-page {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .book-grid {
+        gap: 17px 9px;
+    }
+
+    .book-info {
+        min-height: 47px;
+
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .book-info h2 {
+        font-size: 9px;
+    }
+
+    .book-number {
+        font-size: 7px;
+    }
+
+    .open-icon {
+        font-size: 11px;
+    }
+
+    .intro {
+        padding-top: 40px;
+    }
+}
+
+
+/* -------------------------
+   VERY SMALL SCREENS
+   ------------------------- */
+
+@media (max-width: 320px) {
+
+    .book-grid {
+        gap: 14px 7px;
+    }
+
+    .book-info h2 {
+        font-size: 8px;
+    }
+
+    .subtitle {
+        font-size: 10px;
+    }
+}
+
+
+/* -------------------------
+   REDUCED MOTION
+   ------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+  }

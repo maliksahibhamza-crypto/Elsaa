@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | HAZEL</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Signup CSS -->
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+
+    <!-- Background Particles -->
+    <div id="particles-js"></div>
+
+    <!-- Main Container -->
+    <main class="signup-container">
+
+        <div class="signup-card">
+
+            <!-- Logo -->
+            <div class="logo">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <h1>HAZEL</h1>
+
+            <p class="subtitle">
+                Create your private account
+            </p>
+
+            <!-- Signup Form -->
+            <form id="signupForm">
+
+                <!-- Name -->
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Full Name"
+                        autocomplete="name"
+                        maxlength="40"
+                        required
+                    >
+                </div>
+
+                <!-- Username -->
+                <div class="input-group">
+                    <i class="fa-solid fa-at"></i>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Username"
+                        autocomplete="username"
+                        maxlength="20"
+                        required
+                    >
+                </div>
+
+                <p class="input-hint">
+                    3–20 characters • letters, numbers and _
+                </p>
+
+                <!-- Email -->
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Email Address"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <!-- Password -->
+                <div class="input-group password-group">
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="password-toggle"
+                        aria-label="Show password"
+                    >
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="input-group password-group">
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm Password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="toggleConfirmPassword"
+                        class="password-toggle"
+                        aria-label="Show password"
+                    >
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+
+                <!-- HAZEL ID Info -->
+                <div class="hazel-id-info">
+                    <i class="fa-solid fa-fingerprint"></i>
+
+                    <div>
+                        <strong>HAZEL ID</strong>
+                        <span>
+                            Your unique HAZEL ID will be generated automatically.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Error / Success -->
+                <div id="message" class="message"></div>
+
+                <!-- Signup Button -->
+                <button
+                    type="submit"
+                    id="signupBtn"
+                    class="signup-btn"
+                >
+                    <i class="fa-solid fa-user-plus"></i>
+                    Create Account
+                </button>
+
+            </form>
+
+            <!-- Login Link -->
+            <div class="login-link">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span>Private • Secure • HAZEL</span>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Particles JS -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Signup JS -->
+    <script type="module" src="signup.js"></script>
+
+</body>
+  </html>

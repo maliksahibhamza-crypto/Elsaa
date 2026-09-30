@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HAZEL AI</title>
+
+    <!-- HAZEL AI CSS -->
+    <link rel="stylesheet" href="ai.css">
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         HAZEL AI APP
+         ===================================================== -->
+
+    <div class="hazel-ai-app">
+
+
+        <!-- =================================================
+             HEADER
+             ================================================= -->
+
+        <header class="ai-header">
+
+            <div class="ai-header-left">
+
+                <button
+                    class="back-btn"
+                    id="backBtn"
+                    type="button"
+                    aria-label="Go back"
+                >
+                    <span>‹</span>
+                </button>
+
+
+                <div class="ai-avatar">
+
+                    <span>H</span>
+
+                </div>
+
+
+                <div class="ai-title">
+
+                    <h1>HAZEL AI</h1>
+
+                    <p>
+                        <span class="online-dot"></span>
+                        Online
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Header Menu -->
+
+            <button
+                class="ai-menu-btn"
+                id="aiMenuBtn"
+                type="button"
+                aria-label="AI menu"
+            >
+                ⋮
+            </button>
+
+        </header>
+
+
+
+        <!-- =================================================
+             MENU
+             ================================================= -->
+
+        <div
+            class="ai-menu"
+            id="aiMenu"
+            hidden
+        >
+
+            <button
+                type="button"
+                id="newChatBtn"
+            >
+                New Chat
+            </button>
+
+            <button
+                type="button"
+                id="clearChatBtn"
+            >
+                Clear Chat
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CHAT AREA
+             ================================================= -->
+
+        <main
+            class="chat-container"
+            id="chatContainer"
+        >
+
+            <!-- Welcome Message -->
+
+            <div class="welcome-section" id="welcomeSection">
+
+                <div class="welcome-logo">
+                    H
+                </div>
+
+                <h2>
+                    Welcome to HAZEL AI
+                </h2>
+
+                <p>
+                    Your private little assistant inside HAZEL.
+                </p>
+
+            </div>
+
+
+            <!-- Messages will be inserted here -->
+
+            <div
+                class="messages"
+                id="messages"
+            ></div>
+
+
+        </main>
+
+
+
+        <!-- =================================================
+             TYPING INDICATOR
+             ================================================= -->
+
+        <div
+            class="typing-indicator"
+            id="typingIndicator"
+            hidden
+        >
+
+            <div class="typing-avatar">
+                H
+            </div>
+
+            <div class="typing-bubble">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             INPUT AREA
+             ================================================= -->
+
+        <footer class="chat-input-area">
+
+            <div class="chat-input-wrapper">
+
+                <textarea
+                    id="messageInput"
+                    class="message-input"
+                    rows="1"
+                    maxlength="1000"
+                    placeholder="Message HAZEL AI..."
+                    autocomplete="off"
+                ></textarea>
+
+
+                <button
+                    id="sendBtn"
+                    class="send-btn"
+                    type="button"
+                    aria-label="Send message"
+                >
+
+                    <span>➤</span>
+
+                </button>
+
+            </div>
+
+
+            <p class="ai-disclaimer">
+                HAZEL AI uses a custom response system.
+            </p>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SCRIPTS
+         IMPORTANT:
+         ai-data.js MUST load before ai.js
+         ===================================================== -->
+
+    <script src="ai-data.js"></script>
+    <script src="ai.js"></script>
+
+
+</body>
+
+  </html>

@@ -6,18 +6,36 @@
    - Reads user messages
    - Normalizes different typing styles
    - Detects intents from ai-data.js
-   - Selects a random response
-   - Uses fallback when nothing matches
+   - Uses custom responses first
+   - Sends unmatched messages to Gemini through Cloudflare Worker
+   - Uses fallback if Gemini/Worker fails
    - Controls the chat interface
    - Handles Send / Enter
    - Shows typing indicator
    - Handles New Chat / Clear Chat
    - Handles Back button
+   - Loads saved HAZEL theme
    ========================================================= */
 
 
 /* =========================================================
-   1. NORMALIZE USER MESSAGE
+   1. GEMINI / CLOUDFLARE WORKER SETTINGS
+   ========================================================= */
+
+/*
+ * IMPORTANT:
+ * Gemini API key is NOT stored here.
+ *
+ * The API key stays safely inside your Cloudflare Worker
+ * as the GEMINI_API_KEY secret.
+ */
+
+const HAZEL_AI_WORKER_URL =
+    "https://hazel-ai.maliksahibhamza.workers.dev/";
+
+
+/* =========================================================
+   2. NORMALIZE USER MESSAGE
    ========================================================= */
 
 function normalizeMessage(message) {
@@ -45,12 +63,13 @@ function normalizeMessage(message) {
 
 
 /* =========================================================
-   2. CHECK WHETHER A KEYWORD MATCHES
+   3. CHECK WHETHER A KEYWORD MATCHES
    ========================================================= */
 
 function keywordMatches(message, keyword) {
 
-    const normalizedKeyword = normalizeMessage(keyword);
+    const normalizedKeyword =
+        normalizeMessage(keyword);
 
     if (message.includes(normalizedKeyword)) {
         return true;
@@ -61,12 +80,13 @@ function keywordMatches(message, keyword) {
 
 
 /* =========================================================
-   3. FIND USER INTENT
+   4. FIND USER INTENT
    ========================================================= */
 
 function detectIntent(message) {
 
-    const normalizedMessage = normalizeMessage(message);
+    const normalizedMessage =
+        normalizeMessage(message);
 
     let bestIntent = null;
     let bestScore = 0;
@@ -78,7 +98,8 @@ function detectIntent(message) {
             continue;
         }
 
-        const intent = HAZEL_AI_DATA[intentName];
+        const intent =
+            HAZEL_AI_DATA[intentName];
 
         if (!intent.keywords) {
             continue;
@@ -88,14 +109,16 @@ function detectIntent(message) {
 
         for (const keyword of intent.keywords) {
 
-            if (keywordMatches(normalizedMessage, keyword)) {
+            if (
+                keywordMatches(
+                    normalizedMessage,
+                    keyword
+                )
+            ) {
 
                 /*
-                 * Longer phrases receive a higher score.
-                 *
-                 * Example:
-                 * "hello hazel" gets more priority
-                 * than just "hello".
+                 * Longer phrases receive
+                 * a higher score.
                  */
 
                 score += keyword.length;
@@ -114,7 +137,7 @@ function detectIntent(message) {
 
 
 /* =========================================================
-   4. GET RANDOM RESPONSE
+   5. GET RANDOM RESPONSE
    ========================================================= */
 
 function getRandomReply(replies) {
@@ -123,32 +146,41 @@ function getRandomReply(replies) {
         return "";
     }
 
-    const randomIndex = Math.floor(
-        Math.random() * replies.length
-    );
+    const randomIndex =
+        Math.floor(
+            Math.random() * replies.length
+        );
 
     return replies[randomIndex];
 }
 
 
 /* =========================================================
-   5. GENERATE HAZEL AI RESPONSE
+   6. GENERATE CUSTOM HAZEL RESPONSE
    ========================================================= */
 
 function getHazelResponse(userMessage) {
 
-    if (!userMessage || !userMessage.trim()) {
+    if (
+        !userMessage ||
+        !userMessage.trim()
+    ) {
         return "";
     }
 
-    const intentName = detectIntent(userMessage);
+    const intentName =
+        detectIntent(userMessage);
+
 
     /*
      * If an intent was detected,
-     * use its replies.
+     * use its custom replies.
      */
 
-    if (intentName && HAZEL_AI_DATA[intentName]) {
+    if (
+        intentName &&
+        HAZEL_AI_DATA[intentName]
+    ) {
 
         return getRandomReply(
             HAZEL_AI_DATA[intentName].replies
@@ -158,7 +190,7 @@ function getHazelResponse(userMessage) {
 
     /*
      * Nothing matched.
-     * Use fallback responses.
+     * Use fallback.
      */
 
     return getRandomReply(
@@ -168,38 +200,221 @@ function getHazelResponse(userMessage) {
 
 
 /* =========================================================
-   6. DOM ELEMENTS
+   7. CHECK IF CUSTOM INTENT EXISTS
    ========================================================= */
 
-const messageInput = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
+function hasCustomIntent(userMessage) {
 
-const messages = document.getElementById("messages");
-const chatContainer = document.getElementById("chatContainer");
-
-const welcomeSection = document.getElementById("welcomeSection");
-
-const typingIndicator =
-    document.getElementById("typingIndicator");
-
-const aiMenuBtn =
-    document.getElementById("aiMenuBtn");
-
-const aiMenu =
-    document.getElementById("aiMenu");
-
-const newChatBtn =
-    document.getElementById("newChatBtn");
-
-const clearChatBtn =
-    document.getElementById("clearChatBtn");
-
-const backBtn =
-    document.getElementById("backBtn");
+    return Boolean(
+        detectIntent(userMessage)
+    );
+}
 
 
 /* =========================================================
-   7. SHOW / HIDE WELCOME SCREEN
+   8. GET GEMINI RESPONSE THROUGH CLOUDFLARE
+   ========================================================= */
+
+async function getGeminiResponse(userMessage) {
+
+    if (
+        !userMessage ||
+        !userMessage.trim()
+    ) {
+        return "";
+    }
+
+
+    /*
+     * Abort request if it takes too long.
+     * This prevents the typing indicator from
+     * staying forever if the Worker is unavailable.
+     */
+
+    const controller =
+        new AbortController();
+
+    const timeoutId =
+        setTimeout(() => {
+            controller.abort();
+        }, 30000);
+
+
+    try {
+
+        const response =
+            await fetch(
+                HAZEL_AI_WORKER_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        message:
+                            userMessage
+                    }),
+
+                    signal:
+                        controller.signal
+                }
+            );
+
+
+        /*
+         * Worker returned an error.
+         */
+
+        if (!response.ok) {
+
+            console.error(
+                "HAZEL AI Worker error:",
+                response.status
+            );
+
+            return "";
+        }
+
+
+        /*
+         * Read JSON response.
+         */
+
+        let data;
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch (error) {
+
+            console.error(
+                "Invalid Worker response:",
+                error
+            );
+
+            return "";
+        }
+
+
+        /*
+         * Expected Worker response:
+         *
+         * {
+         *   "reply": "..."
+         * }
+         */
+
+        if (
+            !data ||
+            typeof data.reply !== "string"
+        ) {
+
+            console.error(
+                "Worker returned no valid reply."
+            );
+
+            return "";
+        }
+
+
+        const reply =
+            data.reply.trim();
+
+
+        if (!reply) {
+            return "";
+        }
+
+
+        return reply;
+
+    } catch (error) {
+
+        /*
+         * Network error / timeout / CORS error
+         */
+
+        console.error(
+            "Gemini connection error:",
+            error
+        );
+
+        return "";
+
+    } finally {
+
+        clearTimeout(timeoutId);
+    }
+}
+
+
+/* =========================================================
+   9. DOM ELEMENTS
+   ========================================================= */
+
+const messageInput =
+    document.getElementById(
+        "messageInput"
+    );
+
+const sendBtn =
+    document.getElementById(
+        "sendBtn"
+    );
+
+const messages =
+    document.getElementById(
+        "messages"
+    );
+
+const chatContainer =
+    document.getElementById(
+        "chatContainer"
+    );
+
+const welcomeSection =
+    document.getElementById(
+        "welcomeSection"
+    );
+
+const typingIndicator =
+    document.getElementById(
+        "typingIndicator"
+    );
+
+const aiMenuBtn =
+    document.getElementById(
+        "aiMenuBtn"
+    );
+
+const aiMenu =
+    document.getElementById(
+        "aiMenu"
+    );
+
+const newChatBtn =
+    document.getElementById(
+        "newChatBtn"
+    );
+
+const clearChatBtn =
+    document.getElementById(
+        "clearChatBtn"
+    );
+
+const backBtn =
+    document.getElementById(
+        "backBtn"
+    );
+
+
+/* =========================================================
+   10. SHOW / HIDE WELCOME SCREEN
    ========================================================= */
 
 function updateWelcomeScreen() {
@@ -208,68 +423,90 @@ function updateWelcomeScreen() {
         return;
     }
 
-    if (messages && messages.children.length > 0) {
+    if (
+        messages &&
+        messages.children.length > 0
+    ) {
 
-        welcomeSection.style.display = "none";
+        welcomeSection.style.display =
+            "none";
 
     } else {
 
-        welcomeSection.style.display = "flex";
-
+        welcomeSection.style.display =
+            "flex";
     }
 }
 
 
 /* =========================================================
-   8. GET CURRENT TIME
+   11. GET CURRENT TIME
    ========================================================= */
 
 function getCurrentTime() {
 
-    const now = new Date();
+    const now =
+        new Date();
 
-    return now.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit"
-    });
+    return now.toLocaleTimeString(
+        [],
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
 }
 
 
 /* =========================================================
-   9. ADD MESSAGE TO CHAT
+   12. ADD MESSAGE TO CHAT
    ========================================================= */
 
-function addMessage(text, sender) {
+function addMessage(
+    text,
+    sender
+) {
 
-    if (!messages || !text) {
+    if (
+        !messages ||
+        !text
+    ) {
         return;
     }
 
 
     const messageWrapper =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     messageWrapper.className =
         `message ${sender}`;
 
 
     const bubble =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     bubble.className =
         "message-bubble";
 
 
     /*
-     * textContent is intentionally used instead of
-     * innerHTML so user input cannot inject HTML.
+     * textContent is intentionally used
+     * instead of innerHTML so user input
+     * cannot inject HTML.
      */
 
-    bubble.textContent = text;
+    bubble.textContent =
+        text;
 
 
     const time =
-        document.createElement("span");
+        document.createElement(
+            "span"
+        );
 
     time.className =
         "message-time";
@@ -278,11 +515,17 @@ function addMessage(text, sender) {
         getCurrentTime();
 
 
-    bubble.appendChild(time);
+    bubble.appendChild(
+        time
+    );
 
-    messageWrapper.appendChild(bubble);
+    messageWrapper.appendChild(
+        bubble
+    );
 
-    messages.appendChild(messageWrapper);
+    messages.appendChild(
+        messageWrapper
+    );
 
 
     updateWelcomeScreen();
@@ -292,7 +535,7 @@ function addMessage(text, sender) {
 
 
 /* =========================================================
-   10. SCROLL CHAT TO BOTTOM
+   13. SCROLL CHAT TO BOTTOM
    ========================================================= */
 
 function scrollToBottom() {
@@ -301,19 +544,25 @@ function scrollToBottom() {
         return;
     }
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(
+        () => {
 
-        chatContainer.scrollTo({
-            top: chatContainer.scrollHeight,
-            behavior: "smooth"
-        });
+            chatContainer.scrollTo({
 
-    });
+                top:
+                    chatContainer.scrollHeight,
+
+                behavior:
+                    "smooth"
+            });
+
+        }
+    );
 }
 
 
 /* =========================================================
-   11. SHOW TYPING INDICATOR
+   14. SHOW TYPING INDICATOR
    ========================================================= */
 
 function showTypingIndicator() {
@@ -322,14 +571,15 @@ function showTypingIndicator() {
         return;
     }
 
-    typingIndicator.hidden = false;
+    typingIndicator.hidden =
+        false;
 
     scrollToBottom();
 }
 
 
 /* =========================================================
-   12. HIDE TYPING INDICATOR
+   15. HIDE TYPING INDICATOR
    ========================================================= */
 
 function hideTypingIndicator() {
@@ -338,15 +588,16 @@ function hideTypingIndicator() {
         return;
     }
 
-    typingIndicator.hidden = true;
+    typingIndicator.hidden =
+        true;
 }
 
 
 /* =========================================================
-   13. SEND MESSAGE
+   16. SEND MESSAGE
    ========================================================= */
 
-function sendMessage() {
+async function sendMessage() {
 
     if (!messageInput) {
         return;
@@ -401,31 +652,162 @@ function sendMessage() {
     showTypingIndicator();
 
 
-    /*
-     * Small delay makes the chatbot feel
-     * more natural instead of instant.
-     */
+    try {
 
-    const typingDelay =
-        500 + Math.floor(Math.random() * 700);
+        /*
+         * =================================================
+         * STEP 1
+         * Check custom ai-data.js intents first.
+         * =================================================
+         */
+
+        const customIntent =
+            hasCustomIntent(
+                userMessage
+            );
 
 
-    setTimeout(() => {
+        if (customIntent) {
 
-        const response =
-            getHazelResponse(userMessage);
+            /*
+             * Keep a small natural delay
+             * for custom responses.
+             */
+
+            const typingDelay =
+                500 +
+                Math.floor(
+                    Math.random() * 700
+                );
+
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        typingDelay
+                    )
+            );
+
+
+            const response =
+                getHazelResponse(
+                    userMessage
+                );
+
+
+            hideTypingIndicator();
+
+
+            if (response) {
+
+                addMessage(
+                    response,
+                    "ai"
+                );
+            }
+
+            return;
+        }
+
+
+        /*
+         * =================================================
+         * STEP 2
+         * No custom intent found.
+         * Send message to Gemini.
+         * =================================================
+         */
+
+        const geminiReply =
+            await getGeminiResponse(
+                userMessage
+            );
 
 
         hideTypingIndicator();
 
 
-        if (response) {
+        /*
+         * =================================================
+         * STEP 3
+         * Gemini replied successfully.
+         * =================================================
+         */
+
+        if (geminiReply) {
 
             addMessage(
-                response,
+                geminiReply,
+                "ai"
+            );
+
+        } else {
+
+            /*
+             * =================================================
+             * STEP 4
+             * Gemini / Worker failed.
+             * Use existing fallback system.
+             * =================================================
+             */
+
+            const fallback =
+                getRandomReply(
+                    HAZEL_AI_DATA.fallback.replies
+                );
+
+
+            if (fallback) {
+
+                addMessage(
+                    fallback,
+                    "ai"
+                );
+            }
+        }
+
+    } catch (error) {
+
+        console.error(
+            "HAZEL AI error:",
+            error
+        );
+
+
+        /*
+         * Always hide typing indicator
+         * if something unexpected happens.
+         */
+
+        hideTypingIndicator();
+
+
+        /*
+         * Final fallback.
+         */
+
+        const fallback =
+            getRandomReply(
+                HAZEL_AI_DATA.fallback.replies
+            );
+
+
+        if (fallback) {
+
+            addMessage(
+                fallback,
                 "ai"
             );
         }
+
+    } finally {
+
+        /*
+         * Always restore the input state.
+         */
+
+        hideTypingIndicator();
 
 
         if (sendBtn) {
@@ -436,13 +818,12 @@ function sendMessage() {
         if (messageInput) {
             messageInput.focus();
         }
-
-    }, typingDelay);
+    }
 }
 
 
 /* =========================================================
-   14. TEXTAREA AUTO RESIZE
+   17. TEXTAREA AUTO RESIZE
    ========================================================= */
 
 function autoResizeTextarea() {
@@ -451,7 +832,8 @@ function autoResizeTextarea() {
         return;
     }
 
-    messageInput.style.height = "auto";
+    messageInput.style.height =
+        "auto";
 
     messageInput.style.height =
         Math.min(
@@ -462,7 +844,7 @@ function autoResizeTextarea() {
 
 
 /* =========================================================
-   15. SEND BUTTON EVENT
+   18. SEND BUTTON EVENT
    ========================================================= */
 
 if (sendBtn) {
@@ -476,7 +858,7 @@ if (sendBtn) {
 
 
 /* =========================================================
-   16. ENTER TO SEND
+   19. ENTER TO SEND
    ========================================================= */
 
 if (messageInput) {
@@ -514,10 +896,13 @@ if (messageInput) {
 
 
 /* =========================================================
-   17. AI MENU
+   20. AI MENU
    ========================================================= */
 
-if (aiMenuBtn && aiMenu) {
+if (
+    aiMenuBtn &&
+    aiMenu
+) {
 
     aiMenuBtn.addEventListener(
         "click",
@@ -535,24 +920,30 @@ if (aiMenuBtn && aiMenu) {
 
 
 /* =========================================================
-   18. CLOSE MENU WHEN CLICKING OUTSIDE
+   21. CLOSE MENU WHEN CLICKING OUTSIDE
    ========================================================= */
 
 document.addEventListener(
     "click",
     function (event) {
 
-        if (!aiMenu || aiMenu.hidden) {
+        if (
+            !aiMenu ||
+            aiMenu.hidden
+        ) {
             return;
         }
 
 
         if (
-            !aiMenu.contains(event.target) &&
+            !aiMenu.contains(
+                event.target
+            ) &&
             event.target !== aiMenuBtn
         ) {
 
-            aiMenu.hidden = true;
+            aiMenu.hidden =
+                true;
         }
 
     }
@@ -560,7 +951,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   19. NEW CHAT
+   22. NEW CHAT
    ========================================================= */
 
 if (newChatBtn) {
@@ -570,19 +961,25 @@ if (newChatBtn) {
         function () {
 
             if (messages) {
-                messages.innerHTML = "";
+                messages.innerHTML =
+                    "";
             }
 
             hideTypingIndicator();
 
             updateWelcomeScreen();
 
+
             if (aiMenu) {
-                aiMenu.hidden = true;
+                aiMenu.hidden =
+                    true;
             }
 
+
             if (messageInput) {
-                messageInput.value = "";
+
+                messageInput.value =
+                    "";
 
                 autoResizeTextarea();
 
@@ -596,7 +993,7 @@ if (newChatBtn) {
 
 
 /* =========================================================
-   20. CLEAR CHAT
+   23. CLEAR CHAT
    ========================================================= */
 
 if (clearChatBtn) {
@@ -606,15 +1003,21 @@ if (clearChatBtn) {
         function () {
 
             if (messages) {
-                messages.innerHTML = "";
+
+                messages.innerHTML =
+                    "";
             }
+
 
             hideTypingIndicator();
 
             updateWelcomeScreen();
 
+
             if (aiMenu) {
-                aiMenu.hidden = true;
+
+                aiMenu.hidden =
+                    true;
             }
 
         }
@@ -624,7 +1027,7 @@ if (clearChatBtn) {
 
 
 /* =========================================================
-   21. BACK BUTTON
+   24. BACK BUTTON
    ========================================================= */
 
 if (backBtn) {
@@ -639,7 +1042,9 @@ if (backBtn) {
              * go to accounts.html.
              */
 
-            if (window.history.length > 1) {
+            if (
+                window.history.length > 1
+            ) {
 
                 window.history.back();
 
@@ -647,7 +1052,6 @@ if (backBtn) {
 
                 window.location.href =
                     "accounts.html";
-
             }
 
         }
@@ -657,7 +1061,7 @@ if (backBtn) {
 
 
 /* =========================================================
-   22. INITIAL STATE
+   25. INITIAL STATE
    ========================================================= */
 
 updateWelcomeScreen();
@@ -666,10 +1070,10 @@ hideTypingIndicator();
 
 
 /* =========================================================
-   23. OPTIONAL DEBUG FUNCTION
+   26. OPTIONAL DEBUG FUNCTION
    =========================================================
 
-   Browser console mein test:
+   Browser console:
 
    testHazelAI("hello hazel");
    testHazelAI("kesi hooo");
@@ -680,21 +1084,9 @@ hideTypingIndicator();
 function testHazelAI(message) {
 
     const response =
-        getHazelResponse(message);
+        getHazelResponse(
+            message
+        );
 
-    console.log("User:", message);
-    console.log("HAZEL AI:", response);
-
-    return response;
-}
-
-/* =========================================================
-   HAZEL AI — LOAD SAVED HAZEL THEME
-   ========================================================= */
-
-(function applySavedHazelTheme() {
-    const savedTheme = localStorage.getItem("hazelTheme");
-    const theme = savedTheme || "black-gold";
-
-    document.body.setAttribute("data-theme", theme);
-})();
+    console.log(
+       

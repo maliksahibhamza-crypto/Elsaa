@@ -897,3 +897,20 @@ body[data-theme="white-grey"] .toast {
     }
 
   }
+
+/* =========================================================
+   HAZEL AI — REMOVE LINK UNDERLINE
+   ========================================================= */
+
+#hazelAIButton {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+#hazelAIButton:hover,
+#hazelAIButton:focus,
+#hazelAIButton:active,
+#hazelAIButton:visited {
+    text-decoration: none !important;
+    color: inherit;
+}

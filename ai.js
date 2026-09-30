@@ -1089,4 +1089,38 @@ function testHazelAI(message) {
         );
 
     console.log(
+       "User:",
+        message
+    );
+
+    console.log(
+        "HAZEL AI:",
+        response
+    );
+
+    return response;
+}
+
+
+/* =========================================================
+   27. LOAD SAVED HAZEL THEME
+   ========================================================= */
+
+(function applySavedHazelTheme() {
+
+    const savedTheme =
+        localStorage.getItem(
+            "hazelTheme"
+        );
+
+    const theme =
+        savedTheme ||
+        "black-gold";
+
+    document.body.setAttribute(
+        "data-theme",
+        theme
+    );
+
+})();
        

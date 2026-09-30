@@ -1158,4 +1158,57 @@ loadConversationMemory();
 updateWelcomeScreen();
 
 hideTypingIndicator();
+
+/* =========================================================
+   23. OPTIONAL DEBUG FUNCTION
+   =========================================================
+
+   Browser console:
+
+   testHazelAI("hello hazel");
+
+   This now tests Gemini directly.
+   ========================================================= */
+
+async function testHazelAI(message) {
+
+    const response =
+        await getGeminiResponse(
+            message
+        );
+
+
+    console.log(
+        "HAZEL AI:",
+        response
+    );
+
+
+    return response;
+}
+
+
+/* =========================================================
+   24. LOAD SAVED HAZEL THEME
+   ========================================================= */
+
+(function applySavedHazelTheme() {
+
+    const savedTheme =
+        localStorage.getItem(
+            "hazelTheme"
+        );
+
+
+    const theme =
+        savedTheme ||
+        "black-gold";
+
+
+    document.body.setAttribute(
+        "data-theme",
+        theme
+    );
+
+})();
        

@@ -1,43 +1,20 @@
 /* =========================================================
    HAZEL AI — Intent & Response Database
    File: ai-data.js
-
-   Yahan HAZEL AI ke:
-   - Intents
-   - Keywords / phrases
-   - Responses
-
-   add/edit kiye jayenge.
-
-   NOTE:
-   Is file mein AI ka main logic nahi hai.
-   Main logic baad mein ai.js handle karega.
    ========================================================= */
 
 const HAZEL_AI_DATA = {
 
     /* =========================
        GREETINGS
-       ========================= */
+    ========================= */
 
     greeting: {
         keywords: [
-            "hello",
-            "hi",
-            "hey",
-            "hii",
-            "hiii",
-            "helo",
-            "heloo",
-            "salam",
-            "assalamualaikum",
-            "aoa",
-            "aoa hazel",
-            "hey hazel",
-            "hi hazel",
-            "hello hazel"
+            "hello", "hi", "hey", "hii", "hiii", "helo", "heloo",
+            "salam", "assalamualaikum", "aoa",
+            "hey hazel", "hi hazel", "hello hazel"
         ],
-
         replies: [
             "Hello! 👋 Welcome to HAZEL AI.",
             "Hey! HAZEL AI is here ✨",
@@ -49,7 +26,7 @@ const HAZEL_AI_DATA = {
 
     /* =========================
        HOW ARE YOU
-       ========================= */
+    ========================= */
 
     how_are_you: {
         keywords: [
@@ -67,11 +44,11 @@ const HAZEL_AI_DATA = {
             "kese ho",
             "kaise ho",
             "kya haal hai",
+            "kia haal hai",
             "kya haal",
             "haal kaisa hai",
             "sab theek hai"
         ],
-
         replies: [
             "I'm doing good ✨ Thanks for asking.",
             "I'm good 🖤 How about you?",
@@ -82,8 +59,112 @@ const HAZEL_AI_DATA = {
 
 
     /* =========================
-       THANK YOU
-       ========================= */
+       WHAT ARE YOU DOING
+    ========================= */
+
+    what_doing: {
+        keywords: [
+            "what are you doing",
+            "what r you doing",
+            "what r u doing",
+            "what you doing",
+            "kya kar rahi ho",
+            "kya kr rahi ho",
+            "kya kar rahe ho",
+            "kya kr rahe ho",
+            "kya krti ho",
+            "kya karti ho",
+            "kya chal raha hai"
+        ],
+        replies: [
+            "Bas yahin hoon, aap se baat kar rahi hoon. 🖤",
+            "Abhi to aapke messages ka wait kar rahi thi. ✨",
+            "Nothing much... I'm here whenever you want to talk.",
+            "Jo aap kahen, usi baare mein baat karte hain 😌"
+        ]
+    },
+
+
+    /* =========================
+       WHAT SHOULD I TELL
+    ========================= */
+
+    what_should_i_tell: {
+        keywords: [
+            "what should i tell",
+            "what can i tell you",
+            "what do i tell you",
+            "kya bataun",
+            "kia bataun",
+            "main kya bataun",
+            "mein kya bataun",
+            "kya batau",
+            "kia batau",
+            "kya bolun",
+            "kia bolun"
+        ],
+        replies: [
+            "Ans jo apka dil kre, main sun rahi hun. 🖤",
+            "Jo dil mein hai woh bata dein, main sun rahi hun. ✨",
+            "Kuch bhi bata sakte hain — random baat bhi chalegi 😌",
+            "Jo aap share karna chahein, bataiye."
+        ]
+    },
+
+
+    /* =========================
+       HAZEL MEANING
+    ========================= */
+
+    hazel_meaning: {
+        keywords: [
+            "what does hazel mean",
+            "what is the meaning of hazel",
+            "hazel meaning",
+            "meaning of hazel",
+            "hazel ka matlab",
+            "hazel ka matlb",
+            "hazel ka meaning",
+            "hazel ka kya matlab",
+            "hazel ka kia matlab",
+            "hazel kya hai",
+            "hazel kia hai"
+        ],
+        replies: [
+            "Ager aap website k hawale se puch rhe hain to iska koi khas matlb nh, yeh bs do names ka combination hai."
+        ]
+    },
+
+
+    /* =========================
+       ABOUT HAZEL AI
+    ========================= */
+
+    about_hazel_ai: {
+        keywords: [
+            "who are you",
+            "what are you",
+            "what is hazel ai",
+            "who is hazel ai",
+            "hazel ai kya hai",
+            "hazel ai kia hai",
+            "tum kon ho",
+            "tum kaun ho",
+            "ap kon ho",
+            "aap kaun ho",
+            "who is this"
+        ],
+        replies: [
+            "I'm HAZEL AI — a private assistant built for this website. 🖤",
+            "I'm HAZEL AI. Your little digital assistant inside HAZEL ✨",
+            "I'm HAZEL AI — currently running on my custom response system."
+        ]
+    },
+
+
+    /* =========================
+       THANKS
+    ========================= */
 
     thanks: {
         keywords: [
@@ -92,12 +173,11 @@ const HAZEL_AI_DATA = {
             "thankyou",
             "thx",
             "ty",
+            "thank u",
             "shukriya",
             "bohat shukriya",
-            "thank u",
             "thanks hazel"
         ],
-
         replies: [
             "You're welcome 🖤",
             "Anytime!",
@@ -109,7 +189,7 @@ const HAZEL_AI_DATA = {
 
     /* =========================
        GOOD MORNING
-       ========================= */
+    ========================= */
 
     good_morning: {
         keywords: [
@@ -120,7 +200,6 @@ const HAZEL_AI_DATA = {
             "subah bakhair",
             "saba bakhair"
         ],
-
         replies: [
             "Good morning ☀️ Have a beautiful day.",
             "Good morning! ✨ Ready for a new day?",
@@ -131,21 +210,20 @@ const HAZEL_AI_DATA = {
 
     /* =========================
        GOOD NIGHT
-       ========================= */
+    ========================= */
 
     good_night: {
         keywords: [
             "good night",
             "goodnight",
             "gn",
-            "night",
             "shab bakhair",
             "shab khair",
             "so jao",
             "main so raha",
+            "main sone ja raha",
             "i am going to sleep"
         ],
-
         replies: [
             "Good night 🌙 Take care.",
             "Good night! Sleep well ✨",
@@ -157,7 +235,7 @@ const HAZEL_AI_DATA = {
 
     /* =========================
        HELP
-       ========================= */
+    ========================= */
 
     help: {
         keywords: [
@@ -168,9 +246,9 @@ const HAZEL_AI_DATA = {
             "madad chahiye",
             "meri help karo",
             "what can you do",
-            "tum kya kar sakti ho"
+            "tum kya kar sakti ho",
+            "aap kya kar sakti ho"
         ],
-
         replies: [
             "Sure! Tell me what you need help with.",
             "Of course 🖤 What can I help you with?",
@@ -180,33 +258,8 @@ const HAZEL_AI_DATA = {
 
 
     /* =========================
-       HAZEL AI
-       ========================= */
-
-    about_hazel_ai: {
-        keywords: [
-            "who are you",
-            "what are you",
-            "what is hazel ai",
-            "who is hazel ai",
-            "hazel ai kya hai",
-            "tum kon ho",
-            "tum kaun ho",
-            "ap kon ho",
-            "aap kaun ho"
-        ],
-
-        replies: [
-            "I'm HAZEL AI — a private assistant built for this website. 🖤",
-            "I'm HAZEL AI. Think of me as your little digital assistant inside HAZEL ✨",
-            "I'm HAZEL AI — currently running on my custom response system."
-        ]
-    },
-
-
-    /* =========================
        YES
-       ========================= */
+    ========================= */
 
     yes: {
         keywords: [
@@ -226,7 +279,6 @@ const HAZEL_AI_DATA = {
             "okiee",
             "okieee"
         ],
-
         replies: [
             "Alright ✨",
             "Okay 🖤",
@@ -238,20 +290,18 @@ const HAZEL_AI_DATA = {
 
     /* =========================
        NO
-       ========================= */
+    ========================= */
 
     no: {
         keywords: [
             "no",
             "nope",
             "nah",
-            "not",
             "nahi",
             "nahin",
             "jee nahi",
             "bilkul nahi"
         ],
-
         replies: [
             "Alright, no problem.",
             "Okay 🖤",
@@ -262,8 +312,8 @@ const HAZEL_AI_DATA = {
 
 
     /* =========================
-       LOVE / AFFECTION
-       ========================= */
+       AFFECTION
+    ========================= */
 
     affection: {
         keywords: [
@@ -275,10 +325,8 @@ const HAZEL_AI_DATA = {
             "mohabbat",
             "pyar",
             "pyaar",
-            "love",
             "i adore you"
         ],
-
         replies: [
             "That's sweet 🖤",
             "Aww, that's kind of you.",
@@ -288,8 +336,8 @@ const HAZEL_AI_DATA = {
 
 
     /* =========================
-       LAUGHING / FUN
-       ========================= */
+       LAUGHING
+    ========================= */
 
     laughing: {
         keywords: [
@@ -303,7 +351,6 @@ const HAZEL_AI_DATA = {
             "🤣",
             "lolll"
         ],
-
         replies: [
             "😂",
             "Haha 😭",
@@ -314,8 +361,210 @@ const HAZEL_AI_DATA = {
 
 
     /* =========================
-       FAREWELL
-       ========================= */
+       REALLY / SERIOUSLY
+    ========================= */
+
+    really: {
+        keywords: [
+            "really",
+            "really?",
+            "seriously",
+            "seriously?",
+            "sach mein",
+            "sach me",
+            "waqai",
+            "wakai",
+            "for real",
+            "fr"
+        ],
+        replies: [
+            "Yep, really 😌",
+            "Seriously. ✨",
+            "Haan, bilkul.",
+            "As real as a custom AI can be 😭"
+        ]
+    },
+
+
+    /* =========================
+       OKAY / ALRIGHT
+    ========================= */
+
+    okay: {
+        keywords: [
+            "alright",
+            "theek hai",
+            "thik hai",
+            "theek",
+            "acha",
+            "accha",
+            "achaa",
+            "okay then",
+            "alright then"
+        ],
+        replies: [
+            "Alright 🖤",
+            "Theek hai ✨",
+            "Okay, got it.",
+            "Acha ji 😌"
+        ]
+    },
+
+
+    /* =========================
+       HMM
+    ========================= */
+
+    hmm: {
+        keywords: [
+            "hmm",
+            "hmmm",
+            "hmmmm",
+            "hmm okay",
+            "hmm acha",
+            "hmm theek"
+        ],
+        replies: [
+            "Hmm... 👀",
+            "Hmmm 😌",
+            "I see...",
+            "Acha... I'm listening. 🖤"
+        ]
+    },
+
+
+    /* =========================
+       GOOD / NICE
+    ========================= */
+
+    positive: {
+        keywords: [
+            "good",
+            "nice",
+            "great",
+            "awesome",
+            "amazing",
+            "perfect",
+            "excellent",
+            "acha hai",
+            "bohat acha",
+            "zabardast",
+            "kamaal",
+            "wah"
+        ],
+        replies: [
+            "Glad you liked it ✨",
+            "That's good to hear. 🖤",
+            "Hehe, nice 😌",
+            "Kamaal! ✨"
+        ]
+    },
+
+
+    /* =========================
+       SORRY
+    ========================= */
+
+    sorry: {
+        keywords: [
+            "sorry",
+            "so sorry",
+            "im sorry",
+            "i am sorry",
+            "maaf karo",
+            "maaf karna",
+            "sorry hazel"
+        ],
+        replies: [
+            "It's okay 🖤",
+            "No worries, you're good.",
+            "It's completely fine ✨",
+            "Don't worry about it."
+        ]
+    },
+
+
+    /* =========================
+       BORED
+    ========================= */
+
+    bored: {
+        keywords: [
+            "i am bored",
+            "im bored",
+            "bored",
+            "boring",
+            "mujhe bore ho raha",
+            "bor ho raha",
+            "bore ho raha hai",
+            "main bore ho raha"
+        ],
+        replies: [
+            "Bored? 😭 Let's talk about something random.",
+            "Hmm... phir koi interesting topic start karte hain. ✨",
+            "Random question, random story, ya random conversation — pick one 😌"
+        ]
+    },
+
+
+    /* =========================
+       GOOD / BAD MOOD
+    ========================= */
+
+    mood: {
+        keywords: [
+            "i am happy",
+            "im happy",
+            "happy today",
+            "aaj khush",
+            "main khush hun",
+            "mein khush hun",
+            "i am sad",
+            "im sad",
+            "sad today",
+            "udaas",
+            "udas",
+            "mood off",
+            "mood acha nahi",
+            "mood kharab"
+        ],
+        replies: [
+            "Hmm... tell me what's on your mind. 🖤",
+            "I'm listening. Take your time.",
+            "I hope things feel a little lighter soon. ✨"
+        ]
+    },
+
+
+    /* =========================
+       RANDOM CONVERSATION
+    ========================= */
+
+    random: {
+        keywords: [
+            "random",
+            "random baat",
+            "random question",
+            "kuch random",
+            "koi random baat",
+            "lets talk",
+            "let's talk",
+            "baat karo",
+            "baat karte hain",
+            "talk to me"
+        ],
+        replies: [
+            "Random it is 😌 What's the first thing that comes to mind?",
+            "Okay, random mode activated. ✨",
+            "Let's make this conversation interesting. 🖤",
+            "I'm listening — say whatever comes to mind."
+        ]
+    },
+
+
+    /* =========================
+       GOODBYE
+    ========================= */
 
     goodbye: {
         keywords: [
@@ -329,7 +578,6 @@ const HAZEL_AI_DATA = {
             "talk later",
             "see you later"
         ],
-
         replies: [
             "Bye! Take care 🖤",
             "See you later ✨",
@@ -340,8 +588,8 @@ const HAZEL_AI_DATA = {
 
 
     /* =========================
-       FALLBACK RESPONSES
-       ========================= */
+       FALLBACK
+    ========================= */
 
     fallback: {
         replies: [
@@ -352,5 +600,4 @@ const HAZEL_AI_DATA = {
             "Hmm, I need a little more context."
         ]
     }
-
 };

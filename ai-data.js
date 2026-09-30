@@ -586,6 +586,45 @@ const HAZEL_AI_DATA = {
         ]
     },
 
+   /* =========================
+   ABUSIVE / RUDE LANGUAGE
+========================= */
+
+abusive_language: {
+    keywords: [
+        "shut up",
+        "stupid",
+        "idiot",
+        "dumb",
+        "fool",
+        "pagal",
+        "bewaqoof",
+        "badtameez",
+        "ghussa",
+        "gali",
+        "gaali",
+        "abuse",
+        "fuck",
+        "fucking",
+        "kutta",
+        "kutte",
+        "kutti",
+        "bharwa",
+        "bharwe",
+        "kamini",
+        "kamina",
+        "kamine",
+        "lund"
+    ],
+    replies: [
+        "Acha ji 😭 Itna ghussa kyun?",
+        "Relax 😌 Baat karte hain, larai nahi.",
+        "Oho 😂 Thora tameez se, main sun rahi hoon.",
+        "It's okay. Agar mood off hai to batao kya hua. 🖤",
+        "Acha... samajh gayi 😭 Ab normal mode mein aao.",
+        "No worries 🖤 Baat ko calmly continue karte hain."
+    ]
+},
 
     /* =========================
        FALLBACK

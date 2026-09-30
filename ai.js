@@ -4,8 +4,7 @@
 
    This file:
    - Reads user messages
-   - Sends all messages directly to Gemini
-   - Keeps recent conversation context in memory
+   - Sends messages directly to Gemini
    - Uses Cloudflare Worker for Gemini
    - Uses fallback if Gemini/Worker fails
    - Controls the chat interface
@@ -14,6 +13,11 @@
    - Handles New Chat / Clear Chat
    - Handles Back button
    - Loads saved HAZEL theme
+
+   NOTE:
+   - ai-data.js is NOT required
+   - No keyword/custom-intent system
+   - No conversation memory
    ========================================================= */
 
 
@@ -34,236 +38,13 @@ const HAZEL_AI_WORKER_URL =
 
 
 /* =========================================================
-   2. CONVERSATION MEMORY SETTINGS
+   2. NORMALIZE USER MESSAGE
    ========================================================= */
 
 /*
- * HAZEL keeps recent conversation context in browser memory.
+ * Kept as a utility function from the original file.
  *
- * This is NOT the Gemini API key.
- *
- * We keep a limited number of messages so very long
- * conversations do not create huge API requests.
- */
-
-const HAZEL_MEMORY_KEY =
-    "hazelAIConversationMemory";
-
-const MAX_MEMORY_MESSAGES =
-    30;
-
-
-/* =========================================================
-   3. CONVERSATION MEMORY
-   ========================================================= */
-
-let conversationMemory = [];
-
-
-/*
- * Load previous conversation memory.
- */
-
-function loadConversationMemory() {
-
-    try {
-
-        const savedMemory =
-            localStorage.getItem(
-                HAZEL_MEMORY_KEY
-            );
-
-
-        if (!savedMemory) {
-            conversationMemory = [];
-            return;
-        }
-
-
-        const parsedMemory =
-            JSON.parse(
-                savedMemory
-            );
-
-
-        if (
-            Array.isArray(parsedMemory)
-        ) {
-
-            conversationMemory =
-                parsedMemory
-                    .filter(
-                        message =>
-                            message &&
-                            (
-                                message.role === "user" ||
-                                message.role === "assistant"
-                            ) &&
-                            typeof message.content === "string"
-                    )
-                    .slice(
-                        -MAX_MEMORY_MESSAGES
-                    );
-
-        } else {
-
-            conversationMemory = [];
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Could not load HAZEL AI memory:",
-            error
-        );
-
-        conversationMemory = [];
-    }
-}
-
-
-/*
- * Save conversation memory.
- */
-
-function saveConversationMemory() {
-
-    try {
-
-        conversationMemory =
-            conversationMemory.slice(
-                -MAX_MEMORY_MESSAGES
-            );
-
-
-        localStorage.setItem(
-            HAZEL_MEMORY_KEY,
-            JSON.stringify(
-                conversationMemory
-            )
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Could not save HAZEL AI memory:",
-            error
-        );
-    }
-}
-
-
-/*
- * Add a message to memory.
- */
-
-function addToConversationMemory(
-    role,
-    content
-) {
-
-    if (
-        !content ||
-        !content.trim()
-    ) {
-        return;
-    }
-
-
-    conversationMemory.push({
-
-        role:
-            role,
-
-        content:
-            content.trim()
-
-    });
-
-
-    /*
-     * Keep only the most recent messages.
-     */
-
-    conversationMemory =
-        conversationMemory.slice(
-            -MAX_MEMORY_MESSAGES
-        );
-
-
-    saveConversationMemory();
-}
-
-
-/*
- * Clear conversation memory.
- */
-
-function clearConversationMemory() {
-
-    conversationMemory = [];
-
-
-    try {
-
-        localStorage.removeItem(
-            HAZEL_MEMORY_KEY
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Could not clear HAZEL AI memory:",
-            error
-        );
-    }
-}
-
-
-/*
- * Build the conversation context that will
- * be sent to the Cloudflare Worker.
- */
-
-function buildConversationContext(
-    currentMessage
-) {
-
-    const history =
-        conversationMemory
-            .slice(
-                -MAX_MEMORY_MESSAGES
-            )
-            .map(
-                message =>
-                    `${message.role}: ${message.content}`
-            )
-            .join("\n");
-
-
-    if (!history) {
-
-        return currentMessage;
-    }
-
-
-    return `
-Previous conversation:
-${history}
-
-Current user message:
-${currentMessage}
-`.trim();
-}
-
-
-/* =========================================================
-   4. NORMALIZE USER MESSAGE
-   ========================================================= */
-
-/*
- * Kept from the original file so existing
- * functionality is not unnecessarily removed.
+ * Gemini does NOT depend on this function.
  */
 
 function normalizeMessage(message) {
@@ -275,9 +56,7 @@ function normalizeMessage(message) {
         // Remove extra spaces
         .replace(/\s+/g, " ")
 
-        // Normalize repeated letters:
-        // "hellooo" → "helloo"
-        // "kaaaise" → "kaaise"
+        // Normalize repeated letters
         .replace(/(.)\1{2,}/g, "$1$1")
 
         // Normalize common Roman Urdu variations
@@ -291,12 +70,10 @@ function normalizeMessage(message) {
 
 
 /* =========================================================
-   5. GET GEMINI RESPONSE THROUGH CLOUDFLARE
+   3. GET GEMINI RESPONSE THROUGH CLOUDFLARE
    ========================================================= */
 
-async function getGeminiResponse(
-    userMessage
-) {
+async function getGeminiResponse(userMessage) {
 
     if (
         !userMessage ||
@@ -307,18 +84,10 @@ async function getGeminiResponse(
 
 
     /*
-     * Send current message + recent conversation
-     * to the Worker.
-     */
-
-    const conversationContext =
-        buildConversationContext(
-            userMessage
-        );
-
-
-    /*
      * Abort request if it takes too long.
+     *
+     * This prevents the typing indicator from
+     * staying forever if the Worker is unavailable.
      */
 
     const controller =
@@ -347,10 +116,18 @@ async function getGeminiResponse(
                             "application/json"
                     },
 
+                    /*
+                     * Send ONLY the user's message.
+                     *
+                     * No custom intent.
+                     * No keyword matching.
+                     * No conversation memory.
+                     */
+
                     body:
                         JSON.stringify({
                             message:
-                                conversationContext
+                                userMessage
                         }),
 
                     signal:
@@ -367,7 +144,8 @@ async function getGeminiResponse(
 
             console.error(
                 "HAZEL AI Worker error:",
-                response.status
+                response.status,
+                response.statusText
             );
 
             return "";
@@ -411,7 +189,8 @@ async function getGeminiResponse(
         ) {
 
             console.error(
-                "Worker returned no valid reply."
+                "Worker returned no valid reply.",
+                data
             );
 
             return "";
@@ -452,7 +231,7 @@ async function getGeminiResponse(
 
 
 /* =========================================================
-   6. DOM ELEMENTS
+   4. DOM ELEMENTS
    ========================================================= */
 
 const messageInput =
@@ -460,50 +239,60 @@ const messageInput =
         "messageInput"
     );
 
+
 const sendBtn =
     document.getElementById(
         "sendBtn"
     );
+
 
 const messages =
     document.getElementById(
         "messages"
     );
 
+
 const chatContainer =
     document.getElementById(
         "chatContainer"
     );
+
 
 const welcomeSection =
     document.getElementById(
         "welcomeSection"
     );
 
+
 const typingIndicator =
     document.getElementById(
         "typingIndicator"
     );
+
 
 const aiMenuBtn =
     document.getElementById(
         "aiMenuBtn"
     );
 
+
 const aiMenu =
     document.getElementById(
         "aiMenu"
     );
+
 
 const newChatBtn =
     document.getElementById(
         "newChatBtn"
     );
 
+
 const clearChatBtn =
     document.getElementById(
         "clearChatBtn"
     );
+
 
 const backBtn =
     document.getElementById(
@@ -512,7 +301,7 @@ const backBtn =
 
 
 /* =========================================================
-   7. SHOW / HIDE WELCOME SCREEN
+   5. SHOW / HIDE WELCOME SCREEN
    ========================================================= */
 
 function updateWelcomeScreen() {
@@ -539,7 +328,7 @@ function updateWelcomeScreen() {
 
 
 /* =========================================================
-   8. GET CURRENT TIME
+   6. GET CURRENT TIME
    ========================================================= */
 
 function getCurrentTime() {
@@ -559,7 +348,7 @@ function getCurrentTime() {
 
 
 /* =========================================================
-   9. ADD MESSAGE TO CHAT
+   7. ADD MESSAGE TO CHAT
    ========================================================= */
 
 function addMessage(
@@ -641,7 +430,7 @@ function addMessage(
 
 
 /* =========================================================
-   10. SCROLL CHAT TO BOTTOM
+   8. SCROLL CHAT TO BOTTOM
    ========================================================= */
 
 function scrollToBottom() {
@@ -669,7 +458,7 @@ function scrollToBottom() {
 
 
 /* =========================================================
-   11. SHOW TYPING INDICATOR
+   9. SHOW TYPING INDICATOR
    ========================================================= */
 
 function showTypingIndicator() {
@@ -688,7 +477,7 @@ function showTypingIndicator() {
 
 
 /* =========================================================
-   12. HIDE TYPING INDICATOR
+   10. HIDE TYPING INDICATOR
    ========================================================= */
 
 function hideTypingIndicator() {
@@ -704,7 +493,7 @@ function hideTypingIndicator() {
 
 
 /* =========================================================
-   13. SEND MESSAGE
+   11. SEND MESSAGE
    ========================================================= */
 
 async function sendMessage() {
@@ -728,22 +517,12 @@ async function sendMessage() {
 
 
     /*
-     * Add user's message to visible chat.
+     * Add user's message.
      */
 
     addMessage(
         userMessage,
         "user"
-    );
-
-
-    /*
-     * Add user's message to conversation memory.
-     */
-
-    addToConversationMemory(
-        "user",
-        userMessage
     );
 
 
@@ -761,7 +540,9 @@ async function sendMessage() {
      */
 
     if (sendBtn) {
-        sendBtn.disabled = true;
+
+        sendBtn.disabled =
+            true;
     }
 
 
@@ -776,12 +557,8 @@ async function sendMessage() {
 
         /*
          * =================================================
-         * ALL MESSAGES GO DIRECTLY TO GEMINI.
+         * SEND EVERY MESSAGE DIRECTLY TO GEMINI
          * =================================================
-         *
-         * No keyword system.
-         * No custom intent system.
-         * No ai-data.js response selection.
          */
 
         const geminiReply =
@@ -804,25 +581,10 @@ async function sendMessage() {
                 "ai"
             );
 
-
-            /*
-             * Save Gemini's reply so future
-             * messages can understand context.
-             */
-
-            addToConversationMemory(
-                "assistant",
-                geminiReply
-            );
-
         } else {
 
             /*
              * Gemini / Worker failed.
-             *
-             * We intentionally use a simple local
-             * fallback because ai-data.js is no longer
-             * part of the response system.
              */
 
             const fallback =
@@ -833,7 +595,6 @@ async function sendMessage() {
                 fallback,
                 "ai"
             );
-
         }
 
     } catch (error) {
@@ -851,6 +612,10 @@ async function sendMessage() {
 
         hideTypingIndicator();
 
+
+        /*
+         * Final fallback.
+         */
 
         const fallback =
             "Sorry, something went wrong while connecting to HAZEL AI. Please try again.";
@@ -871,11 +636,14 @@ async function sendMessage() {
 
 
         if (sendBtn) {
-            sendBtn.disabled = false;
+
+            sendBtn.disabled =
+                false;
         }
 
 
         if (messageInput) {
+
             messageInput.focus();
         }
 
@@ -884,7 +652,7 @@ async function sendMessage() {
 
 
 /* =========================================================
-   14. TEXTAREA AUTO RESIZE
+   12. TEXTAREA AUTO RESIZE
    ========================================================= */
 
 function autoResizeTextarea() {
@@ -907,7 +675,7 @@ function autoResizeTextarea() {
 
 
 /* =========================================================
-   15. SEND BUTTON EVENT
+   13. SEND BUTTON EVENT
    ========================================================= */
 
 if (sendBtn) {
@@ -921,7 +689,7 @@ if (sendBtn) {
 
 
 /* =========================================================
-   16. ENTER TO SEND
+   14. ENTER TO SEND
    ========================================================= */
 
 if (messageInput) {
@@ -959,7 +727,7 @@ if (messageInput) {
 
 
 /* =========================================================
-   17. AI MENU
+   15. AI MENU
    ========================================================= */
 
 if (
@@ -984,7 +752,7 @@ if (
 
 
 /* =========================================================
-   18. CLOSE MENU WHEN CLICKING OUTSIDE
+   16. CLOSE MENU WHEN CLICKING OUTSIDE
    ========================================================= */
 
 document.addEventListener(
@@ -1015,7 +783,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   19. NEW CHAT
+   17. NEW CHAT
    ========================================================= */
 
 if (newChatBtn) {
@@ -1032,14 +800,6 @@ if (newChatBtn) {
             }
 
 
-            /*
-             * New Chat also starts
-             * a completely fresh memory.
-             */
-
-            clearConversationMemory();
-
-
             hideTypingIndicator();
 
             updateWelcomeScreen();
@@ -1049,7 +809,6 @@ if (newChatBtn) {
 
                 aiMenu.hidden =
                     true;
-
             }
 
 
@@ -1061,7 +820,6 @@ if (newChatBtn) {
                 autoResizeTextarea();
 
                 messageInput.focus();
-
             }
 
         }
@@ -1071,7 +829,7 @@ if (newChatBtn) {
 
 
 /* =========================================================
-   20. CLEAR CHAT
+   18. CLEAR CHAT
    ========================================================= */
 
 if (clearChatBtn) {
@@ -1084,16 +842,7 @@ if (clearChatBtn) {
 
                 messages.innerHTML =
                     "";
-
             }
-
-
-            /*
-             * Clear visible chat AND
-             * stored conversation memory.
-             */
-
-            clearConversationMemory();
 
 
             hideTypingIndicator();
@@ -1105,7 +854,6 @@ if (clearChatBtn) {
 
                 aiMenu.hidden =
                     true;
-
             }
 
         }
@@ -1115,7 +863,7 @@ if (clearChatBtn) {
 
 
 /* =========================================================
-   21. BACK BUTTON
+   19. BACK BUTTON
    ========================================================= */
 
 if (backBtn) {
@@ -1140,7 +888,6 @@ if (backBtn) {
 
                 window.location.href =
                     "accounts.html";
-
             }
 
         }
@@ -1150,24 +897,25 @@ if (backBtn) {
 
 
 /* =========================================================
-   22. INITIAL STATE
+   20. INITIAL STATE
    ========================================================= */
-
-loadConversationMemory();
 
 updateWelcomeScreen();
 
 hideTypingIndicator();
 
+
 /* =========================================================
-   23. OPTIONAL DEBUG FUNCTION
+   21. OPTIONAL DEBUG FUNCTION
    =========================================================
 
    Browser console:
 
    testHazelAI("hello hazel");
+   testHazelAI("Newton ka pehla law kya hai?");
+   testHazelAI("Photosynthesis kya hoti hai?");
 
-   This now tests Gemini directly.
+   This sends the message directly to Gemini.
    ========================================================= */
 
 async function testHazelAI(message) {
@@ -1189,7 +937,7 @@ async function testHazelAI(message) {
 
 
 /* =========================================================
-   24. LOAD SAVED HAZEL THEME
+   22. LOAD SAVED HAZEL THEME
    ========================================================= */
 
 (function applySavedHazelTheme() {
@@ -1211,4 +959,3 @@ async function testHazelAI(message) {
     );
 
 })();
-       

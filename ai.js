@@ -687,3 +687,14 @@ function testHazelAI(message) {
 
     return response;
 }
+
+/* =========================================================
+   HAZEL AI — LOAD SAVED HAZEL THEME
+   ========================================================= */
+
+(function applySavedHazelTheme() {
+    const savedTheme = localStorage.getItem("hazelTheme");
+    const theme = savedTheme || "black-gold";
+
+    document.body.setAttribute("data-theme", theme);
+})();

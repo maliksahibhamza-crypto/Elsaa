@@ -1043,3 +1043,244 @@ body {
         opacity: 1;
     }
 }
+
+/* =========================================================
+   HAZEL AI — SETTINGS THEME INTEGRATION
+   Uses the same theme system as settings.html
+   ========================================================= */
+
+
+/* =========================
+   BLACK & GOLD
+========================= */
+
+body[data-theme="black-gold"] {
+    --gold: #d4af37;
+    --gold-light: #e8cc7a;
+    --gold-dark: #9c7924;
+
+    --black: #050505;
+    --black-soft: #0b0b0b;
+    --black-card: #111111;
+
+    --text: #f5f1e8;
+    --text-soft: #aaa49a;
+
+    --border: rgba(212, 175, 55, 0.20);
+
+    --user-message: #d4af37;
+    --user-text: #050505;
+
+    --ai-message: #111111;
+    --ai-text: #f5f1e8;
+}
+
+
+/* =========================
+   PINK
+========================= */
+
+body[data-theme="pink"] {
+    --gold: #e88ca8;
+    --gold-light: #f5b5c8;
+    --gold-dark: #b85d7b;
+
+    --black: #080506;
+    --black-soft: #110a0d;
+    --black-card: #1b1014;
+
+    --text: #fff5f8;
+    --text-soft: #b49da4;
+
+    --border: rgba(232, 140, 168, 0.20);
+
+    --user-message: #e88ca8;
+    --user-text: #080506;
+
+    --ai-message: #110a0d;
+    --ai-text: #fff5f8;
+}
+
+
+/* =========================
+   WHITE / GREY
+========================= */
+
+body[data-theme="white-grey"] {
+    --gold: #777777;
+    --gold-light: #555555;
+    --gold-dark: #999999;
+
+    --black: #eeeeee;
+    --black-soft: #f5f5f5;
+    --black-card: #ffffff;
+
+    --text: #202020;
+    --text-soft: #777777;
+
+    --border: rgba(0, 0, 0, 0.09);
+
+    --user-message: #777777;
+    --user-text: #ffffff;
+
+    --ai-message: #ffffff;
+    --ai-text: #202020;
+}
+
+
+/* =========================================================
+   APPLY THEME TO HAZEL AI PAGE
+   ========================================================= */
+
+body {
+    background: var(--black);
+    color: var(--text);
+
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease;
+}
+
+
+.ai-header,
+.chat-input-area {
+    background: var(--black);
+    color: var(--text);
+}
+
+
+.ai-menu {
+    background: var(--black-card);
+    border-color: var(--border);
+}
+
+
+.ai-menu button {
+    color: var(--text);
+}
+
+
+.ai-avatar,
+.welcome-logo,
+.typing-avatar {
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+
+.online-dot {
+    background: var(--gold);
+}
+
+
+.ai-title h1,
+.welcome-section h2 {
+    color: var(--text);
+}
+
+
+.ai-title p,
+.welcome-section p,
+.ai-disclaimer {
+    color: var(--text-soft);
+}
+
+
+.message.user .message-bubble {
+    background: var(--user-message);
+    color: var(--user-text);
+}
+
+
+.message.ai .message-bubble {
+    background: var(--ai-message);
+    color: var(--ai-text);
+    border-color: var(--border);
+}
+
+
+.message-time {
+    color: var(--text-soft);
+}
+
+
+.typing-bubble {
+    background: var(--ai-message);
+    border-color: var(--border);
+}
+
+
+.typing-bubble span {
+    background: var(--gold);
+}
+
+
+.chat-input-wrapper {
+    background: var(--black-card);
+    border-color: var(--border);
+}
+
+
+.message-input {
+    color: var(--text);
+}
+
+
+.message-input::placeholder {
+    color: var(--text-soft);
+}
+
+
+.send-btn {
+    background: var(--gold);
+    color: var(--black);
+}
+
+
+.back-btn,
+.ai-menu-btn {
+    color: var(--gold);
+}
+
+
+.back-btn:hover,
+.ai-menu-btn:hover {
+    color: var(--gold-light);
+}
+
+
+/* =========================
+   WHITE / GREY EXTRA FIX
+========================= */
+
+body[data-theme="white-grey"] {
+    background: #eeeeee;
+}
+
+
+body[data-theme="white-grey"] .chat-input-area {
+    background: #eeeeee;
+}
+
+
+body[data-theme="white-grey"] .chat-input-wrapper {
+    background: #ffffff;
+}
+
+
+body[data-theme="white-grey"] .send-btn {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   SAVED THEME LOADER
+   Reads the same "hazelTheme" used by settings.js
+   ========================================================= */
+
+(function applySavedHazelTheme() {
+    const savedTheme = localStorage.getItem("hazelTheme");
+    const theme = savedTheme || "black-gold";
+
+    document.body.setAttribute("data-theme", theme);
+})();

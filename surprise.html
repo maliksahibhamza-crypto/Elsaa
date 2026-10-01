@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Surprise | HAZEL</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           HAZEL SURPRISE PAGE
+           ===================================================== */
+
+        :root {
+            --bg: #050505;
+            --surface: rgba(255, 255, 255, 0.035);
+            --surface-solid: #0b0b0b;
+
+            --border: rgba(212, 175, 55, 0.30);
+
+            --text: #f5f1e8;
+            --muted: rgba(245, 241, 232, 0.62);
+
+            --accent: #d4af37;
+            --accent-light: #f3df9b;
+
+            --shadow: rgba(212, 175, 55, 0.10);
+        }
+
+
+        /* =====================================================
+           PINK THEME
+           ===================================================== */
+
+        body[data-theme="pink"] {
+            --bg: #11080d;
+
+            --surface: rgba(255, 190, 205, 0.045);
+            --surface-solid: #170b11;
+
+            --border: rgba(232, 160, 181, 0.34);
+
+            --text: #fff3f6;
+            --muted: rgba(255, 230, 237, 0.64);
+
+            --accent: #e7a0b5;
+            --accent-light: #ffd5df;
+
+            --shadow: rgba(232, 160, 181, 0.12);
+        }
+
+
+        /* =====================================================
+           BLACK THEME
+           ===================================================== */
+
+        body[data-theme="black"] {
+            --bg: #050505;
+
+            --surface: rgba(255, 255, 255, 0.035);
+            --surface-solid: #0b0b0b;
+
+            --border: rgba(212, 175, 55, 0.30);
+
+            --text: #f5f1e8;
+            --muted: rgba(245, 241, 232, 0.62);
+
+            --accent: #d4af37;
+            --accent-light: #f3df9b;
+
+            --shadow: rgba(212, 175, 55, 0.10);
+        }
+
+
+        /* =====================================================
+           WHITE / GRAY THEME
+           ===================================================== */
+
+        body[data-theme="white"] {
+            --bg: #f2f2f2;
+
+            --surface: rgba(255, 255, 255, 0.88);
+            --surface-solid: #ffffff;
+
+            --border: rgba(50, 50, 50, 0.16);
+
+            --text: #222222;
+            --muted: rgba(34, 34, 34, 0.60);
+
+            --accent: #555555;
+            --accent-light: #222222;
+
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =====================================================
+           RESET
+           ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            min-height: 100%;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            background: var(--bg);
+            color: var(--text);
+
+            font-family: "Poppins", sans-serif;
+
+            overflow-x: hidden;
+
+            transition:
+                background 0.35s ease,
+                color 0.35s ease;
+
+            position: relative;
+        }
+
+
+        /* =====================================================
+           BACKGROUND
+           ===================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            width: 320px;
+            height: 320px;
+
+            top: 28%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            background: var(--accent);
+
+            opacity: 0.035;
+
+            filter: blur(110px);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .top-bar {
+            width: 100%;
+
+            height: 72px;
+
+            padding: 0 20px;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            text-decoration: none;
+
+            color: var(--accent);
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .back-button:hover {
+            transform: translateX(-2px);
+
+            background: rgba(212, 175, 55, 0.07);
+        }
+
+
+        .page-name {
+            margin-left: 13px;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 17px;
+
+            font-weight: 500;
+
+            color: var(--text);
+        }
+
+
+        /* =====================================================
+           MAIN
+           ===================================================== */
+
+        .page {
+            min-height: calc(100vh - 72px);
+
+            width: 100%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 30px 18px 50px;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        .container {
+            width: min(100%, 470px);
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           TOP ICON
+           ===================================================== */
+
+        .surprise-icon {
+            width: 82px;
+            height: 82px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 0 30px var(--shadow);
+
+            animation: floating 3.2s ease-in-out infinite;
+        }
+
+
+        .surprise-icon i {
+            font-size: 30px;
+
+            color: var(--accent);
+        }
+
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+
+        /* =====================================================
+           TITLE
+           ===================================================== */
+
+        .title {
+            font-family: "Playfair Display", serif;
+
+            font-size: 30px;
+
+            font-weight: 600;
+
+            color: var(--text);
+
+            margin-bottom: 7px;
+        }
+
+
+        .subtitle {
+            color: var(--muted);
+
+            font-size: 11.5px;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================================
+           MESSAGE CARD
+           ===================================================== */
+
+        .message-card {
+            width: 100%;
+
+            padding: 30px 25px;
+
+            border-radius: 22px;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 18px 45px var(--shadow);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            position: relative;
+
+            overflow: hidden;
+
+            animation: cardAppear 0.6s ease;
+        }
+
+
+        .message-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 90px;
+            height: 1px;
+
+            background: var(--accent);
+
+            opacity: 0.7;
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .card-symbol {
+            color: var(--accent);
+
+            font-size: 17px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .message {
+            font-family: "Playfair Display", serif;
+
+            font-size: 18px;
+
+            line-height: 1.75;
+
+            color: var(--text);
+
+            font-weight: 500;
+        }
+
+
+        /* =====================================================
+           DATE
+           ===================================================== */
+
+        .today-label {
+            margin-top: 18px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            letter-spacing: 0.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           TIMER AREA
+           ===================================================== */
+
+        .next-surprise {
+            margin-top: 22px;
+
+            padding: 17px 15px;
+
+            border-radius: 15px;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+        }
+
+
+        .next-title {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            letter-spacing: 0.6px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+
+        .timer {
+            color: var(--accent);
+
+            font-size: 17px;
+
+            font-weight: 500;
+
+            letter-spacing: 1px;
+
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        .timer-note {
+            margin-top: 5px;
+
+            color: var(--muted);
+
+            font-size: 8.5px;
+        }
+
+
+        /* =====================================================
+           LOADING
+           ===================================================== */
+
+        .loading {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            padding: 30px 10px;
+        }
+
+
+        .loading i {
+            color: var(--accent);
+
+            margin-right: 6px;
+        }
+
+
+        /* =====================================================
+           ERROR
+           ===================================================== */
+
+        .error {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+            padding: 10px;
+        }
+
+
+        .error i {
+            color: var(--accent);
+
+            display: block;
+
+            font-size: 20px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .top-bar {
+                height: 64px;
+
+                padding: 0 16px;
+            }
+
+
+            .page {
+                min-height: calc(100vh - 64px);
+
+                padding:
+                    25px 15px
+                    40px;
+            }
+
+
+            .surprise-icon {
+                width: 76px;
+                height: 76px;
+            }
+
+
+            .surprise-icon i {
+                font-size: 28px;
+            }
+
+
+            .title {
+                font-size: 27px;
+            }
+
+
+            .subtitle {
+                font-size: 10.5px;
+
+                margin-bottom: 21px;
+            }
+
+
+            .message-card {
+                padding: 27px 20px;
+            }
+
+
+            .message {
+                font-size: 17px;
+            }
+        }
+
+
+        @media (max-width: 380px) {
+
+            .title {
+                font-size: 25px;
+            }
+
+
+            .message {
+                font-size: 16px;
+            }
+
+
+            .message-card {
+                padding:
+                    25px 17px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="top-bar">
+
+        <a
+            href="accounts.html"
+            class="back-button"
+            aria-label="Back"
+        >
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+
+        <div class="page-name">
+            HAZEL
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="page">
+
+        <div class="container">
+
+
+            <!-- Surprise Icon -->
+
+            <div class="surprise-icon">
+
+                <i class="fa-solid fa-gift"></i>
+
+            </div>
+
+
+
+            <!-- Title -->
+
+            <h1 class="title">
+                A Little Surprise
+            </h1>
+
+
+            <p class="subtitle">
+                A new little message waits here every day.
+            </p>
+
+
+
+            <!-- =================================================
+                 MESSAGE CARD
+                 ================================================= -->
+
+            <section class="message-card">
+
+                <div
+                    id="messageArea"
+                    class="loading"
+                >
+
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+
+                    Loading today's surprise...
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 NEXT SURPRISE TIMER
+                 ================================================= -->
+
+            <div class="next-surprise">
+
+                <div class="next-title">
+                    Next Surprise
+                </div>
+
+
+                <div
+                    id="timer"
+                    class="timer"
+                >
+                    00:00:00
+                </div>
+
+
+                <div class="timer-note">
+                    New surprise every day at 12:00 AM
+                    Pakistan time
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <script>
+
+        /* =====================================================
+           THEME
+           Uses the SAME theme value from Settings
+           ===================================================== */
+
+        const savedTheme =
+            localStorage.getItem("theme") || "pink";
+
+
+        document.body.setAttribute(
+            "data-theme",
+            savedTheme
+        );
+
+
+
+        /* =====================================================
+           ELEMENTS
+           ===================================================== */
+
+        const messageArea =
+            document.getElementById("messageArea");
+
+
+        const timer =
+            document.getElementById("timer");
+
+
+
+        /* =====================================================
+           PAKISTAN TIME
+           
+           Pakistan Standard Time:
+           UTC + 05:00
+           
+           We calculate the current Pakistan date
+           without depending on the user's device timezone.
+           ===================================================== */
+
+        function getPakistanDateParts() {
+
+            const now = new Date();
+
+
+            const formatter =
+                new Intl.DateTimeFormat(
+                    "en-CA",
+                    {
+                        timeZone: "Asia/Karachi",
+
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit"
+                    }
+                );
+
+
+            const parts =
+                formatter.formatToParts(now);
+
+
+            const result = {};
+
+
+            parts.forEach(part => {
+
+                if (
+                    part.type === "year" ||
+                    part.type === "month" ||
+                    part.type === "day"
+                ) {
+
+                    result[part.type] =
+                        Number(part.value);
+                }
+
+            });
+
+
+            return result;
+        }
+
+
+
+        /* =====================================================
+           PAKISTAN DATE KEY
+           
+           Example:
+           2026-10-01
+           ===================================================== */
+
+        function getPakistanDateKey() {
+
+            const date =
+                getPakistanDateParts();
+
+
+            return (
+                date.year +
+                "-" +
+                String(date.month).padStart(2, "0") +
+                "-" +
+                String(date.day).padStart(2, "0")
+            );
+        }
+
+
+
+        /* =====================================================
+           CREATE A STABLE NUMBER FROM DATE
+           
+           Same date = same number.
+           Therefore refresh will NOT change the message.
+           ===================================================== */
+
+        function getDailyIndex(dateKey, totalMessages) {
+
+            let hash = 0;
+
+
+            for (
+                let i = 0;
+                i < dateKey.length;
+                i++
+            ) {
+
+                hash =
+                    (
+                        (hash << 5) -
+                        hash +
+                        dateKey.charCodeAt(i)
+                    ) | 0;
+            }
+
+
+            hash =
+                Math.abs(hash);
+
+
+            return hash % totalMessages;
+        }
+
+
+
+        /* =====================================================
+           LOAD MESSAGES
+           
+           surprise-content.html is ONLY the content source.
+           It is never opened/navigated to.
+           ===================================================== */
+
+        async function loadSurprise() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "surprise-content.html",
+                        {
+                            cache: "no-store"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load surprise content."
+                    );
+                }
+
+
+                const html =
+                    await response.text();
+
+
+                /*
+                   Temporary DOM parser.
+
+                   The content file should contain:
+
+                   <div class="surprise-message">
+                       Message 1
+                   </div>
+
+                   <div class="surprise-message">
+                       Message 2
+                   </div>
+                */
+
+                const parser =
+                    new DOMParser();
+
+
+                const documentFromFile =
+                    parser.parseFromString(
+                        html,
+                        "text/html"
+                    );
+
+
+                const messages =
+                    Array.from(
+                        documentFromFile.querySelectorAll(
+                            ".surprise-message"
+                        )
+                    )
+                    .map(element =>
+                        element.innerHTML.trim()
+                    )
+                    .filter(message =>
+                        message.length > 0
+                    );
+
+
+                if (messages.length === 0) {
+
+                    throw new Error(
+                        "No surprise messages found."
+                    );
+                }
+
+
+                /* Get today's Pakistan date */
+
+                const today =
+                    

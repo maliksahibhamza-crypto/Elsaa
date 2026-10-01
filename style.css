@@ -649,12 +649,19 @@ body {
 ========================= */
 
 .developer-id {
+    position: fixed;
+
+    left: 50%;
+    bottom: 78px;
+
+    transform: translateX(-50%);
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
 
-    margin: 18px auto 0;
+    margin: 0;
 
     color: #aaa4a4;
     font-family: "Poppins", sans-serif;
@@ -662,17 +669,29 @@ body {
     font-weight: 300;
 
     letter-spacing: 0.3px;
+    white-space: nowrap;
+
+    z-index: 999;
 }
+
+
+/* DEVELOPER LABEL */
 
 .developer-label {
     color: #777272;
 }
+
+
+/* DEVELOPER CODE */
 
 .developer-code {
     color: #d4af37;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.8px;
 }
+
+
+/* COPY BUTTON */
 
 .copy-developer {
     width: 24px;
@@ -698,19 +717,27 @@ body {
         border-color 0.25s ease;
 }
 
+
+/* COPY ICON */
+
 .copy-developer i {
     font-size: 10px;
 }
+
+
+/* HOVER */
 
 .copy-developer:hover {
     background: rgba(212, 175, 55, 0.12);
     border-color: rgba(212, 175, 55, 0.5);
 }
 
+
+/* CLICK */
+
 .copy-developer:active {
     transform: scale(0.9);
 }
-
 /* =========================
    HAZEL GAMES CIRCLE
 ========================= */

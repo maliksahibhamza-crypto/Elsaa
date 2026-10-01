@@ -709,3 +709,64 @@ body {
 .copy-developer:active {
     transform: scale(0.9);
 }
+
+/* =========================
+   HAZEL GAMES CIRCLE
+========================= */
+
+.game-circle {
+    width: 64px;
+    height: 64px;
+
+    margin: 22px auto 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 50%;
+
+    background: rgba(212, 175, 55, 0.03);
+
+    color: #d4af37;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 0 12px rgba(212, 175, 55, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.game-circle i {
+    font-size: 19px;
+}
+
+.game-circle span {
+    font-family: "Poppins", sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.game-circle:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.8);
+
+    box-shadow:
+        0 0 18px rgba(212, 175, 55, 0.12);
+
+    transform: scale(1.05);
+}
+
+.game-circle:active {
+    transform: scale(0.94);
+}

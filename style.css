@@ -770,3 +770,138 @@ body {
 .game-circle:active {
     transform: scale(0.94);
 }
+
+/* ================================
+   SPECIAL BUTTONS
+   Games • Surprise • Hazel AI • More
+================================ */
+
+.special-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 22px auto 0;
+}
+
+
+/* ================================
+   ALL SPECIAL CIRCLES
+================================ */
+
+.special-circle {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 50%;
+
+    background: rgba(212, 175, 55, 0.03);
+
+    color: #d4af37;
+    text-decoration: none;
+
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ICON */
+
+.special-circle i {
+    font-size: 19px;
+}
+
+
+/* LABEL */
+
+.special-circle span {
+    font-family: "Poppins", sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+
+/* HOVER */
+
+.special-circle:hover {
+    background: rgba(212, 175, 55, 0.08);
+
+    border-color: rgba(212, 175, 55, 0.8);
+
+    box-shadow:
+        0 0 18px rgba(212, 175, 55, 0.12);
+
+    transform: scale(1.05);
+}
+
+
+/* CLICK */
+
+.special-circle:active {
+    transform: scale(0.94);
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    .special-buttons {
+        gap: 12px;
+    }
+
+    .special-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .special-circle i {
+        font-size: 18px;
+    }
+
+    .special-circle span {
+        font-size: 7.5px;
+    }
+}
+
+
+/* SMALL PHONES */
+
+@media (max-width: 380px) {
+
+    .special-buttons {
+        gap: 8px;
+    }
+
+    .special-circle {
+        width: 56px;
+        height: 56px;
+    }
+
+    .special-circle i {
+        font-size: 17px;
+    }
+
+    .special-circle span {
+        font-size: 7px;
+    }
+}

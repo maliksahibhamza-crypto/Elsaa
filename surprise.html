@@ -964,5 +964,273 @@
 
                 /* Get today's Pakistan date */
 
-                const today =
+                                const today =
+                    getPakistanDateKey();
+
+
+                /* Pick ONE stable message for today */
+
+                const index =
+                    getDailyIndex(
+                        today,
+                        messages.length
+                    );
+
+
+                const selectedMessage =
+                    messages[index];
+
+
+                /* Display today's selected message */
+
+                messageArea.className =
+                    "message";
+
+
+                messageArea.innerHTML =
+                    selectedMessage;
+
+
+                /* Create today's date label */
+
+                const dateLabel =
+                    document.createElement("div");
+
+
+                dateLabel.className =
+                    "today-label";
+
+
+                dateLabel.textContent =
+                    "Today's surprise • " + today;
+
+
+                messageArea.parentElement.appendChild(
+                    dateLabel
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                messageArea.className =
+                    "error";
+
+
+                messageArea.innerHTML = `
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Today's surprise could not be loaded.
+                `;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           NEXT PAKISTAN MIDNIGHT
+           ===================================================== */
+
+        function getMillisecondsUntilPakistanMidnight() {
+
+            const now =
+                new Date();
+
+
+            const pakistanParts =
+                new Intl.DateTimeFormat(
+                    "en-US",
+                    {
+                        timeZone: "Asia/Karachi",
+
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+
+                        hour12: false
+                    }
+                )
+                .formatToParts(now);
+
+
+            const values = {};
+
+
+            pakistanParts.forEach(part => {
+
+                if (
+                    part.type !== "literal"
+                ) {
+
+                    values[part.type] =
+                        Number(part.value);
+
+                }
+
+            });
+
+
+            /* Current Pakistan time */
+
+            const currentPakistan =
+                Date.UTC(
+                    values.year,
+                    values.month - 1,
+                    values.day,
+                    values.hour,
+                    values.minute,
+                    values.second
+                );
+
+
+            /* Next 12:00 AM Pakistan time */
+
+            const nextMidnight =
+                Date.UTC(
+                    values.year,
+                    values.month - 1,
+                    values.day + 1,
+                    0,
+                    0,
+                    0
+                );
+
+
+            return (
+                nextMidnight -
+                currentPakistan
+            );
+
+        }
+
+
+
+        /* =====================================================
+           TIMER FORMAT
+           ===================================================== */
+
+        function formatTime(milliseconds) {
+
+            if (milliseconds < 0) {
+                milliseconds = 0;
+            }
+
+
+            const totalSeconds =
+                Math.floor(
+                    milliseconds / 1000
+                );
+
+
+            const hours =
+                Math.floor(
+                    totalSeconds / 3600
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (totalSeconds % 3600) / 60
+                );
+
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            return (
+                String(hours).padStart(2, "0") +
+                ":" +
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(seconds).padStart(2, "0")
+            );
+
+        }
+
+
+
+        /* =====================================================
+           UPDATE TIMER
+           ===================================================== */
+
+        function updateTimer() {
+
+            const remaining =
+                getMillisecondsUntilPakistanMidnight();
+
+
+            timer.textContent =
+                formatTime(remaining);
+
+
+            /*
+               At Pakistan midnight,
+               reload the page so the next
+               day's surprise appears.
+            */
+
+            if (remaining <= 1000) {
+
+                setTimeout(() => {
+
+                    window.location.reload();
+
+                }, 1200);
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           START
+           ===================================================== */
+
+        loadSurprise();
+
+        updateTimer();
+
+
+        /* Update every second */
+
+        setInterval(
+            updateTimer,
+            1000
+        );
+
+
+
+        /* =====================================================
+           WHEN PAGE BECOMES VISIBLE AGAIN
+           ===================================================== */
+
+        document.addEventListener(
+            "visibilitychange",
+            function () {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    updateTimer();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
                     

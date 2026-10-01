@@ -297,3 +297,47 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+/* =========================
+   COPY DEVELOPER ID
+========================= */
+
+const copyDeveloper =
+    document.getElementById("copyDeveloper");
+
+const developerCode =
+    document.getElementById("developerCode");
+
+
+if (copyDeveloper && developerCode) {
+
+    copyDeveloper.addEventListener("click", async function () {
+
+        try {
+
+            await navigator.clipboard.writeText(
+                developerCode.textContent.trim()
+            );
+
+            copyDeveloper.innerHTML =
+                '<i class="fa-solid fa-check"></i>';
+
+            setTimeout(function () {
+
+                copyDeveloper.innerHTML =
+                    '<i class="fa-regular fa-copy"></i>';
+
+            }, 1500);
+
+        } catch (error) {
+
+            console.error(
+                "Failed to copy developer ID:",
+                error
+            );
+
+        }
+
+    });
+
+}

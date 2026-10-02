@@ -244,15 +244,285 @@
             </article>
 
 
-            <!--
-                FUTURE GAMES CAN BE ADDED HERE.
+            <!-- =========================
+                 TIC-TAC-TOE
+            ========================== -->
 
-                Example:
+            <article class="game-card" id="ticTacToeCard">
 
-                <article class="game-card">
-                    ...
-                </article>
-            -->
+                <!-- GAME HEADER -->
+
+                <button
+                    type="button"
+                    class="game-header"
+                    id="ticTacToeToggle"
+                    aria-expanded="false"
+                    aria-controls="ticTacToeDetails"
+                >
+
+                    <div class="game-title-area">
+
+                        <div class="game-icon">
+                            <i class="fa-solid fa-table-cells"></i>
+                        </div>
+
+                        <div>
+                            <h3>Tic-Tac-Toe</h3>
+                            <span>Classic Strategy Game</span>
+                        </div>
+
+                    </div>
+
+                    <span class="game-arrow">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+
+                </button>
+
+
+                <!-- =========================
+                     EXPANDED GUIDE
+                ========================== -->
+
+                <div
+                    class="game-details"
+                    id="ticTacToeDetails"
+                    aria-hidden="true"
+                >
+
+                    <div class="guide-content">
+
+                        <div class="guide-heading">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Guide</span>
+                        </div>
+
+
+                        <p class="guide-intro">
+                            A classic two-player strategy game played
+                            on a <strong>3×3 grid.</strong>
+                        </p>
+
+
+                        <ul class="guide-list">
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Players take turns placing their
+                                    symbol on an empty space.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Complete three matching symbols in
+                                    a row, column, or diagonal to win.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    If all spaces are filled without a
+                                    winning combination, the round is a draw.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Online multiplayer using HAZEL ID
+                                    can be added in a future version.
+                                </span>
+                            </li>
+
+                        </ul>
+
+
+                        <!-- MULTIPLAYER GUIDANCE -->
+
+                        <div class="leaderboard-info">
+
+                            <div class="leaderboard-title">
+                                <i class="fa-solid fa-users"></i>
+                                <span>Multiplayer</span>
+                            </div>
+
+                            <p>
+                                Future versions can allow players to
+                                challenge each other online using their
+                                HAZEL ID.
+                            </p>
+
+                        </div>
+
+
+                        <!-- PLAY BUTTON -->
+
+                        <button
+                            type="button"
+                            class="play-button"
+                            id="ticTacToePlay"
+                        >
+                            <span>PLAY</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- =========================
+                 GUESS THE NUMBER
+            ========================== -->
+
+            <article class="game-card" id="guessNumberCard">
+
+                <!-- GAME HEADER -->
+
+                <button
+                    type="button"
+                    class="game-header"
+                    id="guessNumberToggle"
+                    aria-expanded="false"
+                    aria-controls="guessNumberDetails"
+                >
+
+                    <div class="game-title-area">
+
+                        <div class="game-icon">
+                            <i class="fa-solid fa-hashtag"></i>
+                        </div>
+
+                        <div>
+                            <h3>Guess the Number</h3>
+                            <span>Number Prediction Game</span>
+                        </div>
+
+                    </div>
+
+                    <span class="game-arrow">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+
+                </button>
+
+
+                <!-- =========================
+                     EXPANDED GUIDE
+                ========================== -->
+
+                <div
+                    class="game-details"
+                    id="guessNumberDetails"
+                    aria-hidden="true"
+                >
+
+                    <div class="guide-content">
+
+                        <div class="guide-heading">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Guide</span>
+                        </div>
+
+
+                        <p class="guide-intro">
+                            Try to find the hidden number chosen by
+                            the <strong>system.</strong>
+                        </p>
+
+
+                        <ul class="guide-list">
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    The system secretly chooses a number
+                                    from a defined range.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Enter your number as your guess.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    If your guess is lower than the hidden
+                                    number, the game says
+                                    <strong>Higher.</strong>
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    If your guess is higher than the hidden
+                                    number, the game says
+                                    <strong>Lower.</strong>
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Guess the exact number to win the round.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Online multiplayer can be added in a
+                                    future version using HAZEL ID.
+                                </span>
+                            </li>
+
+                        </ul>
+
+
+                        <!-- MULTIPLAYER GUIDANCE -->
+
+                        <div class="leaderboard-info">
+
+                            <div class="leaderboard-title">
+                                <i class="fa-solid fa-globe"></i>
+                                <span>Future Multiplayer</span>
+                            </div>
+
+                            <p>
+                                Players can challenge each other online
+                                through their HAZEL ID in a future version.
+                            </p>
+
+                        </div>
+
+
+                        <!-- PLAY BUTTON -->
+
+                        <button
+                            type="button"
+                            class="play-button"
+                            id="guessNumberPlay"
+                        >
+                            <span>PLAY</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
 
         </section>
 
@@ -293,4 +563,4 @@
     <script src="hazelgame.js"></script>
 
 </body>
-                                  </html>
+                            </html>

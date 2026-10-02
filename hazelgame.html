@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HAZEL Games</title>
+
+    <!-- Prevent content flash before authentication/theme check -->
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- Apply saved HAZEL theme before page appears -->
+    <script>
+        (() => {
+            const savedTheme = localStorage.getItem("hazelTheme");
+
+            const allowedThemes = [
+                "black-gold",
+                "pink",
+                "white-grey"
+            ];
+
+            const theme = allowedThemes.includes(savedTheme)
+                ? savedTheme
+                : "black-gold";
+
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+
+    <!-- HAZEL Games CSS -->
+    <link rel="stylesheet" href="hazelgame.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         MAIN GAMES PAGE
+    ========================== -->
+
+    <main class="games-page">
+
+        <!-- TOP BAR -->
+
+        <header class="games-header">
+
+            <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Go back to Home"
+            >
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="header-title">
+                <span class="header-kicker">HAZEL</span>
+                <h1>Games</h1>
+            </div>
+
+            <div class="header-space"></div>
+
+        </header>
+
+
+        <!-- =========================
+             GAMES INTRO
+        ========================== -->
+
+        <section class="games-intro">
+
+            <div class="games-icon">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <h2>HAZEL Games</h2>
+
+            <p>
+                Explore interactive experiences inside the HAZEL universe.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             GAMES LIST
+        ========================== -->
+
+        <section class="games-list" aria-label="Available games">
+
+            <!-- HAZEL TRADING -->
+
+            <article class="game-card" id="tradingCard">
+
+                <!-- GAME HEADER -->
+
+                <button
+                    type="button"
+                    class="game-header"
+                    id="tradingToggle"
+                    aria-expanded="false"
+                    aria-controls="tradingDetails"
+                >
+
+                    <div class="game-title-area">
+
+                        <div class="game-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <div>
+                            <h3>HAZEL Trading</h3>
+                            <span>Virtual Market Game</span>
+                        </div>
+
+                    </div>
+
+                    <span class="game-arrow">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+
+                </button>
+
+
+                <!-- =========================
+                     EXPANDED GUIDE
+                ========================== -->
+
+                <div
+                    class="game-details"
+                    id="tradingDetails"
+                    aria-hidden="true"
+                >
+
+                    <div class="guide-content">
+
+                        <div class="guide-heading">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Guide</span>
+                        </div>
+
+
+                        <p class="guide-intro">
+                            Start your trading journey with
+                            <strong>$1,000 virtual money.</strong>
+                        </p>
+
+
+                        <ul class="guide-list">
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Buy and sell assets at their current
+                                    market price.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Market prices continuously change over time.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Buy Price and Sell Price update with
+                                    the market.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Track your Portfolio Value and P/L
+                                    in real time.
+                                </span>
+                            </li>
+
+                            <li>
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    View individual asset price graphs.
+                                </span>
+                            </li>
+
+                        </ul>
+
+
+                        <!-- LEADERBOARD GUIDANCE -->
+
+                        <div class="leaderboard-info">
+
+                            <div class="leaderboard-title">
+                                <i class="fa-solid fa-trophy"></i>
+                                <span>Leaderboard</span>
+                            </div>
+
+                            <p>
+                                The Top 10 richest players are ranked by
+                                their total current wealth. Rankings update
+                                as players' wealth changes.
+                            </p>
+
+                        </div>
+
+
+                        <!-- PLAY BUTTON -->
+
+                        <button
+                            type="button"
+                            class="play-button"
+                            id="tradingPlay"
+                        >
+                            <span>PLAY</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!--
+                FUTURE GAMES CAN BE ADDED HERE.
+
+                Example:
+
+                <article class="game-card">
+                    ...
+                </article>
+            -->
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FIREBASE AUTH GUARD
+    ========================== -->
+
+    <script type="module">
+
+        import { auth } from "./firebase-config.js";
+
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                document.body.style.visibility = "visible";
+
+            } else {
+
+                window.location.replace("login.html");
+
+            }
+
+        });
+
+    </script>
+
+
+    <!-- HAZEL Games JavaScript -->
+    <script src="hazelgame.js"></script>
+
+</body>
+                                  </html>

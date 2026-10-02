@@ -1,140 +1,217 @@
-/* =========================
-   HAZEL GAMES
-   Main JavaScript
-========================= */
+
+"use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =========================
-       ELEMENTS
-    ========================== */
+/* =========================  
+   ELEMENTS  
+========================= */  
 
-    const backButton =
-        document.getElementById("backButton");
+const backButton = document.getElementById("backButton");  
 
-    const tradingCard =
-        document.getElementById("tradingCard");
+const games = [  
+    {  
+        card: document.getElementById("tradingCard"),  
+        toggle: document.getElementById("tradingToggle"),  
+        details: document.getElementById("tradingDetails"),  
+        play: document.getElementById("tradingPlay")  
+    },  
 
-    const tradingToggle =
-        document.getElementById("tradingToggle");
+    {  
+        card: document.getElementById("ticTacToeCard"),  
+        toggle: document.getElementById("ticTacToeToggle"),  
+        details: document.getElementById("ticTacToeDetails"),  
+        play: document.getElementById("ticTacToePlay")  
+    },  
 
-    const tradingDetails =
-        document.getElementById("tradingDetails");
-
-    const tradingPlay =
-        document.getElementById("tradingPlay");
-
-
-    /* =========================
-       HAZEL TRADING
-       EXPAND / COLLAPSE
-    ========================== */
-
-    tradingToggle.addEventListener("click", () => {
-
-        const isOpen =
-            tradingCard.classList.contains("open");
-
-
-        if (isOpen) {
-
-            /* Collapse only HAZEL Trading */
-
-            tradingCard.classList.remove("open");
-
-            tradingToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            tradingDetails.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-        } else {
-
-            /* Expand HAZEL Trading */
-
-            tradingCard.classList.add("open");
-
-            tradingToggle.setAttribute(
-                "aria-expanded",
-                "true"
-            );
-
-            tradingDetails.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-        }
-
-    });
+    {  
+        card: document.getElementById("guessNumberCard"),  
+        toggle: document.getElementById("guessNumberToggle"),  
+        details: document.getElementById("guessNumberDetails"),  
+        play: document.getElementById("guessNumberPlay")  
+    }  
+];  
 
 
-    /* =========================
-       PLAY BUTTON
-    ========================== */
+/* =========================  
+   THEME  
+========================= */  
 
-    tradingPlay.addEventListener("click", () => {
+function applySavedTheme() {  
 
-        /*
-            Actual HAZEL Trading page will be
-            connected here later.
+    const savedTheme = localStorage.getItem("hazelTheme");  
 
-            Example later:
+    const allowedThemes = [  
+        "black-gold",  
+        "pink",  
+        "white-grey"  
+    ];  
 
-            window.location.href = "trading.html";
-        */
+    const theme = allowedThemes.includes(savedTheme)  
+        ? savedTheme  
+        : "black-gold";  
 
-        console.log(
-            "HAZEL Trading will open here."
-        );
-
-    });
-
-
-    /* =========================
-       BACK TO HOME
-    ========================== */
-
-    backButton.addEventListener("click", () => {
-
-        window.location.href =
-            "accounts.html";
-
-    });
+    document.documentElement.setAttribute(  
+        "data-theme",  
+        theme  
+    );  
+}  
 
 
-    /* =========================
-       KEYBOARD ACCESSIBILITY
-    ========================== */
+/* =========================  
+   GAME CONTROLS  
+========================= */  
 
-    document.addEventListener("keydown", (event) => {
+function openGame(game) {  
 
-        if (event.key === "Escape") {
+    if (!game.card) return;  
 
-            if (
-                tradingCard.classList.contains("open")
-            ) {
+    game.card.classList.add("open");  
 
-                tradingCard.classList.remove("open");
+    if (game.toggle) {  
+        game.toggle.setAttribute(  
+            "aria-expanded",  
+            "true"  
+        );  
+    }  
 
-                tradingToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
+    if (game.details) {  
+        game.details.setAttribute(  
+            "aria-hidden",  
+            "false"  
+        );  
+    }  
+}  
 
-                tradingDetails.setAttribute(
-                    "aria-hidden",
-                    "true"
-                );
 
-            }
+function closeGame(game) {  
 
-        }
+    if (!game.card) return;  
 
-    });
+    game.card.classList.remove("open");  
+
+    if (game.toggle) {  
+        game.toggle.setAttribute(  
+            "aria-expanded",  
+            "false"  
+        );  
+    }  
+
+    if (game.details) {  
+        game.details.setAttribute(  
+            "aria-hidden",  
+            "true"  
+        );  
+    }  
+}  
+
+
+function toggleGame(game) {  
+
+    if (!game.card) return;  
+
+    const isOpen =  
+        game.card.classList.contains("open");  
+
+    if (isOpen) {  
+        closeGame(game);  
+    } else {  
+        openGame(game);  
+    }  
+}  
+
+
+/* =========================  
+   INITIALIZE GAMES  
+========================= */  
+
+function initializeGames() {  
+
+    games.forEach((game) => {  
+
+        if (!game.card || !game.toggle) {  
+            return;  
+        }  
+
+        game.toggle.addEventListener(  
+            "click",  
+            () => toggleGame(game)  
+        );  
+
+        if (game.play) {  
+
+            game.play.addEventListener(  
+                "click",  
+                () => {  
+
+                    console.log(  
+                        "Game is ready to be connected."  
+                    );  
+
+                }  
+            );  
+
+        }  
+
+        closeGame(game);  
+    });  
+}  
+
+
+/* =========================  
+   BACK BUTTON  
+========================= */  
+
+function initializeNavigation() {  
+
+    if (!backButton) return;  
+
+    backButton.addEventListener(  
+        "click",  
+        () => {  
+            window.location.href = "accounts.html";  
+        }  
+    );  
+}  
+
+
+/* =========================  
+   KEYBOARD SUPPORT  
+========================= */  
+
+function initializeKeyboardSupport() {  
+
+    document.addEventListener(  
+        "keydown",  
+        (event) => {  
+
+            if (event.key !== "Escape") {  
+                return;  
+            }  
+
+            games.forEach((game) => {  
+
+                if (  
+                    game.card &&  
+                    game.card.classList.contains("open")  
+                ) {  
+                    closeGame(game);  
+                }  
+
+            });  
+
+        }  
+    );  
+}  
+
+
+/* =========================  
+   INITIALIZATION  
+========================= */  
+
+applySavedTheme();  
+initializeGames();  
+initializeNavigation();  
+initializeKeyboardSupport();
 
 });

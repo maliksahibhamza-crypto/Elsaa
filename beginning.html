@@ -1,1 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Secure Access</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+
+            background:
+                radial-gradient(circle at 20% 20%, rgba(212,175,55,0.08), transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(212,175,55,0.06), transparent 30%),
+                #080808;
+
+            color: #ffffff;
+            font-family: "Poppins", sans-serif;
+            overflow: hidden;
+        }
+
+        /* =========================
+           BACKGROUND ANIMATION
+        ========================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            animation: floatOrb 10s ease-in-out infinite alternate;
+        }
+
+        .orb.one {
+            width: 260px;
+            height: 260px;
+            background: #d4af37;
+            top: -100px;
+            left: -80px;
+        }
+
+        .orb.two {
+            width: 220px;
+            height: 220px;
+            background: #b8860b;
+            right: -70px;
+            bottom: -80px;
+            animation-delay: -4s;
+        }
+
+        @keyframes floatOrb {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(30px, -25px) scale(1.12);
+            }
+        }
+
+        /* =========================
+           LOGIN CARD
+        ========================= */
+
+        .login-card {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            max-width: 430px;
+
+            padding: 42px 32px 34px;
+
+            background: rgba(17, 17, 17, 0.88);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            border-radius: 24px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.65),
+                inset 0 0 30px rgba(212, 175, 55, 0.025);
+
+            backdrop-filter: blur(18px);
+
+            animation: cardIn 0.9s cubic-bezier(.2,.8,.2,1) forwards;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .logo {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(212, 175, 55, 0.45);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(212,175,55,0.16),
+                    rgba(255,255,255,0.025)
+                );
+
+            box-shadow:
+                0 0 35px rgba(212,175,55,0.08),
+                inset 0 0 20px rgba(212,175,55,0.05);
+
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        .logo i {
+            font-size: 27px;
+            color: #d4af37;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.04);
+            }
+        }
+
+        .title {
+            text-align: center;
+            font-family: "Playfair Display", serif;
+            font-size: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            text-align: center;
+            color: #929292;
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        form {
+            margin-top: 32px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 17px;
+        }
+
+        .input-group > i {
+            position: absolute;
+            left: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            color: #777;
+            font-size: 14px;
+
+            transition: 0.3s ease;
+
+            pointer-events: none;
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 55px;
+
+            padding: 0 48px;
+
+            border: 1px solid #292929;
+            border-radius: 14px;
+
+            outline: none;
+
+            background: rgba(255,255,255,0.035);
+            color: #ffffff;
+
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+
+            transition:
+                border 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        .input-group input::placeholder {
+            color: #686868;
+        }
+
+        .input-group input:focus {
+            border-color: rgba(212,175,55,0.65);
+            background: rgba(212,175,55,0.035);
+
+            box-shadow:
+                0 0 0 3px rgba(212,175,55,0.06);
+
+            transform: translateY(-1px);
+        }
+
+        .input-group:focus-within > i {
+            color: #d4af37;
+        }
+
+        /* =========================
+           PASSWORD EYE
+        ========================= */
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+            color: #777;
+
+            cursor: pointer;
+
+            padding: 5px;
+
+            transition: 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #d4af37;
+        }
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .error-message {
+            display: none;
+
+            margin: -3px 0 16px;
+
+            padding: 11px 13px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 70, 70, 0.07);
+            border: 1px solid rgba(255, 70, 70, 0.18);
+
+            color: #ff8c8c;
+
+            font-size: 11px;
+            text-align: center;
+
+            animation: shake 0.35s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-button {
+            position: relative;
+
+            width: 100%;
+            height: 55px;
+
+            border: none;
+            border-radius: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #d4af37,
+                #b89020
+            );
+
+            color: #080808;
+
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.6px;
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .login-button::before {
+            content: "";
+
+            position: absolute;
+            top: 0;
+            left: -100%;
+
+            width: 60%;
+            height: 100%;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.35),
+                transparent
+            );
+
+            transform: skewX(-20deg);
+
+            transition: 0.7s ease;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(212,175,55,0.18);
+        }
+
+        .login-button:hover::before {
+            left: 140%;
+        }
+
+        .login-button:active {
+            transform: scale(0.98);
+        }
+
+        .button-content {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+        }
+
+        .spinner {
+            display: none;
+
+            width: 16px;
+            height: 16px;
+
+            border: 2px solid rgba(0,0,0,0.25);
+            border-top-color: #080808;
+
+            border-radius: 50%;
+
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #555;
+
+            font-size: 9px;
+            letter-spacing: 0.8px;
+        }
+
+        .footer span {
+            color: #8d762d;
+        }
+
+        /* =========================
+           SUCCESS OVERLAY
+        ========================= */
+
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #080808;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition: opacity 0.5s ease;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-content {
+            text-align: center;
+
+            transform: translateY(20px);
+            transition: 0.6s ease;
+        }
+
+        .success-overlay.show .success-content {
+            transform: translateY(0);
+        }
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(212,175,55,0.5);
+
+            color: #d4af37;
+
+            font-size: 27px;
+
+            animation: successPulse 1.2s ease infinite alternate;
+        }
+
+        @keyframes successPulse {
+            from {
+                box-shadow: 0 0 0 rgba(212,175,55,0);
+            }
+
+            to {
+                box-shadow: 0 0 35px rgba(212,175,55,0.15);
+            }
+        }
+
+        .success-content h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 27px;
+        }
+
+        .success-content p {
+            margin-top: 7px;
+
+            color: #777;
+            font-size: 11px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 16px;
+            }
+
+            .login-card {
+                padding: 35px 22px 29px;
+                border-radius: 21px;
+            }
+
+            .logo {
+                width: 66px;
+                height: 66px;
+            }
+
+            .title {
+                font-size: 27px;
+            }
+
+            .subtitle {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background">
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+    </div>
+
+    <!-- LOGIN CARD -->
+    <main class="login-card">
+
+        <div class="logo">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+
+        <h1 class="title">Secure Access</h1>
+
+        <p class="subtitle">
+            PRIVATE ACCESS • HAZEL
+        </p>
+
+        <form id="loginForm">
+
+            <!-- USERNAME -->
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <!-- EMAIL -->
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email address"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="input-group">
+                <i class="fa-solid fa-key"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    id="togglePassword"
+                    aria-label="Show password"
+                >
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+
+            <!-- ERROR -->
+            <div class="error-message" id="errorMessage">
+                Invalid username, email, or password.
+            </div>
+
+            <!-- LOGIN -->
+            <button type="submit" class="login-button" id="loginButton">
+
+                <span class="button-content">
+
+                    <span id="buttonText">
+                        Login
+                    </span>
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                        id="buttonArrow"
+                    ></i>
+
+                    <span
+                        class="spinner"
+                        id="spinner"
+                    ></span>
+
+                </span>
+
+            </button>
+
+        </form>
+
+        <div class="footer">
+            Protected Access • <span>HAZEL</span>
+        </div>
+
+    </main>
+
+    <!-- SUCCESS SCREEN -->
+    <div class="success-overlay" id="successOverlay">
+
+        <div class="success-content">
+
+            <div class="success-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <h2>Access Granted</h2>
+
+            <p>Welcome back. Opening your private space...</p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* =========================
+           LOGIN CREDENTIALS
+        ========================= */
+
+        const CORRECT_USERNAME = "imirhamza14";
+        const CORRECT_EMAIL = "imirhamza14@gmail.com";
+        const CORRECT_PASSWORD = "els@@ndh@mz@_(180625)?!";
+
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const loginForm = document.getElementById("loginForm");
+
+        const usernameInput =
+            document.getElementById("username");
+
+        const emailInput =
+            document.getElementById("email");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const buttonText =
+            document.getElementById("buttonText");
+
+        const buttonArrow =
+            document.getElementById("buttonArrow");
+
+        const spinner =
+            document.getElementById("spinner");
+
+        const successOverlay =
+            document.getElementById("successOverlay");
+
+
+        /* =========================
+           SHOW / HIDE PASSWORD
+        ========================= */
+
+        togglePassword.addEventListener("click", function () {
+
+            const isPassword =
+                passwordInput.type === "password";
+
+            passwordInput.type =
+                isPassword ? "text" : "password";
+
+            this.innerHTML = isPassword
+                ? '<i class="fa-solid fa-eye-slash"></i>'
+                : '<i class="fa-solid fa-eye"></i>';
+
+            this.setAttribute(
+                "aria-label",
+                isPassword
+                    ? "Hide password"
+                    : "Show password"
+            );
+        });
+
+
+        /* =========================
+           LOGIN
+        ========================= */
+
+        loginForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const username =
+                usernameInput.value.trim();
+
+            const email =
+                emailInput.value.trim();
+
+            const password =
+                passwordInput.value;
+
+
+            /* Hide old error */
+            errorMessage.classList.remove("show");
+
+
+            /* Check credentials */
+            if (
+                username === CORRECT_USERNAME &&
+                email === CORRECT_EMAIL &&
+                password === CORRECT_PASSWORD
+            ) {
+
+                /* Loading state */
+                loginButton.disabled = true;
+
+                buttonText.textContent = "Verifying";
+                buttonArrow.style.display = "none";
+                spinner.style.display = "inline-block";
+
+
+                /* Small professional delay */
+                setTimeout(function () {
+
+                    successOverlay.classList.add("show");
+
+                    /*
+                     * Redirect after success animation
+                     */
+                    setTimeout(function () {
+
+                        window.location.href =
+                            "beginning-start.html";
+
+                    }, 1200);
+
+                }, 700);
+
+
+            } else {
+
+                /* Wrong credentials */
+                errorMessage.classList.remove("show");
+
+                void errorMessage.offsetWidth;
+
+                errorMessage.classList.add("show");
+
+                passwordInput.value = "";
+
+                passwordInput.focus();
+            }
+
+        });
+
+    </script>
+
+</body>
+  </html>

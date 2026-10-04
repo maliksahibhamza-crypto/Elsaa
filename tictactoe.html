@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HAZEL Tic-Tac-Toe</title>
+
+
+    <!-- Prevent content flash -->
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- Theme -->
+    <script>
+
+        (() => {
+
+            const savedTheme =
+                localStorage.getItem("hazelTheme");
+
+            const allowedThemes = [
+                "black-gold",
+                "pink",
+                "white-grey"
+            ];
+
+            const theme =
+                allowedThemes.includes(savedTheme)
+                    ? savedTheme
+                    : "black-gold";
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                theme
+            );
+
+        })();
+
+    </script>
+
+
+    <!-- Tic-Tac-Toe CSS -->
+    <link
+        rel="stylesheet"
+        href="tictactoe.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         PAGE
+    ========================== -->
+
+    <main class="ttt-page">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="ttt-header">
+
+            <button
+                type="button"
+                class="back-button"
+                id="backButton"
+                aria-label="Back to Games"
+            >
+
+                <i class="fa-solid fa-chevron-left"></i>
+
+            </button>
+
+
+            <div class="header-title">
+
+                <span class="header-kicker">
+                    HAZEL
+                </span>
+
+                <h1>
+                    Tic-Tac-Toe
+                </h1>
+
+            </div>
+
+
+            <div class="header-space"></div>
+
+        </header>
+
+
+
+        <!-- =========================
+             PLAYER INFO
+        ========================== -->
+
+        <section class="player-info">
+
+            <div class="player-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+
+            <div class="player-details">
+
+                <span class="player-label">
+                    PLAYER
+                </span>
+
+                <strong id="playerName">
+                    Loading...
+                </strong>
+
+                <small id="hazelId">
+                    HAZEL ID: Loading...
+                </small>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             GAME STATUS
+        ========================== -->
+
+        <section class="game-status">
+
+            <span class="status-label">
+                CURRENT TURN
+            </span>
+
+            <div
+                class="turn-display"
+                id="turnDisplay"
+            >
+
+                <span id="turnSymbol">
+                    X
+                </span>
+
+                <span id="turnText">
+                    Player X's Turn
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SCOREBOARD
+        ========================== -->
+
+        <section class="scoreboard">
+
+
+            <div class="score-card">
+
+                <span class="score-symbol x-symbol">
+                    X
+                </span>
+
+                <span class="score-name">
+                    Player X
+                </span>
+
+                <strong id="scoreX">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="score-divider">
+                VS
+            </div>
+
+
+            <div class="score-card">
+
+                <span class="score-symbol o-symbol">
+                    O
+                </span>
+
+                <span class="score-name">
+                    Player O
+                </span>
+
+                <strong id="scoreO">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             BOARD
+        ========================== -->
+
+        <section
+            class="board-section"
+            aria-label="Tic-Tac-Toe board"
+        >
+
+            <div
+                class="game-board"
+                id="gameBoard"
+                role="grid"
+            >
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="0"
+                    aria-label="Cell 1"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="1"
+                    aria-label="Cell 2"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="2"
+                    aria-label="Cell 3"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="3"
+                    aria-label="Cell 4"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="4"
+                    aria-label="Cell 5"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="5"
+                    aria-label="Cell 6"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="6"
+                    aria-label="Cell 7"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="7"
+                    aria-label="Cell 8"
+                ></button>
+
+                <button
+                    type="button"
+                    class="cell"
+                    data-index="8"
+                    aria-label="Cell 9"
+                ></button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             RESULT
+        ========================== -->
+
+        <section
+            class="result-box"
+            id="resultBox"
+            aria-live="polite"
+        >
+
+            <div class="result-icon">
+                <i
+                    class="fa-solid fa-gamepad"
+                    id="resultIcon"
+                ></i>
+            </div>
+
+
+            <div>
+
+                <strong id="resultTitle">
+                    Game in Progress
+                </strong>
+
+                <p id="resultMessage">
+                    Player X starts the game.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CONTROLS
+        ========================== -->
+
+        <section class="controls">
+
+            <button
+                type="button"
+                class="control-button primary-button"
+                id="newGameButton"
+            >
+
+                <i class="fa-solid fa-rotate-right"></i>
+
+                <span>
+                    New Game
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="control-button secondary-button"
+                id="resetScoreButton"
+            >
+
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+
+                <span>
+                    Reset Score
+                </span>
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =========================
+             GAME INFO
+        ========================== -->
+
+        <section class="game-info">
+
+            <div class="info-title">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    How to Play
+                </span>
+
+            </div>
+
+
+            <p>
+
+                Take turns placing X and O on the
+                3×3 board. The first player to get
+                three matching symbols in a row,
+                column, or diagonal wins.
+
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FIREBASE AUTH
+    ========================== -->
+
+    <script type="module">
+
+        import { auth } from "./firebase-config.js";
+
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+
+        onAuthStateChanged(
+            auth,
+            (user) => {
+
+                if (user) {
+
+                    document.body.style.visibility =
+                        "visible";
+
+                } else {
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+    <!-- =========================
+         GAME JAVASCRIPT
+    ========================== -->
+
+    <script
+        type="module"
+        src="tictactoe.js"
+    ></script>
+
+
+</body>
+
+  </html>

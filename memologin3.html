@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Level 3 | Phishing Detector</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #050505;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+}
+
+.top {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.level {
+    color: #d4af37;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.message-card {
+    background: #101010;
+    border: 1px solid #292929;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.35);
+    transition: .3s;
+}
+
+.message-card:hover {
+    border-color: #5c4c16;
+}
+
+.message-number {
+    color: #d4af37;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+
+.message {
+    background: #181818;
+    border-radius: 12px;
+    padding: 16px;
+    color: #ddd;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.question {
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.options {
+    display: grid;
+    gap: 9px;
+}
+
+.option {
+    background: #151515;
+    border: 1px solid #303030;
+    color: #ccc;
+    padding: 12px 13px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .25s;
+    user-select: none;
+}
+
+.option:hover {
+    border-color: #8c7420;
+    color: #fff;
+}
+
+.option.selected {
+    border-color: #d4af37;
+    background: rgba(212,175,55,.09);
+    color: #fff;
+}
+
+.option input {
+    display: none;
+}
+
+.submit-area {
+    text-align: center;
+    margin-top: 28px;
+    padding-bottom: 20px;
+}
+
+#submitBtn {
+    width: 100%;
+    max-width: 320px;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #d4af37, #a98216);
+    color: #050505;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 8px 25px rgba(212,175,55,.15);
+}
+
+#submitBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(212,175,55,.25);
+}
+
+.note {
+    margin-top: 12px;
+    color: #777;
+    font-size: 11px;
+}
+
+/* SUCCESS / ERROR SCREEN */
+
+.result {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.result-box {
+    width: 100%;
+    max-width: 400px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 30px 22px;
+    text-align: center;
+    animation: pop .35s ease;
+}
+
+.result-icon {
+    font-size: 45px;
+    margin-bottom: 12px;
+}
+
+.result-box h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.result-box p {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@keyframes pop {
+    from {
+        transform: scale(.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 22px 12px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .message-card {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+        <div class="level">SECURITY GAME • LEVEL 3</div>
+
+        <h1>Phishing Detector</h1>
+
+        <p class="subtitle">
+            Read each message carefully and select every suspicious sign.
+            One wrong answer will end the challenge.
+        </p>
+    </div>
+
+
+    <!-- MESSAGE 1 -->
+
+    <div class="message-card">
+
+        <div class="message-number">MESSAGE 01</div>
+
+        <div class="message">
+            ⚠️ Your account will be locked within 24 hours.
+            Verify your account immediately by clicking the link below.
+        </div>
+
+        <div class="question">
+            Which signs are suspicious?
+        </div>
+
+        <div class="options">
+
+            <label class="option">
+                <input type="checkbox" value="urgent">
+                🚨 Urgent / threatening language
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="link">
+                🔗 Suspicious link
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="password">
+                🔐 Asking for a password
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="normal">
+                ✅ Normal greeting
+            </label>
+
+        </div>
+    </div>
+
+
+    <!-- MESSAGE 2 -->
+
+    <div class="message-card">
+
+        <div class="message-number">MESSAGE 02</div>
+
+        <div class="message">
+            🎉 Congratulations! You have won a $500 gift card.
+            Claim your prize now by entering your account details.
+        </div>
+
+        <div class="question">
+            Which signs are suspicious?
+        </div>
+
+        <div class="options">
+
+            <label class="option">
+                <input type="checkbox" value="prize">
+                🎁 Unexpected / unrealistic prize
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="details">
+                🔐 Asking for account details
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="link">
+                🔗 Suspicious claim link
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="normal">
+                ✅ Normal greeting
+            </label>
+
+        </div>
+    </div>
+
+
+    <!-- MESSAGE 3 -->
+
+    <div class="message-card">
+
+        <div class="message-number">MESSAGE 03</div>
+
+        <div class="message">
+            🔒 Security Alert: We detected unusual activity on your account.
+            Please confirm your password and verification code to secure your account.
+        </div>
+
+        <div class="question">
+            Which signs are suspicious?
+        </div>
+
+        <div class="options">
+
+            <label class="option">
+                <input type="checkbox" value="alert">
+                ⚠️ Unexpected security alert
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="password">
+                🔐 Asking for a password
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="code">
+                🔢 Asking for a verification code
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="normal">
+                ✅ Normal greeting
+            </label>
+
+        </div>
+    </div>
+
+
+    <!-- MESSAGE 4 -->
+
+    <div class="message-card">
+
+        <div class="message-number">MESSAGE 04</div>
+
+        <div class="message">
+            📦 Your package could not be delivered.
+            Please confirm your information through the link below
+            to reschedule delivery.
+        </div>
+
+        <div class="question">
+            Which signs are suspicious?
+        </div>
+
+        <div class="options">
+
+            <label class="option">
+                <input type="checkbox" value="unknown">
+                📦 Unexpected delivery claim
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="link">
+                🔗 Suspicious link
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="details">
+                📝 Asking for personal information
+            </label>
+
+            <label class="option">
+                <input type="checkbox" value="normal">
+                ✅ Normal greeting
+            </label>
+
+        </div>
+    </div>
+
+
+    <div class="submit-area">
+
+        <button id="submitBtn">
+            CHECK ANSWERS
+        </button>
+
+        <div class="note">
+            One wrong selection = challenge failed
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+
+    <div class="result-box">
+
+        <div class="result-icon" id="resultIcon">🔐</div>
+
+        <h2 id="resultTitle"></h2>
+
+        <p id="resultText"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const correctAnswers = [
+
+    ["urgent", "link"],
+
+    ["prize", "details", "link"],
+
+    ["alert", "password", "code"],
+
+    ["unknown", "link", "details"]
+
+];
+
+
+const optionLabels = document.querySelectorAll(".option");
+
+
+// Selection UI
+
+optionLabels.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        const checkbox = option.querySelector("input");
+
+        checkbox.checked = !checkbox.checked;
+
+        option.classList.toggle("selected", checkbox.checked);
+
+    });
+
+});
+
+
+const submitBtn = document.getElementById("submitBtn");
+
+const result = document.getElementById("result");
+
+const resultIcon = document.getElementById("resultIcon");
+
+const resultTitle = document.getElementById("resultTitle");
+
+const resultText = document.getElementById("resultText");
+
+
+submitBtn.addEventListener("click", () => {
+
+    const cards = document.querySelectorAll(".message-card");
+
+    let allCorrect = true;
+
+
+    cards.forEach((card, index) => {
+
+        const selected = [...card.querySelectorAll("input:checked")]
+            .map(input => input.value)
+            .sort();
+
+        const correct = [...correctAnswers[index]].sort();
+
+
+        if (
+            selected.length !== correct.length ||
+            selected.some((value, i) => value !== correct[i])
+        ) {
+            allCorrect = false;
+        }
+
+    });
+
+
+    if (allCorrect) {
+
+        result.style.display = "flex";
+
+        resultIcon.textContent = "🏆";
+
+        resultTitle.textContent = "Level 3 Complete!";
+
+        resultText.textContent =
+            "Excellent work. You identified all the phishing signs correctly.";
+
+        setTimeout(() => {
+            window.location.href = "memologin4.html";
+        }, 1800);
+
+    } else {
+
+        result.style.display = "flex";
+
+        resultIcon.textContent = "🚨";
+
+        resultTitle.textContent = "Challenge Failed";
+
+        resultText.textContent =
+            "One or more answers were incorrect. Returning to the account page...";
+
+        setTimeout(() => {
+            window.location.href = "accounts.html";
+        }, 1800);
+
+    }
+
+});
+
+</script>
+
+</body>
+          </html>

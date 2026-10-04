@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Beginning | HAZEL</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =========================
+           ROOT
+        ========================= */
+
+        :root {
+            --bg: #080808;
+            --card: #111111;
+            --card-hover: #151515;
+            --gold: #d4af37;
+            --gold-light: #e6c75a;
+            --text: #f2f2f2;
+            --muted: #aaa;
+            --border: rgba(212, 175, 55, 0.22);
+            --shadow: rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(212, 175, 55, 0.06),
+                    transparent 35%
+                ),
+                var(--bg);
+            color: var(--text);
+            font-family: "Poppins", sans-serif;
+            padding: 28px 16px 110px;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        /* =========================
+           MAIN HEADING
+        ========================= */
+
+        .page-title {
+            text-align: center;
+            font-family: "Playfair Display", serif;
+            font-size: 38px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+        }
+
+        .title-line {
+            width: 55px;
+            height: 1px;
+            background: var(--gold);
+            margin: -16px auto 30px;
+            opacity: 0.7;
+        }
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+            font-family: "Playfair Display", serif;
+            font-size: 27px;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin: 38px 0 15px;
+        }
+
+        /* =========================
+           ACCORDION
+        ========================= */
+
+        .accordion {
+            width: 100%;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: rgba(17, 17, 17, 0.92);
+            box-shadow: 0 8px 25px var(--shadow);
+            overflow: hidden;
+            transition: border-color 0.3s ease,
+                        background 0.3s ease;
+        }
+
+        .accordion.active {
+            border-color: rgba(212, 175, 55, 0.45);
+        }
+
+        /* =========================
+           ACCORDION HEADER
+        ========================= */
+
+        .accordion-header {
+            width: 100%;
+            min-height: 62px;
+            padding: 16px 17px 16px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            background: transparent;
+            border: none;
+            color: var(--text);
+
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .accordion-header:active {
+            background: rgba(212, 175, 55, 0.04);
+        }
+
+        .accordion-name {
+            line-height: 1.45;
+        }
+
+        /* =========================
+           ARROW
+        ========================= */
+
+        .arrow {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            border-radius: 50%;
+
+            color: var(--gold);
+            font-size: 14px;
+
+            transition:
+                transform 0.35s ease,
+                background 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .accordion.active .arrow {
+            transform: rotate(180deg);
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.55);
+        }
+
+        /* =========================
+           ACCORDION CONTENT
+        ========================= */
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .content-inner {
+            padding: 0 20px 22px;
+        }
+
+        .content-inner::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(212, 175, 55, 0.25),
+                transparent
+            );
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           STORY TEXT
+        ========================= */
+
+        .story-text {
+            color: #d4d4d4;
+            font-size: 13.5px;
+            font-weight: 300;
+            line-height: 1.9;
+            margin-bottom: 17px;
+        }
+
+        .story-text:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .story-date {
+            display: block;
+            margin-top: 20px;
+
+            color: var(--gold);
+            font-family: "Playfair Display", serif;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: right;
+            letter-spacing: 0.4px;
+        }
+
+        /* =========================
+           SPECIAL NAME
+        ========================= */
+
+        .special-name {
+            color: var(--gold-light);
+            font-family: "Playfair Display", serif;
+            font-size: 17px;
+            text-align: center;
+            margin: 18px 0;
+            word-break: break-word;
+        }
+
+        /* =========================
+           CALL TIMELINE
+        ========================= */
+
+        .timeline-title {
+            color: var(--gold-light);
+            font-family: "Playfair Display", serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 25px 0 15px;
+        }
+
+        .call-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .call-timeline li {
+            position: relative;
+            padding: 11px 12px;
+            margin-bottom: 8px;
+
+            border-left: 2px solid rgba(212, 175, 55, 0.55);
+            border-radius: 0 8px 8px 0;
+
+            background: rgba(212, 175, 55, 0.035);
+
+            color: #cfcfcf;
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           SMALL DATE BLOCK
+        ========================= */
+
+        .date-list {
+            margin-top: 20px;
+        }
+
+        .date-item {
+            color: #d2d2d2;
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 6px;
+        }
+
+        .date-label {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .bottom-line {
+            width: 100%;
+            height: 1px;
+            margin: 45px 0 18px;
+
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(212, 175, 55, 0.3),
+                transparent
+            );
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #666;
+            font-size: 10px;
+            letter-spacing: 0.8px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 23px 12px 100px;
+            }
+
+            .page-title {
+                font-size: 34px;
+                margin-bottom: 25px;
+            }
+
+            .section-title {
+                font-size: 25px;
+                margin-top: 32px;
+            }
+
+            .accordion-header {
+                min-height: 58px;
+                padding: 14px 14px 14px 17px;
+                font-size: 14px;
+            }
+
+            .content-inner {
+                padding: 0 16px 20px;
+            }
+
+            .story-text {
+                font-size: 13px;
+                line-height: 1.85;
+            }
+
+            .story-date {
+                font-size: 14px;
+            }
+
+            .arrow {
+                width: 28px;
+                height: 28px;
+                min-width: 28px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         PAGE TITLE
+    ========================== -->
+
+    <h1 class="page-title">Beginning</h1>
+    <div class="title-line"></div>
+
+
+    <!-- =========================
+         MY SIDE OF STORY
+    ========================== -->
+
+    <div class="accordion">
+
+        <button class="accordion-header" type="button">
+            <span class="accordion-name">My Side of Story</span>
+            <span class="arrow">⌄</span>
+        </button>
+
+        <div class="accordion-content">
+            <div class="content-inner">
+
+                <p class="story-text">
+                    I was never really interested in online relationships or friendships. At that time, I mostly stayed in a team with my adopted sister, and eventually, even she stopped coming online. So, I decided that maybe it was time to delete the game.
+                </p>
+
+                <p class="story-text">
+                    But then, by coincidence, I thought, “Why not visit a few teams before deleting it, just for fun?”
+                </p>
+
+                <p class="story-text">
+                    That small decision led me to a new team called Gangster Life. There were only around seven or eight members, and the leader was Abu Bakar. I talked to him for a while, and he seemed like a good person. We became friends, and eventually, he made me one of the team's deputies.
+                </p>
+
+                <p class="story-text">
+                    Slowly, the team started growing. I brought a boy into the team, and I even got him promoted to deputy as well. But after some time, for reasons I don't really remember anymore, I started disliking him and his friends. There may have been a specific reason, but honestly, I don't remember what it was.
+                </p>
+
+                <p class="story-text">
+                    There was also something he told me personally. He said, “Hamza, I'm engaged,” even though I had proposed to Aiza, who was my friend. I used to bring Aiza—the girl I considered like a sister—into the team with me. At first, none of that was really an issue. But later, that same boy proposed to her.
+                </p>
+
+                <p class="story-text">
+                    Eventually, things started falling apart. I had arguments with Aiza, with that boy, and even with the team leader. In the end, I was removed from the team.
+                </p>
+
+                <p class="story-text">
+                    Around that time, the leader had a friend named Ahmed, who used to provide hacked accounts with maximum levels. I became interested in having one too, but I wasn't the kind of person who would ask someone to do something for me. So instead, I bought a hacked account myself, changed its name, and eventually returned to Gangster Life.
+                </p>
+
+                <p class="story-text">
+                    And that was where Elsa was.
+                </p>
+
+                <p class="story-text">
+                    Her ID at the time was ANGEL_PARI.
+                </p>
+
+                <p class="story-text">
+                    I had seen her before. We had exchanged a few simple hi's and hello's, but I never really thought much about her. In fact, there was a funny misunderstanding: for some reason, I always thought she was from Multan. Every time I talked to her, I would ask, “You're from Multan, right?”
+                </p>
+
+                <p class="story-text">
+                    She wasn't.
+                </p>
+
+                <p class="story-text">
+                    She was actually from Karachi.
+                </p>
+
+                <p class="story-text">
+                    When I returned to the team with the new account, Elsa was there. My typing style was quite similar to that of one of her friends, and I was also calling her “Angle,” which was another thing that made her suspicious because that friend used to call her Angle too.
+                </p>
+
+                <p class="story-text">
+                    Because of these similarities, Elsa thought I wasn't Hamza. She believed I was actually that friend of hers. She even told me that I wasn't Hamza and that I was actually one of her friends.
+                </p>
+
+                <p class="story-text">
+                    That misunderstanding kept our conversation going, and somehow, that simple confusion became the beginning of our story.
+                </p>
+
+                <p class="story-text">
+                    And the date was 18 June 2025.
+                </p>
+
+                <p class="story-text">
+                    Later, when I looked back and discovered the exact timing, I found out that our conversation had started somewhere around 1:35–1:41 PM that afternoon.
+                </p>
+
+                <p class="story-text">
+                    I had no idea that such an ordinary conversation would become the beginning of something so important.
+                </p>
+
+                <p class="story-text">
+                    At the time, I was staying in Awara Gang, and Elsa would sometimes come there because there wasn't enough space for her in her own team. She would stay there with us for a while, and eventually, she even left one of her accounts in my team.
+                </p>
+
+                <p class="story-text">
+                    There is still much more to the beginning of this story—things that happened before and after these moments, little conversations, misunderstandings, friendships, arguments, and all the small events that eventually connected everything together.
+                </p>
+
+                <p class="story-text">
+                    But this was where it all began.
+                </p>
+
+                <p class="story-text">
+                    18 June 2025.
+                </p>
+
+                <p class="story-text">
+                    Not with a plan.
+                </p>
+
+                <p class="story-text">
+                    Not with the intention of finding someone.
+                </p>
+
+                <p class="story-text">
+                    Just a random decision to visit a few teams before deleting a game.
+                </p>
+
+                <span class="story-date">18 June 2025</span>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         OUR FIRSTS
+    ========================== -->
+
+    <h2 class="section-title">Our Firsts</h2>
+
+
+    <!-- =========================
+         1. OUR FIRST TEAM
+    ========================== -->
+
+    <div class="accordion">
+
+        <button class="accordion-header" type="button">
+            <span class="accordion-name">Our First Team</span>
+            <span class="arrow">⌄</span>
+        </button>
+
+        <div class="accordion-content">
+            <div class="content-inner">
+
+                <p class="story-text">
+                    I wanted to create a new team.
+                </p>
+
+                <p class="story-text">
+                    I first talked to Elsa in Gangster Life, then later we came to Awara Gang. There was quite a big gap in between, but the point is that I had also created a team called Friends Society, which I eventually ended. After that, I stayed in Awara Gang, but there was one problem: I no longer had leadership there. The leadership was on an ID that I can’t access anymore.
+                </p>
+
+                <p class="story-text">
+                    So, I thought about creating a new team, and I named it:
+                </p>
+
+                <div class="special-name">
+                    H͢e̶a̶Řt̺~S̶c̷a͢P͢e̺s̶♥️
+                </div>
+
+                <p class="story-text">
+                    And I created it with Elsa.
+                </p>
+
+                <p class="story-text">
+                    At that time, or maybe from that point onward, she became everything to me. Not because she supported me, stayed with me, or created a team with me, but because I felt something special with her. I had feelings for her.
+                </p>
+
+                <p class="story-text">
+                    I don’t know why, but I would feel jealous when she talked to another guy. And whenever I talked to her, I would start smiling — something I probably had never felt before.
+                    And there was much more than that.
+                </p>
+
+                <span class="story-date">17 July, 2025</span>
+
+            </div>
+        </div>
+
+  </div>
+
+  <!-- =========================
+     NAMES
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Names</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                But after I created a team with Elsa, something strangely different happened.
+            </p>
+
+            <p class="story-text">
+                I asked her to choose a name for me. I specifically told her not to give me options—I wanted her to choose one herself and tell me just one name.
+            </p>
+
+            <p class="story-text">
+                She suggested Lysander.
+            </p>
+
+            <p class="story-text">
+                So I changed my ID name to:
+            </p>
+
+            <div class="special-name">
+                ℒYSÄÑD£®×͜×
+            </div>
+
+            <p class="story-text">
+                And somehow, I never got bored of it.
+            </p>
+
+            <p class="story-text">
+                Months passed. Then almost a year. And the name was still there.
+            </p>
+
+            <p class="story-text">
+                It wasn't because I was afraid Elsa would feel bad if I changed it. I don't even know exactly why, but this time, something was different. For once, I didn't feel that usual urge to replace something and move on.
+            </p>
+
+            <p class="story-text">
+                Later, I changed it only because Elsa wanted me to.
+            </p>
+
+            <p class="story-text">
+                There was another little story behind that too.
+            </p>
+
+            <p class="story-text">
+                Once, someone else made a name for Elsa, and when I found out, I didn't really like the idea of her using a name made by another guy. She had never even asked me to suggest a name for her. Instead, she had gotten one made by someone else.
+            </p>
+
+            <p class="story-text">
+                So, even though I wasn't particularly good at making those fancy names, I sat there and tried to create one myself.
+            </p>
+
+            <p class="story-text">
+                I didn't want her to use a name another guy had made for her.
+            </p>
+
+            <p class="story-text">
+                Maybe it was jealousy. Maybe it was something else.
+            </p>
+
+            <p class="story-text">
+                But I made one anyway. 🫠
+            </p>
+
+            <div class="date-list">
+
+                <p class="date-item">
+                    <span class="date-label">ℒYSÄÑD£®×͜×</span> — 9 August 2025
+                </p>
+
+                <p class="date-item">
+                    <span class="date-label">ꋊᚚᚚͦᚚᚚͥᚚᚚͬᚚᚚͥᚚᚚͭᚚᚚͪ𓏲𑁘</span> — 4 May 2026
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     3. SNAPCHAT
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Snapchat</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                I gave her my ID and told her that it was my Snapchat ID. I also mentioned that this was the same handle I used across all my social media accounts, so if she wanted to add me, she could. And then, she added me on Snapchat.
+            </p>
+
+            <span class="story-date">29 August, 2025</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     4. SNAP STREAKS
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Snap Streaks</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                A few days after adding her on Snapchat, I asked her if we could start a Snapstreak, just as a little memory between us.
+            </p>
+
+            <p class="story-text">
+                And how funny it was that I told her, “If you ever break the streak, my heart will break too.”
+            </p>
+
+            <p class="story-text">
+                Well… after that, I honestly don’t even remember how many times the streak broke. 😂 But somehow, my heart never did, because we could always restore the streak.
+            </p>
+
+            <p class="story-text">
+                But now I’m wondering… how are we going to restore this one? 🥲
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     5. VOICE NOTES
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Voice Notes</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                The first time I heard her voice… honestly, I don’t think I could ever properly explain what it felt like. Maybe Elsa herself doesn’t realize how beautiful her voice sounded to me.
+            </p>
+
+            <p class="story-text">
+                And then, in that soft, loving way, she asked, “Aapka favourite fictional character?”
+            </p>
+
+            <p class="story-text">
+                Hayee… no words. 🫠
+            </p>
+
+            <p class="story-text">
+                After that, I replied with a little voice note, but it wasn’t actually my real voice—I was just making a funny voice. Then I asked her how she liked it, and she said it was “boht achi” and that I should make a little more. Haha.
+            </p>
+
+            <p class="story-text">
+                That’s when I sent another voice note in my actual voice and asked her, “Waqai apko achi lagi meri awaz?”
+            </p>
+
+            <p class="story-text">
+                But there’s actually an interesting story behind when those voice notes were exchanged.
+            </p>
+
+            <p class="story-text">
+                I used to remember the date as 28 October. Later, when I asked Elsa about it, she said she didn’t remember the exact date either, but she was sure it was in October.
+            </p>
+
+            <p class="story-text">
+                Then, much later, I found out that it actually wasn’t October at all.
+            </p>
+
+            <p class="story-text">
+                And strangely, something very similar had happened with another important date—the day we first started talking. It was actually 18 June, a date I didn’t remember, while Elsa did. Eventually, she forgot it too, and when she asked me if I remembered, I said no. So we decided to keep 17 June as our date instead.
+            </p>
+
+            <p class="story-text">
+                The exact same thing happened with these voice notes.
+            </p>
+
+            <p class="story-text">
+                I eventually found the actual date because I had the conversation saved from back then. And there it was—the exact same wording she had used when she asked me that question.
+            </p>
+
+            <p class="story-text">
+                Sometimes, old memories really do know how to find their way back to you. 🫠
+            </p>
+
+            <span class="story-date">21 September, 2025</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     6. THE FIRST TIME I SAW HER
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">The First Time I Saw Her</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                The first time I actually saw her was on Snapchat, through a picture she sent me.
+            </p>
+
+            <p class="story-text">
+                And honestly… I got a little scared at first. 😂 Not because she looked bad or anything—quite the opposite. It was just that she looked so unexpectedly tall in that picture! I think she probably placed the camera a little lower, or maybe the angle was just slightly from below. 😂
+            </p>
+
+            <p class="story-text">
+                She was wearing a maroon-ish red dress, and somehow that whole picture made her look like such a cutie. 👀🫀
+            </p>
+
+            <p class="story-text">
+                It was the first picture of her I ever saw, so obviously, it stayed in my memory.
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     7. INSTAGRAM
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Instagram</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                When she was about to delete the game, one of her friends asked her for her Instagram, and Elsa gave it to him without asking me first.
+            </p>
+
+            <p class="story-text">
+                She actually wanted to ask me, but I was busy at the time. I was at school, teaching, so I wasn’t around to answer.
+            </p>
+
+            <p class="story-text">
+                When I eventually found out, I got angry with her and ended up arguing with her about it. Looking back, I know I probably shouldn’t have done that, but I was—and honestly still am—very possessive when it comes to her. 🫠
+            </p>
+
+            <p class="story-text">
+                But strangely enough, that moment ended up creating something new.
+            </p>
+
+            <p class="story-text">
+                It gave me the chance to message her on Instagram, and from there, we started talking there too. Before that, Snapchat had been the place where we mostly talked.
+            </p>
+
+            <p class="story-text">
+                So, somehow, an argument I probably shouldn’t have had became the beginning of our Instagram chapter. 😂
+            </p>
+
+            <span class="story-date">27 November, 2025</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     8. WHATSAPP
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">WhatsApp</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                And then came WhatsApp. 😁
+            </p>
+
+            <p class="story-text">
+                One day, I asked her, “What’s your number?”
+            </p>
+
+            <p class="story-text">
+                Instead of simply telling me, she gave me four different numbers and said, “Tell me which one is mine.” 😂
+            </p>
+
+            <p class="story-text">
+                I picked one because it looked somewhat similar to my old number, so I told her that I thought it was that one.
+            </p>
+
+            <p class="story-text">
+                She said, “Check it. Message it.”
+            </p>
+
+            <p class="story-text">
+                So I did.
+            </p>
+
+            <p class="story-text">
+                And yep… it was actually Elsa’s number. 😂
+            </p>
+
+            <p class="story-text">
+                Just like that, we went from Snapchat to Instagram, and now WhatsApp had officially entered the story. 😁
+            </p>
+
+            <span class="story-date">8 March, 2026</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     9. GAMES
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Games</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                We played tournaments together, challenged each other, and kept joking about who would win and by how much.
+            </p>
+
+            <p class="story-text">
+                And honestly, it’s hilarious that I somehow kept forgetting about the tournaments and leaving them every single time. 🙂😂
+            </p>
+
+            <p class="story-text">
+                But whenever I actually completed them, I was the one who won most of the time. Elsa did win one too.
+            </p>
+
+            <p class="story-text">
+                Apart from Homescapes, we also played Ludo together for the first time online. We played four games in total. I won the first three, and Elsa finally got her win in the last one. 😭😂
+            </p>
+
+            <p class="story-text">
+                So technically… she did get her revenge. 😌
+            </p>
+
+            <p class="story-text">
+                And later, we played Carrom as well.
+            </p>
+
+            <span class="story-date">23 February, 2026</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     10. OUR FIRST CALL
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Our First Call</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                Just three days after our first Ludo game, we had our first proper call.
+            </p>
+
+            <p class="story-text">
+                It lasted almost two minutes—2 minutes and 7 seconds, to be exact. 😂
+            </p>
+
+            <p class="story-text">
+                Both of us felt nervous and a little shy. 🤧😂 It was Ramadan, and it was already nighttime, which somehow made the whole moment feel even more special.
+            </p>
+
+            <p class="story-text">
+                During the call, I asked her, “Aaj kya kya kiya?”
+            </p>
+
+            <p class="story-text">
+                She told me what she had done.
+            </p>
+
+            <p class="story-text">
+                Then I asked, “Aur Uske baad?”
+            </p>
+
+            <p class="story-text">
+                She would tell me something else.
+            </p>
+
+            <p class="story-text">
+                Then again, “uske baad?”
+            </p>
+
+            <p class="story-text">
+                And she would continue, telling me what she did after that, and then what she did after that. 🤭
+            </p>
+
+            <p class="story-text">
+                It was such a simple conversation, but somehow, I still remember it.
+            </p>
+
+            <p class="story-text">
+                And that was only the beginning. We ended up having many more calls after that, each one becoming another little memory of its own. 🫠
+            </p>
+
+            <h3 class="timeline-title">Our Call Timeline</h3>
+
+            <ul class="call-timeline">
+
+                <li>26 February 2026 — 2 minutes 7 seconds — 10:44 PM</li>
+                <li>11 March 2026 — 1 minute — 9:29 AM</li>
+                <li>11 March 2026 — 6 minutes — 9:50 AM</li>
+                <li>11 March 2026 — 51 seconds — 10:16 AM</li>
+                <li>16 March 2026 — 30–33 minutes — 2:58 AM</li>
+                <li>18 March 2026 — Duration unknown — Time unknown</li>
+                <li>4 May 2026 — 10 seconds — 6:38 PM</li>
+                <li>4 May 2026 — 4 minutes — 6:59 PM</li>
+                <li>17 May 2026 — 1 hour 4 minutes — 7:55 PM</li>
+                <li>1 July 2026 — 23 seconds — 8:16 PM</li>
+                <li>1 July 2026 — 31 seconds — 8:24 PM</li>
+                <li>9 July 2026 — 50 seconds — 11:56 PM</li>
+                <li>9 July 2026 — 1 minute — 11:58 PM</li>
+                <li>11 July 2026 — 5 minutes 54 seconds — 11:45 AM</li>
+                <li>11 July 2026 — 10 minutes 34 seconds — 11:53 AM</li>
+                <li>16 July 2026 — 4 minutes 25 seconds — 3:50 PM</li>
+                <li>16 July 2026 — 1 minute 37 seconds — 4:18 PM</li>
+
+            </ul>
+
+            <p class="story-text" style="margin-top: 20px;">
+                And even today, whenever I think about all these little memories, I can’t help but smile. 🫠
+            </p>
+
+            <span class="story-date">26 February, 2026</span>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     11. WATCH TOGETHER
+========================== -->
+
+<div class="accordion">
+
+    <button class="accordion-header" type="button">
+        <span class="accordion-name">Watch Together</span>
+        <span class="arrow">⌄</span>
+    </button>
+
+    <div class="accordion-content">
+        <div class="content-inner">
+
+            <p class="story-text">
+                There was a drama she used to watch with so much interest called Leader.
+            </p>
+
+            <p class="story-text">
+                So I told her that I’d watch it too—and surprisingly, I ended up liking it. After that, I suggested that we watch the remaining episodes together.
+            </p>
+
+            <p class="story-text">
+                I searched for an app where we could watch something together online and found Rave. We could join the same room and watch the drama or movies together, so that’s exactly what we did.
+            </p>
+
+            <p class="story-text">
+                We watched Leader together, and it became one of those little things we shared.
+            </p>
+
+            <p class="story-text">
+                Later, we also watched a few movies together. One of them was Rab Ne Bana Di Jodi, which we watched properly together.
+            </p>
+
+            <p class="story-text">
+                There was also another movie, My Fault, which we only watched for a few minutes before stopping.
+            </p>
+
+            <p class="story-text">
+                It’s funny how something as simple as watching a drama or movie together can become a memory that stays with you. 🫠
+            </p>
+
+            <div class="date-list">
+
+                <p class="date-item">
+                    <span class="date-label">Leader</span> — 4 May, 2026
+                </p>
+
+                <p class="date-item">
+                    <span class="date-label">Movies</span> — 3 July, 2026
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+
+<div class="bottom-line"></div>
+
+<p class="footer-text">
+    A story written by memories.
+</p>
+
+</div>
+
+
+<script>
+
+    /* =========================
+       INDEPENDENT ACCORDIONS
+    ========================= */
+
+    const accordions = document.querySelectorAll(".accordion");
+
+    accordions.forEach((accordion) => {
+
+        const header = accordion.querySelector(".accordion-header");
+        const content = accordion.querySelector(".accordion-content");
+
+        header.addEventListener("click", () => {
+
+            const isOpen = accordion.classList.contains("active");
+
+            if (isOpen) {
+
+                accordion.classList.remove("active");
+                content.style.maxHeight = null;
+
+            } else {
+
+                accordion.classList.add("active");
+                content.style.maxHeight = content.scrollHeight + "px";
+
+            }
+
+        });
+
+    });
+
+    /* =========================
+       UPDATE OPEN CONTENT HEIGHT
+       WHEN SCREEN CHANGES
+    ========================= */
+
+    window.addEventListener("resize", () => {
+
+        document
+            .querySelectorAll(".accordion.active .accordion-content")
+            .forEach((content) => {
+
+                content.style.maxHeight = content.scrollHeight + "px";
+
+            });
+
+    });
+
+</script>
+
+</body>
+</html>

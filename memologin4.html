@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Level 4 | Security Analyst</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, rgba(212,175,55,.08), transparent 35%),
+        #050505;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    padding: 25px 14px 50px;
+}
+
+.container {
+    width: 100%;
+    max-width: 720px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.level {
+    color: #d4af37;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.stage {
+    background: rgba(15,15,15,.95);
+    border: 1px solid #292929;
+    border-radius: 18px;
+    padding: 21px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.3);
+}
+
+.stage-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.stage-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(212,175,55,.12);
+    border: 1px solid #8d7422;
+    color: #d4af37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.stage-title h2 {
+    font-size: 16px;
+}
+
+.description {
+    color: #999;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+/* STAGE 1 */
+
+.login-table {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #292929;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 580px;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    font-size: 10px;
+    border-bottom: 1px solid #242424;
+}
+
+th {
+    color: #d4af37;
+    background: #151515;
+}
+
+td {
+    color: #bbb;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.select-row {
+    cursor: pointer;
+    transition: .2s;
+}
+
+.select-row:hover {
+    background: rgba(212,175,55,.06);
+}
+
+.select-row.selected {
+    background: rgba(212,175,55,.12);
+    outline: 1px solid #8d7422;
+}
+
+.select-row input {
+    display: none;
+}
+
+/* OPTIONS */
+
+.options {
+    display: grid;
+    gap: 9px;
+}
+
+.option {
+    border: 1px solid #303030;
+    background: #141414;
+    border-radius: 10px;
+    padding: 12px;
+    color: #ccc;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.option:hover {
+    border-color: #80691d;
+}
+
+.option.selected {
+    border-color: #d4af37;
+    background: rgba(212,175,55,.1);
+    color: #fff;
+}
+
+/* INPUT */
+
+.answer-input {
+    width: 100%;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 10px;
+    padding: 13px;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    transition: .25s;
+}
+
+.answer-input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212,175,55,.07);
+}
+
+/* STAGE 4 */
+
+.sequence {
+    text-align: center;
+    padding: 18px 10px;
+    background: #111;
+    border-radius: 12px;
+    border: 1px solid #282828;
+    color: #d4af37;
+    font-size: 17px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+/* STAGE 5 */
+
+.logs {
+    background: #0c0c0c;
+    border: 1px solid #292929;
+    border-radius: 11px;
+    padding: 15px;
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 2;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.logs span {
+    color: #d4af37;
+}
+
+/* SUBMIT */
+
+.submit-area {
+    text-align: center;
+    margin-top: 28px;
+}
+
+#checkBtn {
+    width: 100%;
+    max-width: 330px;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #d4af37, #a37f16);
+    color: #050505;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+#checkBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(212,175,55,.2);
+}
+
+.note {
+    margin-top: 10px;
+    color: #666;
+    font-size: 10px;
+}
+
+/* FINAL CODE */
+
+#finalCodeSection {
+    display: none;
+    animation: fadeUp .5s ease;
+}
+
+.final-box {
+    background: linear-gradient(145deg, #111, #080808);
+    border: 1px solid #d4af37;
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 0 45px rgba(212,175,55,.08);
+}
+
+.final-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.final-box h2 {
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+.final-box p {
+    color: #999;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.code-input {
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+#codeBtn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d4af37;
+    border-radius: 10px;
+    background: transparent;
+    color: #d4af37;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+#codeBtn:hover {
+    background: rgba(212,175,55,.1);
+}
+
+/* RESULT */
+
+.result {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.94);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.result-box {
+    width: 100%;
+    max-width: 390px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 30px 22px;
+    text-align: center;
+    animation: pop .35s ease;
+}
+
+.result-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.result-box h2 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.result-box p {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: scale(.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .stage {
+        padding: 17px;
+    }
+
+    .sequence {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="level">
+            HAZEL SECURITY • LEVEL 4
+        </div>
+
+        <h1>Security Analyst</h1>
+
+        <p class="subtitle">
+            Five layers. One mistake ends the challenge.
+            Analyze everything carefully.
+        </p>
+
+    </div>
+
+
+    <!-- STAGE 1 -->
+
+    <div class="stage">
+
+        <div class="stage-title">
+
+            <div class="stage-number">01</div>
+
+            <h2>Intruder Detection</h2>
+
+        </div>
+
+        <p class="description">
+            Four login attempts were recorded.
+            Select the ONE attempt that is clearly the most suspicious.
+        </p>
+
+        <div class="login-table">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>TIME</th>
+                        <th>IP</th>
+                        <th>DEVICE</th>
+                        <th>LOCATION</th>
+                        <th>RESULT</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <label>
+                    <tr class="select-row" data-answer="false">
+                        <td>09:14</td>
+                        <td>192.168.1.12</td>
+                        <td>Android</td>
+                        <td>Karachi</td>
+                        <td>Failed</td>
+                        <input type="radio" name="stage1" value="false">
+                    </tr>
+                    </label>
+
+                    <tr class="select-row" data-answer="false">
+                        <td>09:18</td>
+                        <td>192.168.1.12</td>
+                        <td>Android</td>
+                        <td>Karachi</td>
+                        <td>Success</td>
+                    </tr>
+
+                    <tr class="select-row" data-answer="true">
+                        <td>09:19</td>
+                        <td>45.91.XX.17</td>
+                        <td>Windows</td>
+                        <td>Unknown</td>
+                        <td>Success</td>
+                    </tr>
+
+                    <tr class="select-row" data-answer="false">
+                        <td>09:25</td>
+                        <td>192.168.1.12</td>
+                        <td>Android</td>
+                        <td>Karachi</td>
+                        <td>Success</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- STAGE 2 -->
+
+    <div class="stage">
+
+        <div class="stage-title">
+
+            <div class="stage-number">02</div>
+
+            <h2>Access Pattern</h2>
+
+        </div>
+
+        <p class="description">
+            Find the missing number in the sequence.
+        </p>
+
+        <div class="sequence">
+            3 → 7 → 15 → 31 → 63 → ?
+        </div>
+
+        <input
+            type="number"
+            id="stage2"
+            class="answer-input"
+            placeholder="Enter the missing number"
+        >
+
+    </div>
+
+
+    <!-- STAGE 3 -->
+
+    <div class="stage">
+
+        <div class="stage-title">
+
+            <div class="stage-number">03</div>
+
+            <h2>Security Decision</h2>
+
+        </div>
+
+        <p class="description">
+            A system reports these events. Which event should
+            be investigated FIRST?
+        </p>
+
+        <div class="logs">
+
+            <div><span>02:14</span> — Login failed</div>
+            <div><span>02:15</span> — Login failed</div>
+            <div><span>02:16</span> — Password reset requested</div>
+            <div><span>02:17</span> — New device detected</div>
+            <div><span>02:18</span> — Login successful</div>
+            <div><span>02:19</span> — Security settings changed</div>
+
+        </div>
+
+        <div class="options">
+
+            <div class="option" data-value="loginfailed">
+                A — The first failed login
+            </div>
+
+            <div class="option" data-value="reset">
+                B — The password reset request
+            </div>
+
+            <div class="option" data-value="newdevice">
+                C — The new device detection
+            </div>
+
+            <div class="option" data-value="settings">
+                D — Security settings changed
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STAGE 4 -->
+
+    <div class="stage">
+
+        <div class="stage-title">
+
+            <div class="stage-number">04</div>
+
+            <h2>Logic Layer</h2>
+
+        </div>
+
+        <p class="description">
+            Each number follows the same rule.
+            Find the missing value.
+        </p>
+
+        <div class="sequence">
+            2 × 3 = 8<br>
+            3 × 4 = 15<br>
+            4 × 5 = 24<br>
+            5 × 6 = ?
+        </div>
+
+        <input
+            type="number"
+            id="stage4"
+            class="answer-input"
+            placeholder="Enter the missing value"
+        >
+
+    </div>
+
+
+    <!-- STAGE 5 -->
+
+    <div class="stage">
+
+        <div class="stage-title">
+
+            <div class="stage-number">05</div>
+
+            <h2>Final Trap</h2>
+
+        </div>
+
+        <p class="description">
+            Only one statement is logically correct.
+            Choose carefully.
+        </p>
+
+        <div class="options">
+
+            <div class="option" data-value="A">
+                A — Every secure login requires a new password.
+            </div>
+
+            <div class="option" data-value="B">
+                B — A successful login always means the user is trusted.
+            </div>
+
+            <div class="option" data-value="C">
+                C — An unfamiliar device can require additional verification.
+            </div>
+
+            <div class="option" data-value="D">
+                D — Security alerts should always be ignored.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHECK -->
+
+    <div class="submit-area" id="checkArea">
+
+        <button id="checkBtn">
+            VERIFY ALL STAGES
+        </button>
+
+        <div class="note">
+            One incorrect answer will terminate the challenge.
+        </div>
+
+    </div>
+
+
+    <!-- FINAL CODE -->
+
+    <div id="finalCodeSection">
+
+        <div class="final-box">
+
+            <div class="final-icon">🔐</div>
+
+            <h2>Final Security Layer</h2>
+
+            <p>
+                All five security layers have been solved.
+                Enter the final access code to unlock the next memory.
+            </p>
+
+            <input
+                type="text"
+                id="finalCode"
+                class="answer-input code-input"
+                placeholder="ENTER ACCESS CODE"
+                autocomplete="off"
+                spellcheck="false"
+            >
+
+            <button id="codeBtn">
+                UNLOCK
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+
+    <div class="result-box">
+
+        <div class="result-icon" id="resultIcon"></div>
+
+        <h2 id="resultTitle"></h2>
+
+        <p id="resultText"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   STAGE 1
+========================= */
+
+let stage1Answer = null;
+
+const rows = document.querySelectorAll(".select-row");
+
+rows.forEach(row => {
+
+    row.addEventListener("click", () => {
+
+        rows.forEach(r => r.classList.remove("selected"));
+
+        row.classList.add("selected");
+
+        stage1Answer = row.dataset.answer === "true";
+
+    });
+
+});
+
+
+/* =========================
+   STAGE 3 & 5 OPTIONS
+========================= */
+
+const optionGroups = document.querySelectorAll(".options");
+
+optionGroups.forEach(group => {
+
+    const options = group.querySelectorAll(".option");
+
+    options.forEach(option => {
+
+        option.addEventListener("click", () => {
+
+            options.forEach(item =>
+                item.classList.remove("selected")
+            );
+
+            option.classList.add("selected");
+
+        });
+
+    });
+
+});
+
+
+/* =========================
+   RESULT FUNCTION
+========================= */
+
+function showResult(success, title, text) {
+
+    const result = document.getElementById("result");
+
+    document.getElementById("resultIcon").textContent =
+        success ? "🏆" : "🚨";
+
+    document.getElementById("resultTitle").textContent =
+        title;
+
+    document.getElementById("resultText").textContent =
+        text;
+
+    result.style.display = "flex";
+
+}
+
+
+/* =========================
+   VERIFY STAGES
+========================= */
+
+document.getElementById("checkBtn").addEventListener("click", () => {
+
+    const stage2 =
+        document.getElementById("stage2").value.trim();
+
+    const stage3Option =
+        document.querySelector(
+            '.stage:nth-of-type(4) .option.selected'
+        );
+
+    const stage4 =
+        document.getElementById("stage4").value.trim();
+
+    const stage5Option =
+        document.querySelector(
+            '.stage:nth-of-type(6) .option.selected'
+        );
+
+
+    /*
+       Correct answers:
+
+       Stage 1 = true
+       Stage 2 = 127
+       Stage 3 = C
+       Stage 4 = 35
+       Stage 5 = C
+    */
+
+
+    const stage2Correct = stage2 === "127";
+
+    const stage3Correct =
+        stage3Option &&
+        stage3Option.dataset.value === "newdevice";
+
+    const stage4Correct =
+        stage4 === "35";
+
+    const stage5Correct =
+        stage5Option &&
+        stage5Option.dataset.value === "C";
+
+
+    if (
+        stage1Answer === true &&
+        stage2Correct &&
+        stage3Correct &&
+        stage4Correct &&
+        stage5Correct
+    ) {
+
+        document.getElementById("checkArea").style.display = "none";
+
+        document.querySelectorAll(".stage").forEach(stage => {
+            stage.style.display = "none";
+        });
+
+        document.getElementById("finalCodeSection").style.display = "block";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    } else {
+
+        showResult(
+            false,
+            "Challenge Failed",
+            "At least one answer was incorrect. Returning to the account page..."
+        );
+
+        setTimeout(() => {
+            window.location.href = "accounts.html";
+        }, 1800);
+
+    }
+
+});
+
+
+/* =========================
+   FINAL SECURITY CODE
+========================= */
+
+document.getElementById("codeBtn").addEventListener("click", () => {
+
+    const code =
+        document.getElementById("finalCode").value.trim().toLowerCase();
+
+
+    if (code === "hazel18") {
+
+        showResult(
+            true,
+            "Access Granted",
+            "Security verification complete. Opening the next memory..."
+        );
+
+        setTimeout(() => {
+            window.location.href = "memories-start.html";
+        }, 1800);
+
+    } else {
+
+        showResult(
+            false,
+            "Access Denied",
+            "Incorrect security code. Returning to the account page..."
+        );
+
+        setTimeout(() => {
+            window.location.href = "accounts.html";
+        }, 1800);
+
+    }
+
+});
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+document.getElementById("finalCode").addEventListener("keydown", event => {
+
+    if (event.key === "Enter") {
+        document.getElementById("codeBtn").click();
+    }
+
+});
+
+</script>
+
+</body>
+</html>

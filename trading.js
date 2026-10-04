@@ -1012,3 +1012,624 @@ function renderPortfolio() {
         }
     );
   }
+
+// =========================================
+// TRADE MODAL
+// =========================================
+
+function openTradeModal(
+    assetId,
+    action
+) {
+
+    selectedAsset =
+        ASSETS.find(
+            asset =>
+                asset.id === assetId
+        );
+
+
+    if (!selectedAsset) return;
+
+
+    selectedAction = action;
+
+
+    modalIcon.innerHTML =
+        `<i class="fa-solid ${selectedAsset.icon}"></i>`;
+
+
+    modalCategory.textContent =
+        selectedAsset.category;
+
+
+    modalAssetName.textContent =
+        selectedAsset.name;
+
+
+    tradeQuantity.value = 1;
+
+    tradeNote.textContent = "";
+
+
+    confirmTrade.textContent =
+        action === "buy"
+            ? "BUY"
+            : "SELL";
+
+
+    confirmTrade.style.background =
+        action === "buy"
+            ? "#2388ff"
+            : "#ff5c6c";
+
+
+    updateTradeModal();
+
+
+    tradeModal.classList.add("show");
+
+    tradeModal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+}
+
+
+function closeTradeModal() {
+
+    tradeModal.classList.remove("show");
+
+    tradeModal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    selectedAsset = null;
+}
+
+
+function updateTradeModal() {
+
+    if (!selectedAsset) return;
+
+
+    const price =
+        prices[selectedAsset.id];
+
+
+    const quantity =
+        Math.max(
+            1,
+            Number(
+                tradeQuantity.value || 1
+            )
+        );
+
+
+    const total =
+        price * quantity;
+
+
+    modalPrice.textContent =
+        money(price);
+
+
+    tradeTotal.textContent =
+        money(total);
+
+
+    if (selectedAction === "buy") {
+
+        if (total > cash) {
+
+            tradeNote.textContent =
+                "Insufficient virtual cash.";
+
+        } else {
+
+            tradeNote.textContent =
+                "";
+
+        }
+
+    } else {
+
+        const owned =
+            Number(
+                holdings[selectedAsset.id]
+                    ?.quantity || 0
+            );
+
+
+        if (quantity > owned) {
+
+            tradeNote.textContent =
+                `You only own ${owned} unit${
+                    owned === 1 ? "" : "s"
+                }.`;
+
+        } else {
+
+            tradeNote.textContent =
+                "";
+
+        }
+
+    }
+
+}
+
+
+// =========================================
+// QUANTITY
+// =========================================
+
+minusQuantity.addEventListener(
+    "click",
+    () => {
+
+        const value =
+            Math.max(
+                1,
+                Number(tradeQuantity.value || 1) - 1
+            );
+
+        tradeQuantity.value = value;
+
+        updateTradeModal();
+
+    }
+);
+
+
+plusQuantity.addEventListener(
+    "click",
+    () => {
+
+        const value =
+            Math.max(
+                1,
+                Number(tradeQuantity.value || 1) + 1
+            );
+
+        tradeQuantity.value = value;
+
+        updateTradeModal();
+
+    }
+);
+
+
+tradeQuantity.addEventListener(
+    "input",
+    updateTradeModal
+);
+
+
+// =========================================
+// EXECUTE TRADE
+// =========================================
+
+confirmTrade.addEventListener(
+    "click",
+    async () => {
+
+        if (!selectedAsset) return;
+
+
+        const quantity =
+            Math.floor(
+                Number(
+                    tradeQuantity.value || 0
+                )
+            );
+
+
+        if (!Number.isFinite(quantity) ||
+            quantity < 1) {
+
+            tradeNote.textContent =
+                "Enter a valid quantity.";
+
+            return;
+        }
+
+
+        const price =
+            prices[selectedAsset.id];
+
+
+        const total =
+            price * quantity;
+
+
+        if (selectedAction === "buy") {
+
+            if (total > cash) {
+
+                tradeNote.textContent =
+                    "Insufficient virtual cash.";
+
+                return;
+            }
+
+
+            const existing =
+                holdings[selectedAsset.id] ||
+                {
+                    quantity: 0,
+                    averageCost: 0
+                };
+
+
+            const oldQuantity =
+                Number(existing.quantity);
+
+
+            const oldCost =
+                Number(existing.averageCost);
+
+
+            const newQuantity =
+                oldQuantity + quantity;
+
+
+            const newAverageCost =
+                (
+                    (
+                        oldQuantity *
+                        oldCost
+                    ) +
+                    (
+                        quantity *
+                        price
+                    )
+                ) /
+                newQuantity;
+
+
+            holdings[selectedAsset.id] = {
+
+                quantity:
+                    newQuantity,
+
+                averageCost:
+                    Number(
+                        newAverageCost.toFixed(4)
+                    )
+
+            };
+
+
+            cash -= total;
+
+
+            await savePortfolio();
+
+            showToast(
+                `${quantity} × ${selectedAsset.name} bought`
+            );
+
+        } else {
+
+            const existing =
+                holdings[selectedAsset.id];
+
+
+            const owned =
+                Number(
+                    existing?.quantity || 0
+                );
+
+
+            if (quantity > owned) {
+
+                tradeNote.textContent =
+                    `You only own ${owned} unit${
+                        owned === 1 ? "" : "s"
+                    }.`;
+
+                return;
+            }
+
+
+            cash += total;
+
+
+            const remaining =
+                owned - quantity;
+
+
+            if (remaining <= 0) {
+
+                delete holdings[
+                    selectedAsset.id
+                ];
+
+            } else {
+
+                holdings[
+                    selectedAsset.id
+                ].quantity =
+                    remaining;
+
+            }
+
+
+            await savePortfolio();
+
+            showToast(
+                `${quantity} × ${selectedAsset.name} sold`
+            );
+        }
+
+
+        closeTradeModal();
+
+        renderPortfolio();
+
+        updateSummary();
+
+    }
+);
+
+
+// =========================================
+// MODAL EVENTS
+// =========================================
+
+modalClose.addEventListener(
+    "click",
+    closeTradeModal
+);
+
+modalBackdrop.addEventListener(
+    "click",
+    closeTradeModal
+);
+
+
+// =========================================
+// BACK
+// =========================================
+
+backButton.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "hazelgame.html";
+
+    }
+);
+
+
+// =========================================
+// LEADERBOARD
+// =========================================
+
+function listenToLeaderboard() {
+
+    if (leaderboardUnsubscribe) {
+
+        leaderboardUnsubscribe();
+
+    }
+
+
+    const playersRef =
+        collection(
+            db,
+            "tradingPlayers"
+        );
+
+
+    leaderboardUnsubscribe =
+        onSnapshot(
+            playersRef,
+            async (snapshot) => {
+
+                const players = [];
+
+
+                for (
+                    const playerDoc
+                    of snapshot.docs
+                ) {
+
+                    const data =
+                        playerDoc.data();
+
+
+                    const playerPrices =
+                        prices;
+
+
+                    let portfolio =
+                        0;
+
+
+                    Object.entries(
+                        data.holdings || {}
+                    ).forEach(
+                        ([assetId, holding]) => {
+
+                            portfolio +=
+                                Number(
+                                    holding.quantity || 0
+                                ) *
+                                Number(
+                                    playerPrices[
+                                        assetId
+                                    ] ||
+                                    0
+                                );
+
+                        }
+                    );
+
+
+                    const wealth =
+                        Number(
+                            data.cash || 0
+                        ) +
+                        portfolio;
+
+
+                    players.push({
+
+                        uid:
+                            playerDoc.id,
+
+                        name:
+                            data.name ||
+                            "HAZEL User",
+
+                        hazelId:
+                            data.hazelId ||
+                            "",
+
+                        wealth
+
+                    });
+
+                }
+
+
+                players.sort(
+                    (a, b) =>
+                        b.wealth -
+                        a.wealth
+                );
+
+
+                renderLeaderboard(
+                    players.slice(0, 10)
+                );
+
+            },
+            (error) => {
+
+                console.error(
+                    "Leaderboard error:",
+                    error
+                );
+
+                leaderboardList.innerHTML = `
+                    <div class="loading-row">
+                        Leaderboard unavailable.
+                    </div>
+                `;
+
+            }
+        );
+}
+
+
+// =========================================
+// LEADERBOARD RENDER
+// =========================================
+
+function renderLeaderboard(players) {
+
+    leaderboardList.innerHTML = "";
+
+
+    if (!players.length) {
+
+        leaderboardList.innerHTML = `
+            <div class="loading-row">
+                No players yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    players.forEach(
+        (player, index) => {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "leaderboard-row";
+
+
+            row.innerHTML = `
+
+                <div class="rank">
+                    #${index + 1}
+                </div>
+
+                <div class="leader-player">
+
+                    <strong>
+                        ${escapeHTML(
+                            player.name
+                        )}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(
+                            player.hazelId
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="leader-wealth">
+                    ${money(player.wealth)}
+                </div>
+
+            `;
+
+
+            leaderboardList.appendChild(row);
+
+        }
+    );
+}
+
+
+// =========================================
+// ESCAPE HTML
+// =========================================
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value);
+
+    return div.innerHTML;
+}
+
+
+// =========================================
+// CLEANUP
+// =========================================
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if (marketTimer) {
+
+            clearInterval(marketTimer);
+
+        }
+
+        if (leaderboardUnsubscribe) {
+
+            leaderboardUnsubscribe();
+
+        }
+
+    }
+);

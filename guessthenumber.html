@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HAZEL Guess the Number</title>
+
+
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+
+
+    <!-- Fonts -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- Theme -->
+
+    <script>
+
+        (() => {
+
+            const savedTheme =
+                localStorage.getItem("hazelTheme");
+
+            const allowedThemes = [
+                "black-gold",
+                "pink",
+                "white-grey"
+            ];
+
+            const theme =
+                allowedThemes.includes(savedTheme)
+                    ? savedTheme
+                    : "black-gold";
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                theme
+            );
+
+        })();
+
+    </script>
+
+
+    <link
+        rel="stylesheet"
+        href="guessthenumber.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<main class="guess-page">
+
+
+    <!-- HEADER -->
+
+    <header class="guess-header">
+
+        <button
+            type="button"
+            class="back-button"
+            id="backButton"
+        >
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+
+        <div class="header-title">
+
+            <span class="header-kicker">
+                HAZEL
+            </span>
+
+            <h1>
+                Guess the Number
+            </h1>
+
+        </div>
+
+
+        <div class="header-space"></div>
+
+    </header>
+
+
+
+    <!-- PLAYER -->
+
+    <section class="player-info">
+
+        <div class="player-avatar">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+
+        <div class="player-details">
+
+            <span class="player-label">
+                PLAYER
+            </span>
+
+            <strong id="playerName">
+                Loading...
+            </strong>
+
+            <small id="hazelId">
+                HAZEL ID: Loading...
+            </small>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MODE SELECTOR -->
+
+    <section class="mode-section">
+
+        <button
+            type="button"
+            class="mode-button active"
+            id="soloModeButton"
+        >
+            <i class="fa-solid fa-user"></i>
+            Solo
+        </button>
+
+
+        <button
+            type="button"
+            class="mode-button"
+            id="multiModeButton"
+        >
+            <i class="fa-solid fa-users"></i>
+            HAZEL ID Multiplayer
+        </button>
+
+    </section>
+
+
+
+    <!-- =========================
+         SOLO MODE
+    ========================== -->
+
+    <section
+        class="mode-panel"
+        id="soloPanel"
+    >
+
+        <div class="game-intro">
+
+            <div class="number-icon">
+                <i class="fa-solid fa-hashtag"></i>
+            </div>
+
+            <h2>
+                Find the Hidden Number
+            </h2>
+
+            <p>
+                Guess a number between
+                <strong>1 and 100</strong>.
+            </p>
+
+        </div>
+
+
+        <section
+            class="status-card"
+            id="statusCard"
+        >
+
+            <div class="status-icon">
+
+                <i
+                    class="fa-solid fa-bullseye"
+                    id="statusIcon"
+                ></i>
+
+            </div>
+
+
+            <div class="status-content">
+
+                <span class="status-label">
+                    STATUS
+                </span>
+
+                <strong id="statusTitle">
+                    Ready to Play
+                </strong>
+
+                <p id="statusMessage">
+                    Enter a number between 1 and 100.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="guess-section">
+
+            <label
+                for="guessInput"
+                class="input-label"
+            >
+                YOUR GUESS
+            </label>
+
+
+            <div class="input-wrapper">
+
+                <input
+                    type="number"
+                    id="guessInput"
+                    min="1"
+                    max="100"
+                    inputmode="numeric"
+                    placeholder="Enter number"
+                    autocomplete="off"
+                >
+
+
+                <button
+                    type="button"
+                    id="guessButton"
+                    class="guess-button"
+                >
+                    GUESS
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+
+            <p
+                class="input-error"
+                id="inputError"
+            ></p>
+
+        </section>
+
+
+        <section class="attempts-card">
+
+            <div class="attempts-left">
+
+                <span>
+                    ATTEMPTS
+                </span>
+
+                <strong id="attemptCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="attempts-right">
+
+                <span>
+                    BEST
+                </span>
+
+                <strong id="bestScore">
+                    —
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <section class="history-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    <span>
+                        Guess History
+                    </span>
+                </div>
+
+
+                <button
+                    type="button"
+                    id="clearHistoryButton"
+                    class="clear-button"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div
+                class="history-list"
+                id="historyList"
+            ></div>
+
+        </section>
+
+
+        <section class="controls">
+
+            <button
+                type="button"
+                class="control-button primary-button"
+                id="newGameButton"
+            >
+
+                <i class="fa-solid fa-rotate-right"></i>
+
+                New Game
+
+            </button>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- =========================
+         MULTIPLAYER MODE
+    ========================== -->
+
+    <section
+        class="mode-panel hidden"
+        id="multiPanel"
+    >
+
+
+        <!-- MULTIPLAYER LOBBY -->
+
+        <div id="multiLobby">
+
+
+            <div class="game-intro">
+
+                <div class="number-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+
+                <h2>
+                    HAZEL ID Multiplayer
+                </h2>
+
+
+                <p>
+                    Challenge another HAZEL player
+                    using their HAZEL ID.
+                </p>
+
+            </div>
+
+
+
+            <!-- CREATE -->
+
+            <div class="multi-card">
+
+                <div class="multi-card-title">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>
+                        Create Match
+                    </span>
+
+                </div>
+
+
+                <p>
+                    Create a private match and
+                    share the Match ID with your opponent.
+                </p>
+
+
+                <button
+                    type="button"
+                    class="control-button primary-button"
+                    id="createMatchButton"
+                >
+
+                    <i class="fa-solid fa-gamepad"></i>
+
+                    Create Match
+
+                </button>
+
+            </div>
+
+
+
+            <div class="or-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+
+            <!-- JOIN -->
+
+            <div class="multi-card">
+
+                <div class="multi-card-title">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    <span>
+                        Join Match
+                    </span>
+
+                </div>
+
+
+                <label
+                    for="opponentIdInput"
+                    class="input-label"
+                >
+                    OPPONENT HAZEL ID
+                </label>
+
+
+                <input
+                    type="text"
+                    id="opponentIdInput"
+                    class="text-input"
+                    placeholder="HZL-XXXXXX"
+                    autocomplete="off"
+                >
+
+
+                <button
+                    type="button"
+                    class="control-button primary-button"
+                    id="findOpponentButton"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    Find Player
+
+                </button>
+
+
+                <div
+                    class="opponent-result hidden"
+                    id="opponentResult"
+                >
+
+                    <div class="opponent-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+
+                    <div class="opponent-details">
+
+                        <strong id="opponentName">
+                            Player
+                        </strong>
+
+                        <small id="opponentHazelId">
+                            HAZEL ID
+                        </small>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="join-button"
+                        id="joinMatchButton"
+                    >
+                        JOIN
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <p
+                class="multi-error"
+                id="multiError"
+            ></p>
+
+        </div>
+
+
+
+        <!-- WAITING -->
+
+        <div
+            id="waitingPanel"
+            class="hidden"
+        >
+
+            <div class="waiting-card">
+
+                <div class="waiting-icon">
+
+                    <i class="fa-solid fa-hourglass-half"></i>
+
+                </div>
+
+
+                <h2>
+                    Waiting for Opponent
+                </h2>
+
+
+                <p>
+                    Share this Match ID with your
+                    opponent.
+                </p>
+
+
+                <div class="match-id-box">
+
+                    <span>
+                        MATCH ID
+                    </span>
+
+                    <strong id="matchIdDisplay">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="control-button secondary-button"
+                    id="copyMatchButton"
+                >
+
+                    <i class="fa-solid fa-copy"></i>
+
+                    Copy Match ID
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    id="cancelMatchButton"
+                >
+
+                    Cancel Match
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             ACTIVE MULTIPLAYER GAME
+        ========================== -->
+
+        <div
+            id="activeGamePanel"
+            class="hidden"
+        >
+
+            <div class="match-header">
+
+                <div>
+
+                    <span>
+                        MATCH
+                    </span>
+
+                    <strong id="activeMatchId">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="connection-status"
+                    id="connectionStatus"
+                >
+
+                    <span></span>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PLAYERS -->
+
+            <div class="players-card">
+
+                <div class="online-player">
+
+                    <span class="player-symbol x-symbol">
+                        X
+                    </span>
+
+                    <div>
+
+                        <strong id="hostPlayerName">
+                            Player X
+                        </strong>
+
+                        <small>
+                            HOST
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="vs-text">
+                    VS
+                </div>
+
+
+                <div class="online-player">
+
+                    <span class="player-symbol o-symbol">
+                        O
+                    </span>
+
+                    <div>
+
+                        <strong id="guestPlayerName">
+                            Waiting...
+                        </strong>
+
+                        <small>
+                            PLAYER O
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MULTI STATUS -->
+
+            <section
+                class="status-card"
+                id="multiStatusCard"
+            >
+
+                <div class="status-icon">
+
+                    <i
+                        class="fa-solid fa-gamepad"
+                        id="multiStatusIcon"
+                    ></i>
+
+                </div>
+
+
+                <div class="status-content">
+
+                    <span class="status-label">
+                        MATCH STATUS
+                    </span>
+
+                    <strong id="multiStatusTitle">
+                        Waiting...
+                    </strong>
+
+                    <p id="multiStatusMessage">
+                        Waiting for the match to start.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- MULTI GUESS -->
+
+            <section class="guess-section">
+
+                <label
+                    for="multiGuessInput"
+                    class="input-label"
+                >
+                    YOUR GUESS
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="number"
+                        id="multiGuessInput"
+                        min="1"
+                        max="100"
+                        inputmode="numeric"
+                        placeholder="1 - 100"
+                    >
+
+
+                    <button
+                        type="button"
+                        class="guess-button"
+                        id="multiGuessButton"
+                    >
+
+                        GUESS
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+
+                <p
+                    class="input-error"
+                    id="multiInputError"
+                ></p>
+
+            </section>
+
+
+
+            <!-- MULTI STATS -->
+
+            <section class="multi-stats">
+
+                <div>
+
+                    <span>
+                        YOUR ATTEMPTS
+                    </span>
+
+                    <strong id="myAttempts">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        OPPONENT ATTEMPTS
+                    </span>
+
+                    <strong id="opponentAttempts">
+                        0
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- MULTI HISTORY -->
+
+            <section class="history-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <i class="fa-solid fa-list"></i>
+
+                        <span>
+                            Match History
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="history-list"
+                    id="multiHistoryList"
+                ></div>
+
+            </section>
+
+
+
+            <button
+                type="button"
+                class="leave-button"
+                id="leaveMatchButton"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Leave Match
+
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- INFO -->
+
+    <section class="game-info">
+
+        <div class="info-title">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <span>
+                How to Play
+            </span>
+
+        </div>
+
+
+        <p>
+
+            In multiplayer, both players guess the
+            same hidden number. The first player to
+            find the exact number wins.
+
+        </p>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- FIREBASE AUTH -->
+
+<script type="module">
+
+    import { auth } from "./firebase-config.js";
+
+    import {
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+
+    onAuthStateChanged(
+        auth,
+        (user) => {
+
+            if (user) {
+
+                document.body.style.visibility =
+                    "visible";
+
+            } else {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }
+
+        }
+    );
+
+</script>
+
+
+<script
+    type="module"
+    src="guessthenumber.js"
+></script>
+
+
+</body>
+
+      </html>

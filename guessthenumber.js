@@ -1336,3 +1336,700 @@ function updateMultiStatus(
         `fa-solid ${icon}`;
 
   }
+
+/* =========================
+   MULTI HISTORY
+========================= */
+
+function renderMultiHistory(history) {
+
+    if (!history.length) {
+
+        multiHistoryList.innerHTML = `
+
+            <div class="empty-history">
+
+                No guesses yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    multiHistoryList.innerHTML =
+        "";
+
+
+    history.forEach(
+        (item, index) => {
+
+            const row =
+                document.createElement("div");
+
+
+            row.className =
+                "history-item";
+
+
+            row.innerHTML = `
+
+                <div class="history-number">
+
+                    <span class="history-index">
+                        ${index + 1}
+                    </span>
+
+                    <strong>
+                        ${item.number}
+                    </strong>
+
+                </div>
+
+                <span class="history-result">
+                    ${item.playerName}
+                    ·
+                    ${item.result}
+                </span>
+
+            `;
+
+
+            multiHistoryList.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================
+   MULTIPLAYER GUESS
+========================= */
+
+async function submitMultiGuess() {
+
+    if (
+        !currentMatch ||
+        !currentMatchId
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        currentMatch.status !==
+        "active"
+    ) {
+
+        return;
+
+    }
+
+
+    multiInputError.textContent =
+        "";
+
+
+    const number =
+        Number(
+            multiGuessInput.value
+        );
+
+
+    if (
+        !Number.isInteger(number) ||
+        number < MIN_NUMBER ||
+        number > MAX_NUMBER
+    ) {
+
+        multiInputError.textContent =
+            "Enter a whole number between 1 and 100.";
+
+        return;
+
+    }
+
+
+    const isHost =
+        currentMatch.hostUid ===
+        currentUser.uid;
+
+
+    const attempts =
+        isHost
+            ? currentMatch.hostAttempts || 0
+            : currentMatch.guestAttempts || 0;
+
+
+    const newAttempts =
+        attempts + 1;
+
+
+    const secret =
+        currentMatch.secretNumber;
+
+
+    let result =
+        "";
+
+
+    if (number === secret) {
+
+        result =
+            "Correct ✓";
+
+    } else if (number < secret) {
+
+        result =
+            "Higher ↑";
+
+    } else {
+
+        result =
+            "Lower ↓";
+
+    }
+
+
+    const history =
+        Array.isArray(
+            currentMatch.history
+        )
+            ? [
+                ...currentMatch.history
+            ]
+            : [];
+
+
+    history.push({
+
+        uid:
+            currentUser.uid,
+
+        player:
+            isHost
+                ? "X"
+                : "O",
+
+        playerName:
+            currentUserData.name ||
+            currentUserData.username ||
+            "Player",
+
+        number,
+
+        result,
+
+        createdAt:
+            Date.now()
+
+    });
+
+
+    const matchRef =
+        doc(
+            db,
+            "guessNumberMatches",
+            currentMatchId
+        );
+
+
+    const updateData = {
+
+        history,
+
+        updatedAt:
+            serverTimestamp()
+
+    };
+
+
+    if (isHost) {
+
+        updateData.hostAttempts =
+            newAttempts;
+
+    } else {
+
+        updateData.guestAttempts =
+            newAttempts;
+
+    }
+
+
+    if (number === secret) {
+
+        updateData.status =
+            "finished";
+
+        updateData.winnerUid =
+            currentUser.uid;
+
+    }
+
+
+    try {
+
+        multiGuessButton.disabled =
+            true;
+
+
+        await updateDoc(
+            matchRef,
+            updateData
+        );
+
+
+        multiGuessInput.value =
+            "";
+
+
+        if (
+            number !== secret
+        ) {
+
+            multiInputError.textContent =
+                result;
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        multiInputError.textContent =
+            "Your guess could not be submitted.";
+
+    } finally {
+
+        if (
+            currentMatch?.status ===
+            "active"
+        ) {
+
+            multiGuessButton.disabled =
+                false;
+
+        }
+
+    }
+
+}
+
+
+
+/* =========================
+   COPY MATCH ID
+========================= */
+
+async function copyMatchId() {
+
+    if (!currentMatchId) {
+        return;
+    }
+
+
+    try {
+
+        await navigator.clipboard.writeText(
+            currentMatchId
+        );
+
+
+        copyMatchButton.innerHTML =
+            `
+                <i class="fa-solid fa-check"></i>
+                Copied
+            `;
+
+
+        setTimeout(
+            () => {
+
+                copyMatchButton.innerHTML =
+                    `
+                        <i class="fa-solid fa-copy"></i>
+                        Copy Match ID
+                    `;
+
+            },
+            1500
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* =========================
+   CANCEL MATCH
+========================= */
+
+async function cancelMatch() {
+
+    if (!currentMatchId) {
+        return;
+    }
+
+
+    try {
+
+        const matchRef =
+            doc(
+                db,
+                "guessNumberMatches",
+                currentMatchId
+            );
+
+
+        await updateDoc(
+            matchRef,
+            {
+
+                status: "cancelled",
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        resetMultiplayerUI();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* =========================
+   LEAVE MATCH
+========================= */
+
+async function leaveMatch() {
+
+    if (!currentMatchId) {
+        return;
+    }
+
+
+    try {
+
+        const matchRef =
+            doc(
+                db,
+                "guessNumberMatches",
+                currentMatchId
+            );
+
+
+        await updateDoc(
+            matchRef,
+            {
+
+                status: "cancelled",
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        resetMultiplayerUI();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* =========================
+   RESET MULTIPLAYER
+========================= */
+
+function resetMultiplayerUI() {
+
+    if (unsubscribeMatch) {
+
+        unsubscribeMatch();
+
+        unsubscribeMatch =
+            null;
+
+    }
+
+
+    currentMatchId =
+        null;
+
+    currentMatch =
+        null;
+
+    selectedOpponent =
+        null;
+
+
+    multiLobby.classList.remove(
+        "hidden"
+    );
+
+
+    waitingPanel.classList.add(
+        "hidden"
+    );
+
+
+    activeGamePanel.classList.add(
+        "hidden"
+    );
+
+
+    opponentResult.classList.add(
+        "hidden"
+    );
+
+
+    opponentIdInput.value =
+        "";
+
+
+    multiError.textContent =
+        "";
+
+
+    multiInputError.textContent =
+        "";
+
+}
+
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+backButton.addEventListener(
+    "click",
+    () => {
+
+        if (unsubscribeMatch) {
+
+            unsubscribeMatch();
+
+        }
+
+
+        window.location.href =
+            "hazelgame.html";
+
+    }
+);
+
+
+
+/* =========================
+   EVENTS
+========================= */
+
+soloModeButton.addEventListener(
+    "click",
+    showSolo
+);
+
+
+multiModeButton.addEventListener(
+    "click",
+    showMultiplayer
+);
+
+
+guessButton.addEventListener(
+    "click",
+    handleSoloGuess
+);
+
+
+newGameButton.addEventListener(
+    "click",
+    startSoloGame
+);
+
+
+clearHistoryButton.addEventListener(
+    "click",
+    () => {
+
+        soloHistory = [];
+
+        renderSoloHistory();
+
+    }
+);
+
+
+guessInput.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key === "Enter") {
+
+            handleSoloGuess();
+
+        }
+
+    }
+);
+
+
+createMatchButton.addEventListener(
+    "click",
+    createMatch
+);
+
+
+findOpponentButton.addEventListener(
+    "click",
+    findOpponent
+);
+
+
+joinMatchButton.addEventListener(
+    "click",
+    joinMatch
+);
+
+
+copyMatchButton.addEventListener(
+    "click",
+    copyMatchId
+);
+
+
+cancelMatchButton.addEventListener(
+    "click",
+    cancelMatch
+);
+
+
+leaveMatchButton.addEventListener(
+    "click",
+    leaveMatch
+);
+
+
+multiGuessButton.addEventListener(
+    "click",
+    submitMultiGuess
+);
+
+
+multiGuessInput.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key === "Enter") {
+
+            submitMultiGuess();
+
+        }
+
+    }
+);
+
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            window.location.href =
+                "hazelgame.html";
+
+        }
+
+    }
+);
+
+
+
+/* =========================
+   AUTH
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        try {
+
+            await loadUser(user);
+
+        } catch (error) {
+
+            console.error(
+                "User loading failed:",
+                error
+            );
+
+        }
+
+
+        applySavedTheme();
+
+
+        startSoloGame();
+
+
+        document.body.style.visibility =
+            "visible";
+
+    }
+);

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memory</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #ffffff;
+            color: #222222;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 30px 18px 40px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .page-title p {
+            margin-top: 7px;
+            color: #888888;
+            font-size: 13px;
+        }
+
+        .video-card {
+            background: #ffffff;
+            border: 1px solid #e7e7e7;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .video-card video {
+            display: block;
+            width: 100%;
+            max-height: 75vh;
+
+            border-radius: 11px;
+            background: #000000;
+        }
+
+        .video-label {
+            padding: 13px 5px 3px;
+
+            color: #333333;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 22px 12px 30px;
+            }
+
+            .page-title {
+                margin-bottom: 23px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .video-card {
+                padding: 9px;
+                border-radius: 14px;
+            }
+
+            .video-card video {
+                border-radius: 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header class="page-title">
+            <h1>Memory</h1>
+            <p>A moment worth remembering</p>
+        </header>
+
+
+        <!-- VIDEO -->
+
+        <section class="video-card">
+
+            <video
+                controls
+                playsinline
+                preload="metadata"
+            >
+                <source
+                    src="Photos/InShot_20251231_180213742.mp4"
+                    type="video/mp4"
+                >
+
+                Your browser does not support video playback.
+            </video>
+
+            <div class="video-label">
+                Memory
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

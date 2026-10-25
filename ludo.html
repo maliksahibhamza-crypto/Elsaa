@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Ludo</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071329;--panel:#101f3a;--gold:#f4cc70;
+}
+body{
+  min-height:100vh;
+  background:radial-gradient(ellipse,#17325c,#071329 70%);
+  color:white;font-family:Arial,sans-serif;
+}
+button{cursor:pointer;font:inherit}
+.hidden{display:none!important}
+
+/* START SCREEN */
+#start{
+  min-height:100vh;display:flex;align-items:center;
+  justify-content:center;padding:20px;text-align:center;
+}
+.start-card{
+  width:min(100%,410px);padding:38px 26px;
+  background:#101f3a;border:1px solid #344d75;
+  border-radius:25px;box-shadow:0 25px 80px #0008;
+}
+.crown{font-size:55px;color:var(--gold)}
+.start-card h1{font-size:38px;margin:15px 0}
+.start-card h1 span{color:var(--gold)}
+.start-card p{color:#aabbd6;line-height:1.6}
+.colors{display:flex;justify-content:center;gap:17px;margin:25px}
+.dot{width:19px;height:19px;border-radius:50%}
+.red{background:#ff4255}.green{background:#20d58a}
+.yellow{background:#ffd344}.blue{background:#388bff}
+#play{
+  width:100%;padding:16px;border:0;border-radius:12px;
+  background:linear-gradient(120deg,#ffeb9c,#e8b343);
+  color:#18213a;font-weight:900;font-size:17px;
+  box-shadow:0 5px 0 #9a7027;
+}
+.note{font-size:10px;margin-top:23px;letter-spacing:2px}
+
+/* GAME LAYOUT */
+#game{
+  min-height:100vh;height:100dvh;padding:12px;
+  display:grid;grid-template-columns:minmax(155px,1fr) minmax(0,2.2fr) minmax(155px,1fr);
+  grid-template-rows:1fr 1fr;gap:12px;align-items:center;
+}
+.player{
+  --c:#fff;position:relative;padding:14px;
+  background:linear-gradient(145deg,#172b49,#0a1830);
+  border:1px solid color-mix(in srgb,var(--c) 65%,#253858);
+  border-radius:16px;box-shadow:0 12px 30px #0004;
+}
+.player.active{
+  box-shadow:0 0 0 2px var(--c),0 0 24px color-mix(in srgb,var(--c) 35%,transparent);
+}
+#p-red{--c:#ff4255;grid-area:1/1}
+#p-green{--c:#20d58a;grid-area:1/3}
+#p-yellow{--c:#ffd344;grid-area:2/1}
+#p-blue{--c:#388bff;grid-area:2/3}
+.player-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.avatar{
+  width:38px;height:38px;display:grid;place-items:center;
+  border-radius:11px;background:color-mix(in srgb,var(--c) 20%,#13233e);
+  color:var(--c);font-size:18px;font-weight:900;
+}
+.player-name{font-weight:900;font-size:13px}
+.player-color{font-size:10px;color:var(--c);margin-top:4px;letter-spacing:1px}
+.roll{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:9px;border:1px solid #304666;border-radius:12px;
+  background:#09172c;color:white;text-align:left;
+}
+.roll:disabled{opacity:.45;cursor:not-allowed}
+.die{
+  display:grid;place-items:center;flex-shrink:0;
+  width:45px;height:45px;border-radius:10px;
+  background:linear-gradient(145deg,#fff,#dce5f3);
+  color:#10203b;font-size:30px;
+  box-shadow:0 3px 0 #9ba9bd;
+}
+.roll-label{font-size:10px;font-weight:900;letter-spacing:.5px}
+.roll-status{display:block;color:#9aafcf;font-size:10px;margin-top:5px}
+.progress{margin-top:12px;font-size:10px;color:#9aafcf}
+.track{height:4px;background:#2a3b56;border-radius:5px;margin-top:6px;overflow:hidden}
+.bar{height:100%;width:0;background:var(--c);transition:width .3s}
+
+/* LUDO BOARD */
+.board-wrap{
+  grid-area:1/2/3/3;width:min(100%,76vh,650px);
+  justify-self:center;padding:9px;border-radius:18px;
+  background:linear-gradient(145deg,#263e64,#0a1730);
+  border:1px solid #45618b;box-shadow:0 20px 60px #0007;
+}
+.brand{text-align:center;padding:3px 0 9px;font-size:11px;
+  font-weight:900;letter-spacing:2px;color:#dbe7fa}
+.brand span{color:var(--gold)}
+#board{
+  aspect-ratio:1;display:grid;grid-template-columns:repeat(15,1fr);
+  grid-template-rows:repeat(15,1fr);background:#e9e8df;
+  border:2px solid #c6cccf;overflow:hidden;
+}
+.cell{position:relative;border:1px solid #d4d7d5;background:#f8f7f0}
+.cell.home-red{background:#f83f51}
+.cell.home-green{background:#20c981}
+.cell.home-yellow{background:#ffd03d}
+.cell.home-blue{background:#3488f7}
+.cell.lane-red{background:#ff9ca6}
+.cell.lane-green{background:#91efc5}
+.cell.lane-yellow{background:#ffeb9b}
+.cell.lane-blue{background:#a6cbff}
+.cell.safe:after{content:"★";position:absolute;inset:0;display:grid;place-items:center;
+  color:#6c7890;font-size:clamp(7px,1.5vw,17px)}
+.cell.start-red{background:#f83f51}
+.cell.start-green{background:#20c981}
+.cell.start-yellow{background:#ffd03d}
+.cell.start-blue{background:#3488f7}
+.cell.home-center{background:#f9f7ed}
+.home-box{position:absolute;inset:8%;border-radius:10%;
+  background:#ffffffa8;border:2px solid #ffffffb0}
+.home-box:after{content:"";position:absolute;inset:14%;border-radius:10%;
+  background:color-mix(in srgb,var(--home-color) 20%,white);
+  border:2px solid var(--home-color)}
+.home-box.red{--home-color:#ff4255}
+.home-box.green{--home-color:#20c981}
+.home-box.yellow{--home-color:#e8b600}
+.home-box.blue{--home-color:#3488f7}
+.token{
+  position:absolute;width:72%;height:72%;left:14%;top:14%;
+  border-radius:50%;border:2px solid #ffffff;
+  box-shadow:0 2px 3px #0005;z-index:2;
+}
+.token.red{background:#ff253e}.token.green{background:#00bb70}
+.token.yellow{background:#f3bd00}.token.blue{background:#0865eb}
+.token.selectable{outline:3px solid #15213b;cursor:pointer;animation:pulse .8s infinite alternate}
+@keyframes pulse{to{transform:scale(.78)}}
+.board-footer{display:flex;justify-content:space-between;gap:5px;
+  padding:9px 1px 1px;color:#a5b9d8;font-size:9px;font-weight:bold}
+#message{color:var(--gold);text-align:center;margin-top:7px;font-size:12px}
+
+/* SMALL SCREENS */
+@media(max-width:700px){
+  #game{
+    height:auto;min-height:100dvh;grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto auto;gap:9px;padding:9px;
+  }
+  #p-red{grid-area:1/1}#p-green{grid-area:1/2}
+  .board-wrap{grid-area:2/1/3/3;width:min(94vw,540px)}
+  #p-yellow{grid-area:3/1}#p-blue{grid-area:3/2}
+  .player{padding:9px;border-radius:12px}
+  .player-head{gap:7px;margin-bottom:8px}
+  .avatar{width:29px;height:29px;font-size:13px}
+  .player-name{font-size:11px}.player-color{font-size:9px}
+  .die{width:34px;height:34px;font-size:23px}
+  .roll{padding:6px;gap:7px}.roll-label{font-size:9px}
+  .roll-status{font-size:9px}.progress{font-size:9px;margin-top:8px}
+  .brand{font-size:9px}.board-footer{font-size:7px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+<section id="start">
+  <div class="start-card">
+    <div class="crown">♛</div>
+    <p>THE CLASSIC • REIMAGINED</p>
+    <h1>ROYAL <span>LUDO</span></h1>
+    <p>Four players. One board.<br>Let the battle begin.</p>
+    <div class="colors">
+      <i class="dot red"></i><i class="dot green"></i>
+      <i class="dot yellow"></i><i class="dot blue"></i>
+    </div>
+    <button id="play">▶ &nbsp; PLAY NOW</button>
+    <p class="note">4 PLAYERS · LOCAL MODE · OFFLINE</p>
+  </div>
+</section>
+
+<!-- GAME SCREEN -->
+<main id="game" class="hidden">
+
+  <section class="player" id="p-red">
+    <div class="player-head"><div class="avatar">R</div>
+      <div><div class="player-name">PLAYER 1</div><div class="player-color">RED</div></div>
+    </div>
+    <button class="roll" data-player="0">
+      <span class="die" id="die-0">⚄</span>
+      <span><span class="roll-label">ROLL DICE</span><small class="roll-status" id="status-0">Your turn</small></span>
+    </button>
+    <div class="progress" id="progress-0">0 / 4 tokens finished<div class="track"><div class="bar" id="bar-0"></div></div></div>
+  </section>
+
+  <section class="player" id="p-green">
+    <div class="player-head"><div class="avatar">G</div>
+      <div><div class="player-name">PLAYER 2</div><div class="player-color">GREEN</div></div>
+    </div>
+    <button class="roll" data-player="1" disabled>
+      <span class="die" id="die-1">⚄</span>
+      <span><span class="roll-label">ROLL DICE</span><small class="roll-status" id="status-1">Waiting</small></span>
+    </button>
+    <div class="progress" id="progress-1">0 / 4 tokens finished<div class="track"><div class="bar" id="bar-1"></div></div></div>
+  </section>
+
+  <div class="board-wrap">
+    <div class="brand">♛ <span>ROYAL LUDO</span> · CLASSIC</div>
+    <div id="board"></div>
+    <div class="board-footer"><span>★ SAFE SQUARES</span><span>4 PLAYERS</span><span>FIRST TO FINISH WINS</span></div>
+    <div id="message">Red's turn — roll the dice!</div>
+  </div>
+
+  <section class="player" id="p-yellow">
+    <div class="player-head"><div class="avatar">Y</div>
+      <div><div class="player-name">PLAYER 3</div><div class="player-color">YELLOW</div></div>
+    </div>
+    <button class="roll" data-player="2" disabled>
+      <span class="die" id="die-2">⚄</span>
+      <span><span class="roll-label">ROLL DICE</span><small class="roll-status" id="status-2">Waiting</small></span>
+    </button>
+    <div class="progress" id="progress-2">0 / 4 tokens finished<div class="track"><div class="bar" id="bar-2"></div></div></div>
+  </section>
+
+  <section class="player" id="p-blue">
+    <div class="player-head"><div class="avatar">B</div>
+      <div><div class="player-name">PLAYER 4</div><div class="player-color">BLUE</div></div>
+    </div>
+    <button class="roll" data-player="3" disabled>
+      <span class="die" id="die-3">⚄</span>
+      <span><span class="roll-label">ROLL DICE</span><small class="roll-status" id="status-3">Waiting</small></span>
+    </button>
+    <div class="progress" id="progress-3">0 / 4 tokens finished<div class="track"><div class="bar" id="bar-3"></div></div></div>
+  </section>
+
+</main>
+
+<script>
+const colors=["red","green","yellow","blue"];
+const dieFaces=["","⚀","⚁","⚂","⚃","⚄","⚅"];
+const board=document.getElementById("board");
+const cells=[];
+let current=0,dice=null,rolling=false;
+
+for(let i=0;i<225;i++){
+  const cell=document.createElement("div");
+  cell.className="cell";
+  cell.dataset.pos=i;
+  board.appendChild(cell);
+  cells.push(cell);
+}
+
+// Coloured home areas
+function paintArea(r1,c1,r2,c2,color){
+  for(let r=r1;r<=r2;r++)for(let c=c1;c<=c2;c++){
+    cells[r*15+c].classList.add("home-"+color);
+  }
+}
+paintArea(0,0,5,5,"red");
+paintArea(0,9,5,14,"green");
+paintArea(9,0,14,5,"yellow");
+paintArea(9,9,14,14,"blue");
+
+// Home bases
+function addHome(r,c,color){
+  const cell=cells[r*15+c];
+  cell.innerHTML='<div class="home-box '+color+'"></div>';
+  cell.style.gridRow=`${r+1} / span 6`;
+  cell.style.gridColumn=`${c+1} / span 6`;
+}
+addHome(0,0,"red");
+addHome(0,9,"green");
+addHome(9,0,"yellow");
+addHome(9,9,"blue");
+
+// Cross-shaped walking paths
+for(let i=6;i<=8;i++){
+  for(let j=0;j<15;j++){
+    if(j>=6&&j<=8)continue;
+    cells[i*15+j].className="cell";
+  }
+  for(let j=0;j<15;j++){
+    if(j>=6&&j<=8)continue;
+    cells[j*15+i].className="cell";
+  }
+}
+
+// Home lanes
+const lanes=[
+  [[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
+  [[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],
+  [[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]],
+  [[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]]
+];
+lanes.forEach((lane,p)=>lane.forEach(([r,c])=>{
+  cells[r*15+c].classList.add("lane-"+colors[p]);
+}));
+
+// Central finish
+for(let r=6;r<=8;r++)for(let c=6;c<=8;c++){
+  cells[r*15+c].classList.add("home-center");
+}
+cells[7*15+7].textContent="★";
+cells[7*15+7].style.color="#d4a42f";
+cells[7*15+7].style.display="grid";
+cells[7*15+7].style.placeItems="center";
+
+// Safe spots
+[1*15+6,6*15+1,8*15+13,13*15+8].forEach(i=>cells[i].classList.add("safe"));
+
+// Token home slots
+const homeSlots=[
+  [[1,1],[1,4],[4,1],[4,4]],
+  [[1,10],[1,13],[4,10],[4,13]],
+  [[10,1],[10,4],[13,1],[13,4]],
+  [[10,10],[10,13],[13,10],[13,13]]
+];
+const tokens=colors.map(()=>[-1,-1,-1,-1]);
+
+function drawTokens(){
+  document.querySelectorAll(".token").forEach(t=>t.remove());
+  tokens.forEach((player,p)=>player.forEach((step,t)=>{
+    let target;
+    if(step===-1){
+      const [r,c]=homeSlots[p][t];
+      target=cells[r*15+c];
+    }else{
+      const lane=lanes[p];
+      const [r,c]=lane[Math.min(step,5)];
+      target=cells[r*15+c];
+    }
+    const token=document.createElement("button");
+    token.className="token "+colors[p];
+    token.title=colors[p]+" token "+(t+1);
+    token.setAttribute("aria-label",token.title);
+    if(p===current&&dice!==null&&step>=0){
+      token.classList.add("selectable");
+      token.onclick=()=>moveToken(t);
+    }
+    target.appendChild(token);
+  }));
+}
+
+function updateUI(){
+  colors.forEach((color,p)=>{
+    document.getElementById("p-"+color).classList.toggle("active",p===current);
+    document.querySelector(`[data-player="${p}"]`).disabled=
+      p!==current||rolling||dice!==null;
+    document.getElementById("status-"+p).textContent=
+      p===current?(dice!==null?"Choose a token":rolling?"Rolling...":"Your turn"):"Waiting";
+    document.getElementById("progress-"+p).firstChild.textContent=
+      tokens[p].filter(x=>x===5).length+" / 4 tokens finished";
+    document.getElementById("bar-"+p).style.width=
+      (tokens[p].filter(x=>x===5).length*25)+"%";
+  });
+  drawTokens();
+}
+
+function rollDice(){
+  if(rolling||dice!==null)return;
+  rolling=true;updateUI();
+  let ticks=0;
+  const timer=setInterval(()=>{
+    const value=Math.floor(Math.random()*6)+1;
+    document.getElementById("die-"+current).textContent=dieFaces[value];
+    ticks++;
+    if(ticks>=10){
+      clearInterval(timer);
+      dice=value;rolling=false;
+      document.getElementById("message").textContent=
+        colors[current].toUpperCase()+" rolled "+value+". Choose a token.";
+      const movable=tokens[current].some(step=>step>=0&&step<5);
+      const canStart=value===6&&tokens[current].includes(-1);
+      if(!movable&&!canStart){
+        dice=null;
+        if(value!==6)current=(current+1)%4;
+        document.getElementById("message").textContent=
+          "No move available. "+colors[current].toUpperCase()+"'s turn.";
+      }
+      updateUI();
+    }
+  },75);
+}
+
+function moveToken(t){
+  if(dice===null)return;
+  const step=tokens[current][t];
+  if(step===-1){
+    if(dice!==6)return;
+    tokens[current][t]=0;
+  }else{
+    const next=step+dice;
+    if(next>5)return;
+    tokens[current][t]=next;
+  }
+  const rolled=dice;
+  dice=null;
+  if(rolled!==6)current=(current+1)%4;
+  document.getElementById("message").textContent=
+    colors[current].toUpperCase()+"'S TURN — ROLL THE DICE!";
+  updateUI();
+}
+
+document.querySelectorAll("[data-player]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    if(Number(btn.dataset.player)===current)rollDice();
+  });
+});
+
+document.getElementById("play").addEventListener("click",()=>{
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  updateUI();
+});
+
+updateUI();
+</script>
+</body>
+  </html>
+  
